@@ -2,308 +2,886 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#08152f">
 <title>Bubble Blast</title>
 
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
 html,body{
-  margin:0;width:100%;height:100%;
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
   font-family:Arial,sans-serif;
-  background:#09152f;overflow:hidden
+  background:#071229;
 }
-button,input{font:inherit}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
 #app{
-  width:100%;max-width:500px;height:100vh;margin:auto;
-  position:relative;overflow:hidden;color:white;
-  background:radial-gradient(circle at 50% 5%,#3758b9 0,#182d68 35%,#09152f 80%)
-}
-.hidden{display:none!important}
-.fullScreen{position:absolute;inset:0;overflow:auto}
-
-/* PROFILE */
-#profileScreen{
-  z-index:50;padding:28px 20px;
+  width:100%;
+  max-width:500px;
+  height:100vh;
+  margin:auto;
+  position:relative;
+  overflow:hidden;
+  color:#fff;
   background:
-    radial-gradient(circle at 20% 10%,rgba(91,125,255,.5),transparent 35%),
-    radial-gradient(circle at 80% 30%,rgba(190,68,255,.3),transparent 35%),
-    linear-gradient(#162c69,#08142e)
+    radial-gradient(circle at 50% 5%,#3758b9,#182d68 38%,#09152f 82%);
 }
-.gameLogo{text-align:center;margin-top:10px}
-.logoBubble{font-size:70px}
-.gameLogo h1{margin:2px 0;font-size:38px}
-.gameLogo p{margin:5px 0 25px;color:#c7d5ff}
-.glassCard{
-  background:rgba(255,255,255,.96);color:#17203b;
-  border-radius:28px;padding:22px;
-  box-shadow:0 20px 50px rgba(0,0,0,.3)
+
+.hidden{
+  display:none!important;
 }
-.label{display:block;font-size:14px;font-weight:bold;margin:4px 0 7px}
-input{
-  width:100%;padding:15px;border:2px solid #e2e7f2;
-  border-radius:15px;outline:none;font-size:17px;margin-bottom:20px
+
+.full{
+  position:absolute;
+  inset:0;
+  overflow:auto;
 }
-.avatarGrid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:10px;margin:12px 0 20px
-}
-.avatar{
-  background:#f1f4fa;border:3px solid transparent;
-  border-radius:18px;padding:12px 4px;text-align:center;
-  font-size:38px;cursor:pointer
-}
-.avatar span{display:block;margin-top:4px;font-size:10px;font-weight:bold}
-.avatar.selected{border-color:#607cff;background:#edf0ff}
+
+/* ---------- COMMON ---------- */
+
 .primary{
-  width:100%;border:0;border-radius:17px;padding:16px;
-  color:white;font-size:17px;font-weight:bold;cursor:pointer;
-  background:linear-gradient(135deg,#5c7cff,#8a58ff);
-  box-shadow:0 8px 18px rgba(92,124,255,.28)
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:16px;
+  color:#fff;
+  font-weight:800;
+  font-size:17px;
+  background:linear-gradient(135deg,#5d7dff,#8658ff);
+  box-shadow:0 8px 20px rgba(70,91,230,.3);
 }
 
-/* HOME */
-#homeScreen{
-  z-index:30;padding:18px;
-  background:
-    radial-gradient(circle at 10% 0,rgba(95,125,255,.45),transparent 32%),
-    radial-gradient(circle at 95% 40%,rgba(185,70,255,.25),transparent 35%),
-    linear-gradient(#173477,#09152f)
+.green{
+  background:linear-gradient(135deg,#43cf82,#13a76a);
 }
-.playerHeader{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:13px;border-radius:22px;background:rgba(255,255,255,.11)
-}
-.playerLeft{display:flex;align-items:center;gap:10px}
-.playerAvatar{
-  width:52px;height:52px;border-radius:50%;background:white;
-  display:flex;justify-content:center;align-items:center;font-size:30px
-}
-.welcome{font-size:11px;color:#bcd0ff}
-.playerName{font-size:18px;font-weight:bold}
-.settings{
-  border:0;background:rgba(255,255,255,.12);color:white;
-  width:40px;height:40px;border-radius:50%;cursor:pointer
-}
-.hero{text-align:center;margin:22px 0 14px}
-.heroBubble{font-size:58px}
-.hero h1{margin:0;font-size:33px}
-.hero p{color:#b9cbf5;margin:5px 0}
-.levelCard{
-  border-radius:28px;padding:20px;
-  background:linear-gradient(145deg,#fff,#edf3ff);
-  color:#15203d;box-shadow:0 15px 35px rgba(0,0,0,.25)
-}
-.levelTop{display:flex;justify-content:space-between}
-.levelBadge{
-  padding:8px 13px;border-radius:18px;background:#e8edff;
-  color:#536de2;font-weight:bold;font-size:12px
-}
-.bigLevel{font-size:35px;font-weight:900;margin:8px 0 0}
-.levelSub{color:#76809a;font-size:13px}
-.statsRow{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin:17px 0
-}
-.statBox{background:#f2f5fb;border-radius:17px;padding:12px;text-align:center}
-.statBox .value{font-size:20px;font-weight:bold}
-.statBox .desc{color:#778198;font-size:10px;margin-top:3px}
-.continueBtn{
-  width:100%;border:0;border-radius:18px;padding:17px;color:white;
-  font-weight:bold;font-size:18px;cursor:pointer;
-  background:linear-gradient(135deg,#3fc777,#17a76e)
-}
-.cannonPanel{
-  margin-top:15px;border-radius:24px;padding:17px;
-  background:rgba(255,255,255,.1)
-}
-.panelTitle{display:flex;justify-content:space-between;margin-bottom:12px}
-.cannonGrid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
-.cannon{
-  padding:8px 2px;border-radius:14px;text-align:center;
-  background:rgba(255,255,255,.1);border:2px solid transparent;cursor:pointer
-}
-.cannon .icon{font-size:25px}
-.cannon .cname{font-size:7px;margin-top:3px}
-.cannon.locked{opacity:.3}
-.cannon.active{border-color:#75f2c1;background:rgba(74,220,163,.18)}
-.unlockInfo{margin-top:10px;color:#bdd0fa;font-size:10px;text-align:center}
 
-/* GAME */
-#gameScreen{z-index:20;overflow:hidden}
-.gameTop{
-  height:82px;padding:11px 13px;display:flex;
-  align-items:center;justify-content:space-between;
-  background:rgba(5,15,40,.35)
-}
-.gameUser{display:flex;gap:7px;align-items:center}
-.gameUserAvatar{font-size:26px}
-.gameUserName{font-size:13px;font-weight:bold}
-.gameLevel{font-size:9px;color:#b7c8ef}
-.gameStats{display:flex;gap:6px}
-.gamePill{
-  background:rgba(255,255,255,.12);border-radius:15px;
-  padding:7px 9px;text-align:center
-}
-.gamePill b{display:block;font-size:13px}
-.gamePill span{font-size:8px;color:#bdccef}
-canvas{display:block;width:100%;touch-action:none}
-.nextBox{
-  position:absolute;bottom:17px;left:15px;
-  background:rgba(255,255,255,.12);border-radius:17px;
-  padding:7px 11px;text-align:center;font-size:8px
-}
-.nextDot{
-  width:31px;height:31px;margin:4px auto 0;border-radius:50%;
-  border:2px solid rgba(255,255,255,.7);
-  display:flex;align-items:center;justify-content:center;font-size:18px
-}
-.missBox{
-  position:absolute;bottom:17px;right:15px;
-  padding:8px 10px;border-radius:16px;
-  background:rgba(255,255,255,.1);font-size:9px;text-align:center
-}
-.combo{
-  position:absolute;top:95px;width:100%;text-align:center;
-  font-size:25px;font-weight:bold;opacity:0;z-index:10;
-  transition:.2s;pointer-events:none;
-  text-shadow:0 3px 8px rgba(0,0,0,.5)
-}
-.combo.show{opacity:1;transform:scale(1.15)}
-.specialBanner{
-  position:absolute;top:130px;left:50%;transform:translateX(-50%);
-  background:rgba(8,18,45,.8);border:1px solid rgba(255,255,255,.2);
-  border-radius:18px;padding:7px 13px;font-size:10px;
-  opacity:0;transition:.2s;pointer-events:none;z-index:9
-}
-.specialBanner.show{opacity:1}
-
-/* MODALS */
-.overlay{
-  position:absolute;inset:0;z-index:100;background:rgba(3,8,25,.86);
-  display:flex;align-items:center;justify-content:center;padding:20px
-}
-.modal{
-  width:100%;max-width:360px;padding:25px;border-radius:28px;
-  background:white;color:#17203a;text-align:center;
-  box-shadow:0 20px 50px rgba(0,0,0,.4)
-}
-.modalIcon{font-size:65px}
-.scoreBig{font-size:38px;font-weight:bold;color:#536de2;margin:10px 0}
 .secondary{
-  width:100%;border:0;background:none;color:#6075dc;
-  margin-top:13px;cursor:pointer;text-decoration:underline
+  width:100%;
+  border:0;
+  background:none;
+  color:#6075dc;
+  padding:13px;
+  text-decoration:underline;
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  z-index:100;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:18px;
+  background:rgba(2,7,22,.87);
+}
+
+.modal{
+  width:100%;
+  max-width:370px;
+  max-height:88vh;
+  overflow:auto;
+  padding:24px;
+  border-radius:28px;
+  text-align:center;
+  color:#15203b;
+  background:#fff;
+  box-shadow:0 22px 60px rgba(0,0,0,.45);
+}
+
+.modal h1,
+.modal h2{
+  margin:7px 0;
+}
+
+.modal p{
+  color:#778198;
+}
+
+.modalIcon{
+  font-size:64px;
+}
+
+.bigNumber{
+  font-size:38px;
+  font-weight:900;
+  color:#5872e1;
+  margin:8px 0;
+}
+
+/* ---------- PROFILE ---------- */
+
+#profileScreen{
+  z-index:50;
+  padding:25px 20px;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(91,125,255,.5),transparent 35%),
+    radial-gradient(circle at 90% 30%,rgba(185,70,255,.3),transparent 35%),
+    linear-gradient(#17306f,#08142e);
+}
+
+.logo{
+  text-align:center;
+  margin:8px 0 24px;
+}
+
+.logoIcon{
+  font-size:70px;
+}
+
+.logo h1{
+  font-size:39px;
+  margin:0;
+}
+
+.logo p{
+  color:#c3d2f9;
+  margin:5px;
+}
+
+.whiteCard{
+  background:#fff;
+  color:#15203b;
+  border-radius:27px;
+  padding:21px;
+  box-shadow:0 20px 45px rgba(0,0,0,.3);
+}
+
+.label{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  margin:5px 0 7px;
+}
+
+input{
+  width:100%;
+  padding:15px;
+  margin-bottom:19px;
+  border:2px solid #e1e7f0;
+  border-radius:15px;
+  outline:none;
+  font-size:17px;
+}
+
+.avatarGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin:11px 0 20px;
+}
+
+.avatar{
+  padding:11px 3px;
+  border:3px solid transparent;
+  border-radius:18px;
+  text-align:center;
+  font-size:37px;
+  background:#f2f5fa;
+}
+
+.avatar small{
+  display:block;
+  margin-top:4px;
+  font-size:9px;
+  font-weight:800;
+}
+
+.avatar.selected{
+  border-color:#637dff;
+  background:#edf0ff;
+}
+
+/* ---------- HOME ---------- */
+
+#homeScreen{
+  z-index:30;
+  padding:16px;
+}
+
+.playerHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:21px;
+  background:rgba(255,255,255,.11);
+  backdrop-filter:blur(10px);
+}
+
+.playerInfo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.playerAvatar{
+  width:51px;
+  height:51px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-size:29px;
+  background:#fff;
+}
+
+.welcome{
+  font-size:9px;
+  color:#bcd0ff;
+}
+
+.playerName{
+  font-size:18px;
+  font-weight:800;
+}
+
+.coinBox{
+  border-radius:18px;
+  padding:8px 11px;
+  font-size:12px;
+  font-weight:800;
+  background:rgba(255,255,255,.12);
+}
+
+.hero{
+  text-align:center;
+  margin:19px 0 13px;
+}
+
+.heroIcon{
+  font-size:51px;
+}
+
+.hero h1{
+  margin:0;
+  font-size:31px;
+}
+
+.hero p{
+  margin:5px;
+  color:#b9cbf3;
+  font-size:12px;
+}
+
+.levelCard{
+  padding:18px;
+  border-radius:27px;
+  color:#15203b;
+  background:linear-gradient(145deg,#fff,#edf3ff);
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+.levelTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.levelTitle{
+  color:#7a849a;
+  font-size:10px;
+}
+
+.bigLevel{
+  font-size:33px;
+  font-weight:900;
+}
+
+.worldBadge{
+  padding:8px 11px;
+  border-radius:18px;
+  background:#e8edff;
+  color:#536de2;
+  font-size:10px;
+  font-weight:800;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:15px 0;
+}
+
+.stat{
+  padding:10px 4px;
+  border-radius:15px;
+  text-align:center;
+  background:#f3f6fb;
+}
+
+.stat b{
+  display:block;
+  font-size:18px;
+}
+
+.stat small{
+  display:block;
+  margin-top:3px;
+  color:#7a859d;
+  font-size:8px;
+}
+
+.dailyBtn{
+  width:100%;
+  border:0;
+  border-radius:15px;
+  margin:10px 0 0;
+  padding:11px;
+  color:#5c4a00;
+  font-size:12px;
+  font-weight:800;
+  background:linear-gradient(135deg,#fff5b1,#ffd45c);
+}
+
+.homeActions{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:13px;
+}
+
+.homeAction{
+  padding:12px 4px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:17px;
+  color:#fff;
+  background:rgba(255,255,255,.1);
+}
+
+.homeAction span{
+  display:block;
+  font-size:24px;
+}
+
+.homeAction small{
+  display:block;
+  margin-top:4px;
+  font-size:9px;
+}
+
+.cannonPanel{
+  margin-top:13px;
+  padding:14px;
+  border-radius:22px;
+  background:rgba(255,255,255,.1);
+}
+
+.panelTop{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+  font-size:11px;
+}
+
+.cannonGrid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:5px;
+}
+
+.cannon{
+  padding:7px 1px;
+  border:2px solid transparent;
+  border-radius:13px;
+  text-align:center;
+  background:rgba(255,255,255,.09);
+}
+
+.cannon .icon{
+  font-size:22px;
+}
+
+.cannon small{
+  display:block;
+  font-size:6px;
+}
+
+.cannon.locked{
+  opacity:.3;
+}
+
+.cannon.active{
+  border-color:#73efbf;
+  background:rgba(70,220,160,.18);
+}
+
+.unlockText{
+  margin-top:8px;
+  text-align:center;
+  color:#bfd1fa;
+  font-size:9px;
+}
+
+/* ---------- GAME ---------- */
+
+#gameScreen{
+  z-index:20;
+  overflow:hidden;
+}
+
+.gameTop{
+  height:105px;
+  padding:8px 10px;
+  background:rgba(3,12,35,.4);
+}
+
+.gameTopRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.gamePlayer{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.gameAvatar{
+  font-size:25px;
+}
+
+.gameName{
+  font-size:12px;
+  font-weight:800;
+}
+
+.gameSub{
+  color:#b8c9ef;
+  font-size:8px;
+}
+
+.pauseBtn{
+  width:35px;
+  height:35px;
+  border:0;
+  border-radius:50%;
+  color:#fff;
+  background:rgba(255,255,255,.13);
+}
+
+.gameStats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+  margin-top:7px;
+}
+
+.gameStat{
+  padding:5px;
+  border-radius:11px;
+  text-align:center;
+  background:rgba(255,255,255,.1);
+}
+
+.gameStat b{
+  display:block;
+  font-size:12px;
+}
+
+.gameStat small{
+  font-size:7px;
+  color:#bdcced;
+}
+
+canvas{
+  width:100%;
+  display:block;
+  touch-action:none;
+}
+
+.nextBox{
+  position:absolute;
+  left:12px;
+  bottom:11px;
+  padding:6px 9px;
+  border-radius:15px;
+  text-align:center;
+  font-size:7px;
+  background:rgba(255,255,255,.11);
+}
+
+.nextDot{
+  width:28px;
+  height:28px;
+  margin:3px auto 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid rgba(255,255,255,.7);
+  border-radius:50%;
+  font-size:16px;
+}
+
+.powerBar{
+  position:absolute;
+  right:8px;
+  bottom:9px;
+  display:flex;
+  gap:4px;
+}
+
+.powerBtn{
+  min-width:42px;
+  padding:5px 3px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;
+  text-align:center;
+  color:#fff;
+  background:rgba(255,255,255,.12);
+}
+
+.powerBtn span{
+  display:block;
+  font-size:17px;
+}
+
+.powerBtn small{
+  display:block;
+  font-size:7px;
+}
+
+.combo{
+  position:absolute;
+  top:111px;
+  width:100%;
+  z-index:10;
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+  opacity:0;
+  transition:.2s;
+  pointer-events:none;
+  text-shadow:0 3px 8px #000;
+}
+
+.combo.show{
+  opacity:1;
+  transform:scale(1.12);
+}
+
+.toast{
+  position:absolute;
+  top:145px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:11;
+  padding:8px 13px;
+  border-radius:18px;
+  white-space:nowrap;
+  font-size:10px;
+  opacity:0;
+  transition:.2s;
+  background:rgba(5,14,40,.86);
+}
+
+.toast.show{
+  opacity:1;
+}
+
+/* ---------- SHOP ---------- */
+
+.shopBalance{
+  padding:10px;
+  margin:10px 0;
+  border-radius:15px;
+  font-weight:800;
+  background:#fff5cf;
+}
+
+.shopGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.shopItem{
+  padding:13px 8px;
+  border-radius:16px;
+  background:#f2f5fa;
+}
+
+.shopItem .shopIcon{
+  font-size:34px;
+}
+
+.shopItem b{
+  display:block;
+  font-size:12px;
+}
+
+.shopItem small{
+  display:block;
+  margin:5px;
+  color:#788198;
+}
+
+.buyBtn{
+  width:100%;
+  border:0;
+  padding:8px;
+  border-radius:11px;
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  background:#5d77e7;
+}
+
+/* ---------- ACHIEVEMENTS ---------- */
+
+.achievementList{
+  text-align:left;
+}
+
+.achievement{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:8px 0;
+  padding:10px;
+  border-radius:14px;
+  background:#f2f5fa;
+}
+
+.achievement.locked{
+  opacity:.4;
+}
+
+.achIcon{
+  font-size:29px;
+}
+
+.achievement b{
+  display:block;
+  font-size:12px;
+}
+
+.achievement small{
+  color:#7c8598;
+  font-size:9px;
+}
+
+/* ---------- SETTINGS ---------- */
+
+.toggleRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px;
+  margin:8px 0;
+  border-radius:14px;
+  background:#f2f5fa;
+}
+
+.toggleBtn{
+  border:0;
+  padding:7px 12px;
+  border-radius:14px;
+  color:#fff;
+  font-size:10px;
+  background:#5d77e7;
 }
 </style>
 </head>
 
 <body>
+
 <div id="app">
 
 <!-- PROFILE -->
-<div id="profileScreen" class="fullScreen">
-  <div class="gameLogo">
-    <div class="logoBubble">🫧</div>
+
+<div id="profileScreen" class="full">
+
+  <div class="logo">
+    <div class="logoIcon">🫧</div>
     <h1>Bubble Blast</h1>
     <p>Pop • Upgrade • Conquer</p>
   </div>
 
-  <div class="glassCard">
+  <div class="whiteCard">
+
     <span class="label">PLAYER NAME</span>
     <input id="username" maxlength="15" placeholder="Enter your name">
 
     <span class="label">CHOOSE AVATAR</span>
+
     <div class="avatarGrid">
-      <div class="avatar selected" data-avatar="😎" onclick="chooseAvatar('😎',this)">😎<span>COOL</span></div>
-      <div class="avatar" data-avatar="🥷" onclick="chooseAvatar('🥷',this)">🥷<span>NINJA</span></div>
-      <div class="avatar" data-avatar="🤖" onclick="chooseAvatar('🤖',this)">🤖<span>ROBOT</span></div>
-      <div class="avatar" data-avatar="🦸" onclick="chooseAvatar('🦸',this)">🦸<span>HERO</span></div>
-      <div class="avatar" data-avatar="👾" onclick="chooseAvatar('👾',this)">👾<span>ALIEN</span></div>
-      <div class="avatar" data-avatar="🧙" onclick="chooseAvatar('🧙',this)">🧙<span>WIZARD</span></div>
+      <div class="avatar selected" data-avatar="😎" onclick="chooseAvatar('😎',this)">😎<small>COOL</small></div>
+      <div class="avatar" data-avatar="🥷" onclick="chooseAvatar('🥷',this)">🥷<small>NINJA</small></div>
+      <div class="avatar" data-avatar="🤖" onclick="chooseAvatar('🤖',this)">🤖<small>ROBOT</small></div>
+      <div class="avatar" data-avatar="🦸" onclick="chooseAvatar('🦸',this)">🦸<small>HERO</small></div>
+      <div class="avatar" data-avatar="👾" onclick="chooseAvatar('👾',this)">👾<small>ALIEN</small></div>
+      <div class="avatar" data-avatar="🧙" onclick="chooseAvatar('🧙',this)">🧙<small>WIZARD</small></div>
     </div>
 
     <button class="primary" onclick="createProfile()">START ADVENTURE 🚀</button>
+
   </div>
+
 </div>
 
 <!-- HOME -->
-<div id="homeScreen" class="fullScreen hidden">
+
+<div id="homeScreen" class="full hidden">
+
   <div class="playerHeader">
-    <div class="playerLeft">
+
+    <div class="playerInfo">
       <div id="homeAvatar" class="playerAvatar">😎</div>
+
       <div>
         <div class="welcome">WELCOME BACK</div>
         <div id="homeName" class="playerName">Player</div>
       </div>
     </div>
-    <button class="settings" onclick="editProfile()">⚙️</button>
+
+    <div id="coinBox" class="coinBox">🪙 0</div>
+
   </div>
 
   <div class="hero">
-    <div class="heroBubble">🫧</div>
+    <div class="heroIcon">🫧</div>
     <h1>BUBBLE BLAST</h1>
-    <p>Pop bubbles • Unlock cannons • Beat every level</p>
+    <p id="worldName">Galaxy World</p>
   </div>
 
   <div class="levelCard">
+
     <div class="levelTop">
       <div>
-        <div class="levelSub">CURRENT MISSION</div>
+        <div class="levelTitle">CURRENT MISSION</div>
         <div id="homeLevel" class="bigLevel">Level 1</div>
       </div>
-      <div class="levelBadge">⭐ READY</div>
+
+      <div id="worldBadge" class="worldBadge">🌌 GALAXY</div>
     </div>
 
-    <div class="statsRow">
-      <div class="statBox">
-        <div id="totalScore" class="value">0</div>
-        <div class="desc">TOTAL SCORE</div>
+    <div class="stats">
+      <div class="stat">
+        <b id="totalScore">0</b>
+        <small>TOTAL SCORE</small>
       </div>
-      <div class="statBox">
-        <div id="bestLevel" class="value">0</div>
-        <div class="desc">BEST LEVEL SCORE</div>
+
+      <div class="stat">
+        <b id="totalStars">0 ⭐</b>
+        <small>TOTAL STARS</small>
+      </div>
+
+      <div class="stat">
+        <b id="bestLevel">0</b>
+        <small>BEST LEVEL</small>
       </div>
     </div>
 
-    <button id="continueButton" class="continueBtn" onclick="startLevel()">
-      ▶ CONTINUE
+    <button id="continueButton" class="primary green" onclick="startLevel()">
+      ▶ PLAY LEVEL 1
     </button>
+
+    <button id="dailyBtn" class="dailyBtn" onclick="claimDailyReward()">
+      🎁 CLAIM DAILY REWARD
+    </button>
+
+  </div>
+
+  <div class="homeActions">
+
+    <button class="homeAction" onclick="openShop()">
+      <span>🛒</span>
+      <small>SHOP</small>
+    </button>
+
+    <button class="homeAction" onclick="openAchievements()">
+      <span>🏅</span>
+      <small>ACHIEVEMENTS</small>
+    </button>
+
+    <button class="homeAction" onclick="shareGame()">
+      <span>📤</span>
+      <small>SHARE</small>
+    </button>
+
   </div>
 
   <div class="cannonPanel">
-    <div class="panelTitle">
-      <b>🔫 CANNON COLLECTION</b>
+
+    <div class="panelTop">
+      <b>🔫 CANNONS</b>
       <span id="activeCannonText">Basic</span>
     </div>
+
     <div id="cannonGrid" class="cannonGrid"></div>
-    <div id="unlockInfo" class="unlockInfo"></div>
+
+    <div id="unlockText" class="unlockText"></div>
+
   </div>
+
 </div>
 
 <!-- GAME -->
-<div id="gameScreen" class="fullScreen hidden">
+
+<div id="gameScreen" class="full hidden">
+
   <div class="gameTop">
-    <div class="gameUser">
-      <div id="gameAvatar" class="gameUserAvatar">😎</div>
-      <div>
-        <div id="gameName" class="gameUserName">Player</div>
-        <div id="gameLevel" class="gameLevel">LEVEL 1</div>
+
+    <div class="gameTopRow">
+
+      <div class="gamePlayer">
+        <div id="gameAvatar" class="gameAvatar">😎</div>
+
+        <div>
+          <div id="gameName" class="gameName">Player</div>
+          <div id="gameLevel" class="gameSub">LEVEL 1</div>
+        </div>
       </div>
+
+      <button class="pauseBtn" onclick="pauseGame()">⏸</button>
+
     </div>
 
     <div class="gameStats">
-      <div class="gamePill">
+
+      <div class="gameStat">
         <b id="levelScore">0</b>
-        <span>LEVEL</span>
+        <small>SCORE</small>
       </div>
-      <div class="gamePill">
-        <b id="gameTotal">0</b>
-        <span>TOTAL</span>
+
+      <div class="gameStat">
+        <b id="goalScore">300</b>
+        <small>GOAL</small>
       </div>
+
+      <div class="gameStat">
+        <b id="shotsText">30</b>
+        <small>SHOTS</small>
+      </div>
+
+      <div class="gameStat">
+        <b id="multiplierText">x1</b>
+        <small>COMBO</small>
+      </div>
+
     </div>
+
   </div>
 
   <div id="combo" class="combo"></div>
-  <div id="specialBanner" class="specialBanner"></div>
+  <div id="toast" class="toast"></div>
 
   <canvas id="game"></canvas>
 
@@ -312,54 +890,212 @@ canvas{display:block;width:100%;touch-action:none}
     <div id="nextDot" class="nextDot"></div>
   </div>
 
-  <div class="missBox">
-    MISSES
-    <div id="misses">0 / 5</div>
+  <div class="powerBar">
+
+    <button class="powerBtn" onclick="useInventory('bomb')">
+      <span>💣</span>
+      <small id="bombCount">0</small>
+    </button>
+
+    <button class="powerBtn" onclick="useInventory('rainbow')">
+      <span>🌈</span>
+      <small id="rainbowCount">0</small>
+    </button>
+
+    <button class="powerBtn" onclick="useInventory('lightning')">
+      <span>⚡</span>
+      <small id="lightningCount">0</small>
+    </button>
+
+    <button class="powerBtn" onclick="useInventory('color')">
+      <span>🎨</span>
+      <small id="colorCount">0</small>
+    </button>
+
   </div>
+
 </div>
 
-<!-- LEVEL COMPLETE -->
+<!-- COMPLETE -->
+
 <div id="completeOverlay" class="overlay hidden">
+
   <div class="modal">
+
     <div class="modalIcon">🏆</div>
     <h1>LEVEL COMPLETE!</h1>
-    <p id="completeLevel"></p>
-    <div id="completeScore" class="scoreBig">+0</div>
-    <p>Total Score: <b id="completeTotal">0</b></p>
-    <button class="primary" onclick="nextLevel()">CONTINUE →</button>
+
+    <p id="completeLevel">Level 1 cleared</p>
+
+    <div id="starResult" style="font-size:42px">⭐</div>
+
+    <div id="completeScore" class="bigNumber">+0</div>
+
+    <p>
+      Coins earned:
+      <b id="earnedCoins">0</b> 🪙
+    </p>
+
+    <button class="primary green" onclick="nextLevel()">NEXT LEVEL →</button>
+
+    <button class="secondary" onclick="shareScore()">Share Result</button>
+
   </div>
+
 </div>
 
 <!-- FAILED -->
+
 <div id="failedOverlay" class="overlay hidden">
+
   <div class="modal">
+
     <div class="modalIcon">💥</div>
-    <h1>TRY AGAIN!</h1>
-    <p>You keep your level and previous progress.</p>
-    <div id="failedScore" class="scoreBig">0</div>
+    <h1>MISSION FAILED</h1>
+
+    <p id="failReason">Try again.</p>
+
+    <div id="failedScore" class="bigNumber">0</div>
+
     <button class="primary" onclick="retryLevel()">🔄 RETRY LEVEL</button>
-    <button class="secondary" onclick="goHome()">Back to Home</button>
+
+    <button class="secondary" onclick="goHome()">Back Home</button>
+
   </div>
+
 </div>
 
-<!-- UNLOCK -->
-<div id="unlockOverlay" class="overlay hidden">
+<!-- PAUSE -->
+
+<div id="pauseOverlay" class="overlay hidden">
+
   <div class="modal">
+
+    <div class="modalIcon">⏸️</div>
+    <h1>PAUSED</h1>
+
+    <button class="primary green" onclick="resumeGame()">▶ RESUME</button>
+
+    <button class="secondary" onclick="goHomeFromPause()">Quit to Home</button>
+
+  </div>
+
+</div>
+
+<!-- SHOP -->
+
+<div id="shopOverlay" class="overlay hidden">
+
+  <div class="modal">
+
+    <h1>🛒 Power Shop</h1>
+
+    <div id="shopBalance" class="shopBalance">🪙 0 Coins</div>
+
+    <div class="shopGrid">
+
+      <div class="shopItem">
+        <div class="shopIcon">💣</div>
+        <b>Bomb Bubble</b>
+        <small>Explodes nearby bubbles</small>
+        <button class="buyBtn" onclick="buyPower('bomb',100)">100 🪙</button>
+      </div>
+
+      <div class="shopItem">
+        <div class="shopIcon">🌈</div>
+        <b>Rainbow</b>
+        <small>Matches nearby colors</small>
+        <button class="buyBtn" onclick="buyPower('rainbow',120)">120 🪙</button>
+      </div>
+
+      <div class="shopItem">
+        <div class="shopIcon">⚡</div>
+        <b>Lightning</b>
+        <small>Clears an entire row</small>
+        <button class="buyBtn" onclick="buyPower('lightning',150)">150 🪙</button>
+      </div>
+
+      <div class="shopItem">
+        <div class="shopIcon">🎨</div>
+        <b>Color Clear</b>
+        <small>Removes one full color</small>
+        <button class="buyBtn" onclick="buyPower('color',180)">180 🪙</button>
+      </div>
+
+    </div>
+
+    <button class="secondary" onclick="closeShop()">Close</button>
+
+  </div>
+
+</div>
+
+<!-- ACHIEVEMENTS -->
+
+<div id="achievementOverlay" class="overlay hidden">
+
+  <div class="modal">
+
+    <h1>🏅 Achievements</h1>
+
+    <div id="achievementList" class="achievementList"></div>
+
+    <button class="secondary" onclick="closeAchievements()">Close</button>
+
+  </div>
+
+</div>
+
+<!-- SETTINGS -->
+
+<div id="settingsOverlay" class="overlay hidden">
+
+  <div class="modal">
+
+    <h1>⚙️ Settings</h1>
+
+    <div class="toggleRow">
+      <b>🔊 Sound</b>
+      <button id="soundToggle" class="toggleBtn" onclick="toggleSound()">ON</button>
+    </div>
+
+    <div class="toggleRow">
+      <b>📳 Vibration</b>
+      <button id="vibrationToggle" class="toggleBtn" onclick="toggleVibration()">ON</button>
+    </div>
+
+    <button class="secondary" onclick="closeSettings()">Close</button>
+
+  </div>
+
+</div>
+
+<!-- CANNON UNLOCK -->
+
+<div id="unlockOverlay" class="overlay hidden">
+
+  <div class="modal">
+
     <div class="modalIcon">🔓</div>
-    <h2>NEW CANNON UNLOCKED!</h2>
+
+    <h2>NEW CANNON!</h2>
+
     <div id="newCannonIcon" style="font-size:70px">🟤</div>
     <h1 id="newCannonName">Bronze Cannon</h1>
-    <p>Your total score unlocked a new cannon.</p>
+
     <button class="primary" onclick="closeUnlock()">AWESOME!</button>
+
   </div>
+
 </div>
 
 </div>
 
 <script>
-/* =========================
+
+/* ==================================================
    SAVE DATA
-========================= */
+================================================== */
 
 const SAVE_KEY="bubbleBlastV4";
 
@@ -370,38 +1106,82 @@ let saveData={
   level:1,
   totalScore:0,
   bestLevelScore:0,
-  selectedCannon:"basic"
+  selectedCannon:"basic",
+  coins:0,
+  totalStars:0,
+  dailyDate:"",
+  achievements:[],
+  inventory:{
+    bomb:1,
+    rainbow:1,
+    lightning:0,
+    color:0
+  },
+  sound:true,
+  vibration:true
 };
 
 function loadSave(){
-  const saved=localStorage.getItem(SAVE_KEY);
-  if(saved){
+
+  const raw=localStorage.getItem(SAVE_KEY);
+
+  if(raw){
+
     try{
-      saveData={...saveData,...JSON.parse(saved)};
+
+      const old=JSON.parse(raw);
+
+      saveData={
+        ...saveData,
+        ...old,
+        inventory:{
+          ...saveData.inventory,
+          ...(old.inventory||{})
+        },
+        achievements:old.achievements||[]
+      };
+
     }catch(e){}
+
   }
+
 }
 
 function saveProgress(){
-  localStorage.setItem(SAVE_KEY,JSON.stringify(saveData));
+
+  localStorage.setItem(
+    SAVE_KEY,
+    JSON.stringify(saveData)
+  );
+
 }
 
-/* =========================
+/* ==================================================
    PROFILE
-========================= */
+================================================== */
 
 function chooseAvatar(a,el){
+
   selectedAvatar=a;
-  document.querySelectorAll(".avatar").forEach(x=>x.classList.remove("selected"));
+
+  document.querySelectorAll(".avatar")
+  .forEach(x=>x.classList.remove("selected"));
+
   el.classList.add("selected");
+
 }
 
 function createProfile(){
-  const name=document.getElementById("username").value.trim();
+
+  const name=
+  document.getElementById("username")
+  .value.trim();
 
   if(!name){
+
     alert("Please enter your player name.");
     return;
+
   }
 
   saveData.profile={
@@ -411,44 +1191,95 @@ function createProfile(){
 
   saveProgress();
   showHome();
+
 }
 
-function editProfile(){
-  document.getElementById("homeScreen").classList.add("hidden");
-  document.getElementById("profileScreen").classList.remove("hidden");
+/* ==================================================
+   WORLDS
+================================================== */
 
-  document.getElementById("username").value=saveData.profile.name;
-  selectedAvatar=saveData.profile.avatar;
+function worldData(){
 
-  document.querySelectorAll(".avatar").forEach(el=>{
-    el.classList.toggle("selected",el.dataset.avatar===selectedAvatar);
-  });
+  const l=saveData.level;
+
+  if(l<=5)
+    return{
+      name:"Galaxy World",
+      badge:"🌌 GALAXY",
+      bg:"radial-gradient(circle at 50% 10%,#4c5ccf,#182b66 42%,#070f29)"
+    };
+
+  if(l<=10)
+    return{
+      name:"Jungle World",
+      badge:"🌴 JUNGLE",
+      bg:"radial-gradient(circle at 50% 10%,#44b978,#145b49 45%,#05271f)"
+    };
+
+  if(l<=15)
+    return{
+      name:"Candy World",
+      badge:"🍭 CANDY",
+      bg:"radial-gradient(circle at 50% 10%,#ff83c6,#9f4cba 45%,#40255f)"
+    };
+
+  if(l<=20)
+    return{
+      name:"Ice World",
+      badge:"❄️ ICE",
+      bg:"radial-gradient(circle at 50% 10%,#9be7ff,#3777a8 45%,#0d3156)"
+    };
+
+  return{
+    name:"Lava World",
+    badge:"🌋 LAVA",
+    bg:"radial-gradient(circle at 50% 10%,#ff9a3d,#9a2e20 45%,#360b0b)"
+  };
+
 }
 
-/* =========================
+/* ==================================================
    CANNONS
-========================= */
+================================================== */
 
 const cannons=[
+
   {id:"basic",name:"Basic",icon:"⚙️",need:0,speed:10,aim:180},
+
   {id:"bronze",name:"Bronze",icon:"🟤",need:500,speed:10.5,aim:205},
+
   {id:"silver",name:"Silver",icon:"⚪",need:1500,speed:11,aim:230},
+
   {id:"gold",name:"Gold",icon:"🟡",need:3000,speed:11.5,aim:255},
+
   {id:"plasma",name:"Plasma",icon:"🔵",need:5000,speed:12,aim:285},
+
   {id:"legend",name:"Legend",icon:"🔥",need:10000,speed:13,aim:320}
+
 ];
 
 function cannonData(){
-  return cannons.find(c=>c.id===saveData.selectedCannon)||cannons[0];
+
+  return cannons.find(
+    c=>c.id===saveData.selectedCannon
+  ) || cannons[0];
+
 }
 
 function renderCannons(){
-  const grid=document.getElementById("cannonGrid");
+
+  const grid=
+  document.getElementById("cannonGrid");
+
   grid.innerHTML="";
 
   cannons.forEach(c=>{
-    const unlocked=saveData.totalScore>=c.need;
-    const div=document.createElement("div");
+
+    const unlocked=
+    saveData.totalScore>=c.need;
+
+    const div=
+    document.createElement("div");
 
     div.className=
       "cannon "+
@@ -456,136 +1287,502 @@ function renderCannons(){
       (saveData.selectedCannon===c.id?"active":"");
 
     div.innerHTML=
-      '<div class="icon">'+(unlocked?c.icon:"🔒")+'</div>'+
-      '<div class="cname">'+c.name+'</div>';
+      '<div class="icon">'+
+      (unlocked?c.icon:"🔒")+
+      '</div>'+
+      '<small>'+c.name+'</small>';
 
     if(unlocked){
+
       div.onclick=()=>{
+
         saveData.selectedCannon=c.id;
+
         saveProgress();
         renderCannons();
+
       };
+
     }
 
     grid.appendChild(div);
+
   });
 
   const active=cannonData();
 
-  document.getElementById("activeCannonText").textContent=
-    active.icon+" "+active.name;
+  document.getElementById(
+    "activeCannonText"
+  ).textContent=
+  active.icon+" "+active.name;
 
-  const next=cannons.find(c=>c.need>saveData.totalScore);
+  const next=
+  cannons.find(
+    c=>c.need>saveData.totalScore
+  );
 
-  document.getElementById("unlockInfo").textContent=
-    next
-      ?"Next: "+next.name+" Cannon at "+next.need+" total points"
-      :"👑 All cannons unlocked!";
+  document.getElementById(
+    "unlockText"
+  ).textContent=
+  next
+    ?"Next cannon: "+next.name+" at "+next.need+" points"
+    :"👑 All cannons unlocked!";
+
 }
 
-/* =========================
+/* ==================================================
    HOME
-========================= */
+================================================== */
 
 function showHome(){
+
   running=false;
+  paused=false;
 
-  document.getElementById("profileScreen").classList.add("hidden");
-  document.getElementById("gameScreen").classList.add("hidden");
-  document.getElementById("homeScreen").classList.remove("hidden");
+  const world=worldData();
 
-  document.getElementById("homeAvatar").textContent=saveData.profile.avatar;
-  document.getElementById("homeName").textContent=saveData.profile.name;
-  document.getElementById("homeLevel").textContent="Level "+saveData.level;
-  document.getElementById("totalScore").textContent=saveData.totalScore;
-  document.getElementById("bestLevel").textContent=saveData.bestLevelScore;
+  document.getElementById("app")
+  .style.background=world.bg;
 
-  document.getElementById("continueButton").textContent=
-    (saveData.level===1 && saveData.totalScore===0)
-      ?"▶ PLAY LEVEL 1"
-      :"▶ CONTINUE LEVEL "+saveData.level;
+  document.getElementById("profileScreen")
+  .classList.add("hidden");
+
+  document.getElementById("gameScreen")
+  .classList.add("hidden");
+
+  document.getElementById("homeScreen")
+  .classList.remove("hidden");
+
+  document.getElementById("homeAvatar")
+  .textContent=saveData.profile.avatar;
+
+  document.getElementById("homeName")
+  .textContent=saveData.profile.name;
+
+  document.getElementById("homeLevel")
+  .textContent="Level "+saveData.level;
+
+  document.getElementById("worldName")
+  .textContent=world.name;
+
+  document.getElementById("worldBadge")
+  .textContent=world.badge;
+
+  document.getElementById("totalScore")
+  .textContent=saveData.totalScore;
+
+  document.getElementById("totalStars")
+  .textContent=saveData.totalStars+" ⭐";
+
+  document.getElementById("bestLevel")
+  .textContent=saveData.bestLevelScore;
+
+  document.getElementById("coinBox")
+  .textContent="🪙 "+saveData.coins;
+
+  document.getElementById(
+    "continueButton"
+  ).textContent=
+  "▶ CONTINUE LEVEL "+saveData.level;
+
+  updateDailyButton();
 
   renderCannons();
+
 }
 
-/* =========================
-   SOUND
-========================= */
+/* ==================================================
+   DAILY REWARD
+================================================== */
+
+function localDateKey(){
+
+  const d=new Date();
+
+  return[
+    d.getFullYear(),
+    d.getMonth()+1,
+    d.getDate()
+  ].join("-");
+
+}
+
+function updateDailyButton(){
+
+  const btn=
+  document.getElementById("dailyBtn");
+
+  if(saveData.dailyDate===localDateKey()){
+
+    btn.textContent="✅ DAILY REWARD CLAIMED";
+    btn.disabled=true;
+    btn.style.opacity=.6;
+
+  }else{
+
+    btn.textContent="🎁 CLAIM DAILY REWARD +100 COINS";
+    btn.disabled=false;
+    btn.style.opacity=1;
+
+  }
+
+}
+
+function claimDailyReward(){
+
+  if(saveData.dailyDate===localDateKey())
+    return;
+
+  saveData.dailyDate=localDateKey();
+
+  saveData.coins+=100;
+
+  saveProgress();
+
+  showToast("🎁 +100 DAILY COINS!");
+
+  showHome();
+
+}
+
+/* ==================================================
+   ACHIEVEMENTS
+================================================== */
+
+const achievementData=[
+
+  {
+    id:"firstPop",
+    icon:"🫧",
+    name:"First Pop",
+    desc:"Make your first bubble match."
+  },
+
+  {
+    id:"combo3",
+    icon:"🔥",
+    name:"Combo Master",
+    desc:"Reach a x3 combo."
+  },
+
+  {
+    id:"bomb",
+    icon:"💣",
+    name:"Bomb Expert",
+    desc:"Use a Bomb bubble."
+  },
+
+  {
+    id:"lightning",
+    icon:"⚡",
+    name:"Thunder Strike",
+    desc:"Use a Lightning bubble."
+  },
+
+  {
+    id:"threeStar",
+    icon:"⭐⭐⭐",
+    name:"Perfect Mission",
+    desc:"Earn 3 stars on a level."
+  },
+
+  {
+    id:"level5",
+    icon:"🏆",
+    name:"Level Hunter",
+    desc:"Reach Level 5."
+  },
+
+  {
+    id:"score5000",
+    icon:"👑",
+    name:"Score King",
+    desc:"Reach 5,000 total score."
+  }
+
+];
+
+function unlockAchievement(id){
+
+  if(saveData.achievements.includes(id))
+    return;
+
+  saveData.achievements.push(id);
+
+  saveProgress();
+
+  const a=
+  achievementData.find(x=>x.id===id);
+
+  if(a){
+
+    showToast(
+      "🏅 Achievement: "+a.name
+    );
+
+  }
+
+}
+
+function openAchievements(){
+
+  const list=
+  document.getElementById(
+    "achievementList"
+  );
+
+  list.innerHTML="";
+
+  achievementData.forEach(a=>{
+
+    const unlocked=
+    saveData.achievements.includes(a.id);
+
+    const row=
+    document.createElement("div");
+
+    row.className=
+    "achievement "+
+    (!unlocked?"locked":"");
+
+    row.innerHTML=
+      '<div class="achIcon">'+
+      (unlocked?a.icon:"🔒")+
+      '</div>'+
+      '<div>'+
+      '<b>'+a.name+'</b>'+
+      '<small>'+a.desc+'</small>'+
+      '</div>';
+
+    list.appendChild(row);
+
+  });
+
+  document.getElementById(
+    "achievementOverlay"
+  ).classList.remove("hidden");
+
+}
+
+function closeAchievements(){
+
+  document.getElementById(
+    "achievementOverlay"
+  ).classList.add("hidden");
+
+}
+
+/* ==================================================
+   SHOP
+================================================== */
+
+function openShop(){
+
+  updateShop();
+
+  document.getElementById(
+    "shopOverlay"
+  ).classList.remove("hidden");
+
+}
+
+function closeShop(){
+
+  document.getElementById(
+    "shopOverlay"
+  ).classList.add("hidden");
+
+  showHome();
+
+}
+
+function updateShop(){
+
+  document.getElementById(
+    "shopBalance"
+  ).textContent=
+  "🪙 "+saveData.coins+" Coins";
+
+}
+
+function buyPower(type,cost){
+
+  if(saveData.coins<cost){
+
+    alert("Not enough coins.");
+    return;
+
+  }
+
+  saveData.coins-=cost;
+
+  saveData.inventory[type]++;
+
+  saveProgress();
+
+  updateShop();
+
+}
+
+/* ==================================================
+   SETTINGS
+================================================== */
+
+function openSettings(){
+
+  document.getElementById(
+    "soundToggle"
+  ).textContent=
+  saveData.sound?"ON":"OFF";
+
+  document.getElementById(
+    "vibrationToggle"
+  ).textContent=
+  saveData.vibration?"ON":"OFF";
+
+  document.getElementById(
+    "settingsOverlay"
+  ).classList.remove("hidden");
+
+}
+
+function closeSettings(){
+
+  document.getElementById(
+    "settingsOverlay"
+  ).classList.add("hidden");
+
+}
+
+function toggleSound(){
+
+  saveData.sound=!saveData.sound;
+
+  saveProgress();
+
+  document.getElementById(
+    "soundToggle"
+  ).textContent=
+  saveData.sound?"ON":"OFF";
+
+}
+
+function toggleVibration(){
+
+  saveData.vibration=
+  !saveData.vibration;
+
+  saveProgress();
+
+  document.getElementById(
+    "vibrationToggle"
+  ).textContent=
+  saveData.vibration?"ON":"OFF";
+
+}
+
+/* ==================================================
+   AUDIO
+================================================== */
 
 let audioCtx=null;
 
 function ensureAudio(){
+
+  if(!saveData.sound)
+    return;
+
   if(!audioCtx){
-    const AC=window.AudioContext||window.webkitAudioContext;
-    if(AC) audioCtx=new AC();
+
+    const AC=
+    window.AudioContext||
+    window.webkitAudioContext;
+
+    if(AC)
+      audioCtx=new AC();
+
   }
 
-  if(audioCtx && audioCtx.state==="suspended"){
+  if(
+    audioCtx &&
+    audioCtx.state==="suspended"
+  ){
+
     audioCtx.resume();
+
   }
+
 }
 
-function tone(freq,duration,type="sine",volume=.04,delay=0){
+function tone(
+  freq,
+  duration,
+  type="sine",
+  volume=.03,
+  delay=0
+){
+
+  if(!saveData.sound)
+    return;
+
   ensureAudio();
-  if(!audioCtx)return;
 
-  const osc=audioCtx.createOscillator();
-  const gain=audioCtx.createGain();
+  if(!audioCtx)
+    return;
 
-  const start=audioCtx.currentTime+delay;
+  const osc=
+  audioCtx.createOscillator();
+
+  const gain=
+  audioCtx.createGain();
+
+  const start=
+  audioCtx.currentTime+delay;
 
   osc.type=type;
-  osc.frequency.setValueAtTime(freq,start);
 
-  gain.gain.setValueAtTime(volume,start);
-  gain.gain.exponentialRampToValueAtTime(.001,start+duration);
+  osc.frequency
+  .setValueAtTime(freq,start);
+
+  gain.gain
+  .setValueAtTime(volume,start);
+
+  gain.gain
+  .exponentialRampToValueAtTime(
+    .001,
+    start+duration
+  );
 
   osc.connect(gain);
   gain.connect(audioCtx.destination);
 
   osc.start(start);
   osc.stop(start+duration);
+
 }
 
-function soundShoot(){
-  tone(180,.09,"square",.025);
-  tone(110,.12,"sine",.02,.02);
+function vibrate(ms){
+
+  if(
+    saveData.vibration &&
+    navigator.vibrate
+  ){
+
+    navigator.vibrate(ms);
+
+  }
+
 }
 
-function soundPop(){
-  tone(500,.07,"sine",.035);
-  tone(720,.08,"sine",.025,.04);
-}
-
-function soundDrop(){
-  tone(600,.07,"triangle",.03);
-  tone(800,.07,"triangle",.03,.05);
-  tone(1000,.1,"triangle",.03,.1);
-}
-
-function soundBomb(){
-  tone(90,.22,"sawtooth",.05);
-  tone(55,.3,"square",.025,.04);
-}
-
-function soundRainbow(){
-  tone(520,.08,"sine",.025);
-  tone(660,.08,"sine",.025,.07);
-  tone(820,.12,"sine",.025,.14);
-}
-
-function soundWin(){
-  tone(523,.12,"sine",.035);
-  tone(659,.12,"sine",.035,.12);
-  tone(784,.18,"sine",.035,.24);
-}
-
-/* =========================
+/* ==================================================
    GAME VARIABLES
-========================= */
+================================================== */
 
-const canvas=document.getElementById("game");
-const ctx=canvas.getContext("2d");
+const canvas=
+document.getElementById("game");
+
+const ctx=
+canvas.getContext("2d");
 
 const colors=[
   "#ff4d67",
@@ -608,7 +1805,14 @@ let current=null;
 let nextShot=null;
 
 let running=false;
+let paused=false;
+
 let levelScore=0;
+let shotsRemaining=0;
+let goal=0;
+
+let comboStreak=0;
+let multiplier=1;
 let misses=0;
 
 let shooterX=0;
@@ -620,17 +1824,64 @@ let particles=[];
 let recoil=0;
 let shake=0;
 
-/* =========================
-   SIZE
-========================= */
+/* ==================================================
+   LEVEL SETTINGS
+================================================== */
+
+function levelGoal(){
+
+  return 250+
+  (saveData.level-1)*90;
+
+}
+
+function levelShots(){
+
+  return Math.max(
+    20,
+    31-Math.floor(saveData.level/3)
+  );
+
+}
+
+function availableColors(){
+
+  if(saveData.level<=2)
+    return colors.slice(0,4);
+
+  if(saveData.level<=6)
+    return colors.slice(0,5);
+
+  return colors;
+
+}
+
+function randomColor(){
+
+  const list=availableColors();
+
+  return list[
+    Math.floor(Math.random()*list.length)
+  ];
+
+}
+
+/* ==================================================
+   CANVAS SIZE
+================================================== */
 
 function resize(){
-  const app=document.getElementById("app").getBoundingClientRect();
+
+  const app=
+  document.getElementById("app")
+  .getBoundingClientRect();
 
   W=app.width;
-  H=app.height-82;
 
-  const dpr=window.devicePixelRatio||1;
+  H=app.height-105;
+
+  const dpr=
+  window.devicePixelRatio||1;
 
   canvas.width=W*dpr;
   canvas.height=H*dpr;
@@ -638,149 +1889,201 @@ function resize(){
   canvas.style.width=W+"px";
   canvas.style.height=H+"px";
 
-  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.setTransform(
+    dpr,0,0,dpr,0,0
+  );
 
-  radius=Math.min(20,(W-20)/(COLS*2));
+  radius=
+  Math.min(
+    20,
+    (W-20)/(COLS*2)
+  );
+
   diameter=radius*2;
 
   shooterX=W/2;
-  shooterY=H-58;
+  shooterY=H-56;
+
 }
 
-window.addEventListener("resize",()=>{
-  resize();
-  updateLoadedBubble();
-});
-
-/* =========================
-   LEVEL / SHOTS
-========================= */
-
-function availableColors(){
-  if(saveData.level<=2)return colors.slice(0,4);
-  if(saveData.level<=5)return colors.slice(0,5);
-  return colors;
-}
-
-function randomColor(){
-  const list=availableColors();
-  return list[Math.floor(Math.random()*list.length)];
-}
-
-function createShot(){
-  /*
-    Special bubbles begin appearing from Level 2.
-    Bomb ~6%
-    Rainbow ~5%
-  */
-
-  const roll=Math.random();
-
-  if(saveData.level>=3 && roll<.06){
-    return {type:"bomb",color:"#222"};
-  }
-
-  if(saveData.level>=2 && roll<.11){
-    return {type:"rainbow",color:"#fff"};
-  }
-
-  return {
-    type:"normal",
-    color:randomColor()
-  };
-}
-
-function rowsForLevel(){
-  return Math.min(
-    4+Math.floor((saveData.level-1)/2),
-    7
-  );
-}
+/* ==================================================
+   BOARD LAYOUTS
+================================================== */
 
 function makeGrid(){
+
   grid=[];
-  const filled=rowsForLevel();
+
+  const filled=
+  Math.min(
+    4+Math.floor(
+      (saveData.level-1)/3
+    ),
+    7
+  );
+
+  const pattern=
+  saveData.level%4;
 
   for(let r=0;r<ROWS;r++){
+
     const row=[];
 
     for(let c=0;c<COLS;c++){
+
+      let fill=
+      r<filled;
+
+      if(fill){
+
+        if(
+          pattern===2 &&
+          r>1 &&
+          (r+c)%4===0
+        ){
+          fill=false;
+        }
+
+        if(
+          pattern===3 &&
+          r>1 &&
+          (
+            c<Math.floor(r/3) ||
+            c>COLS-1-Math.floor(r/3)
+          )
+        ){
+          fill=false;
+        }
+
+        if(
+          pattern===0 &&
+          r>1 &&
+          c%4===2
+        ){
+          fill=false;
+        }
+
+      }
+
       row.push(
-        r<filled
-          ?{color:randomColor()}
-          :null
+        fill
+        ?{color:randomColor()}
+        :null
       );
+
     }
 
     grid.push(row);
+
   }
+
 }
 
 function bubblePos(r,c){
-  const offset=r%2===1?radius:0;
 
-  return {
+  const offset=
+  r%2?radius:0;
+
+  return{
     x:radius+8+c*diameter+offset,
     y:radius+8+r*(radius*1.72)
   };
+
 }
 
-/* =========================
-   DRAW BUBBLES
-========================= */
+/* ==================================================
+   SHOT GENERATION
+================================================== */
 
-function drawBubble(x,y,color,type="normal"){
-  if(type==="bomb"){
-    ctx.beginPath();
-    ctx.arc(x,y,radius,0,Math.PI*2);
-    ctx.fillStyle="#202632";
-    ctx.fill();
+function randomShot(){
 
-    ctx.strokeStyle="#697386";
-    ctx.lineWidth=2;
-    ctx.stroke();
+  const roll=Math.random();
 
-    ctx.font=(radius*1.15)+"px Arial";
-    ctx.textAlign="center";
-    ctx.textBaseline="middle";
-    ctx.fillStyle="white";
-    ctx.fillText("💣",x,y+1);
-    return;
+  if(
+    saveData.level>=4 &&
+    roll<.035
+  ){
+    return{
+      type:"lightning",
+      color:"#fff"
+    };
   }
 
-  if(type==="rainbow"){
-    const rg=ctx.createConicGradient(0,x,y);
-    rg.addColorStop(0,"#ff4d67");
-    rg.addColorStop(.18,"#ffb21c");
-    rg.addColorStop(.35,"#24d18b");
-    rg.addColorStop(.52,"#3f8cff");
-    rg.addColorStop(.7,"#9b59ff");
-    rg.addColorStop(.87,"#ff60c5");
-    rg.addColorStop(1,"#ff4d67");
+  if(
+    saveData.level>=3 &&
+    roll<.07
+  ){
+    return{
+      type:"bomb",
+      color:"#222"
+    };
+  }
 
-    ctx.beginPath();
-    ctx.arc(x,y,radius,0,Math.PI*2);
-    ctx.fillStyle=rg;
-    ctx.fill();
+  if(
+    saveData.level>=2 &&
+    roll<.105
+  ){
+    return{
+      type:"rainbow",
+      color:"#fff"
+    };
+  }
 
-    ctx.strokeStyle="rgba(255,255,255,.8)";
-    ctx.lineWidth=2;
-    ctx.stroke();
+  return{
+    type:"normal",
+    color:randomColor()
+  };
+
+}
+
+/* ==================================================
+   DRAW BUBBLES
+================================================== */
+
+function drawBubble(
+  x,y,color,type="normal"
+){
+
+  if(type!=="normal"){
+
+    let emoji="";
+
+    if(type==="bomb")emoji="💣";
+    if(type==="rainbow")emoji="🌈";
+    if(type==="lightning")emoji="⚡";
+    if(type==="color")emoji="🎨";
 
     ctx.beginPath();
     ctx.arc(
-      x-radius*.32,
-      y-radius*.35,
-      radius*.22,
-      0,
-      Math.PI*2
+      x,y,radius,
+      0,Math.PI*2
     );
-    ctx.fillStyle="rgba(255,255,255,.7)";
+
+    ctx.fillStyle=
+    type==="bomb"
+    ?"#222a37"
+    :"#fff";
+
     ctx.fill();
+
+    ctx.font=
+    (radius*1.05)+"px Arial";
+
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+
+    ctx.fillText(
+      emoji,
+      x,
+      y+1
+    );
+
     return;
+
   }
 
-  const g=ctx.createRadialGradient(
+  const g=
+  ctx.createRadialGradient(
     x-radius*.35,
     y-radius*.4,
     radius*.1,
@@ -794,298 +2097,346 @@ function drawBubble(x,y,color,type="normal"){
   g.addColorStop(1,color);
 
   ctx.beginPath();
-  ctx.arc(x,y,radius,0,Math.PI*2);
-  ctx.fillStyle=g;
-  ctx.fill();
 
-  ctx.strokeStyle="rgba(255,255,255,.5)";
-  ctx.lineWidth=1.5;
-  ctx.stroke();
-
-  ctx.beginPath();
   ctx.arc(
-    x-radius*.34,
-    y-radius*.36,
-    radius*.19,
+    x,y,radius,
     0,
     Math.PI*2
   );
-  ctx.fillStyle="rgba(255,255,255,.55)";
+
+  ctx.fillStyle=g;
   ctx.fill();
+
+  ctx.strokeStyle=
+  "rgba(255,255,255,.5)";
+
+  ctx.stroke();
+
 }
 
-/* =========================
+/* ==================================================
    PARTICLES
-========================= */
+================================================== */
 
-function createParticles(x,y,color,count=12){
+function createParticles(
+  x,y,color,count=12
+){
+
   for(let i=0;i<count;i++){
-    const angle=Math.random()*Math.PI*2;
-    const speed=1.5+Math.random()*4;
+
+    const a=
+    Math.random()*Math.PI*2;
+
+    const speed=
+    1+Math.random()*4;
 
     particles.push({
       x:x,
       y:y,
-      vx:Math.cos(angle)*speed,
-      vy:Math.sin(angle)*speed,
+      vx:Math.cos(a)*speed,
+      vy:Math.sin(a)*speed,
       life:1,
-      size:2+Math.random()*5,
+      size:2+Math.random()*4,
       color:color
     });
+
   }
+
 }
 
 function updateParticles(){
-  for(let i=particles.length-1;i>=0;i--){
+
+  for(
+    let i=particles.length-1;
+    i>=0;
+    i--
+  ){
+
     const p=particles[i];
 
     p.x+=p.vx;
     p.y+=p.vy;
 
     p.vy+=.05;
-    p.life-=.035;
 
-    if(p.life<=0){
+    p.life-=.04;
+
+    if(p.life<=0)
       particles.splice(i,1);
-    }
+
   }
+
 }
 
 function drawParticles(){
+
   particles.forEach(p=>{
-    ctx.globalAlpha=Math.max(0,p.life);
+
+    ctx.globalAlpha=p.life;
 
     ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+
+    ctx.arc(
+      p.x,p.y,p.size,
+      0,Math.PI*2
+    );
 
     ctx.fillStyle=p.color;
+
     ctx.fill();
+
   });
 
   ctx.globalAlpha=1;
+
 }
 
-/* =========================
-   AIM / CANNON
-========================= */
+/* ==================================================
+   CANNON
+================================================== */
 
-function getAimAngle(){
+function aimAngle(){
+
   let dx=aimX-shooterX;
   let dy=aimY-shooterY;
 
-  if(dy>0)dy=-10;
+  if(dy>0)
+    dy=-10;
 
-  let angle=Math.atan2(dy,dx);
+  let a=
+  Math.atan2(dy,dx);
 
-  const min=-Math.PI+.18;
-  const max=-.18;
+  a=Math.max(
+    -Math.PI+.18,
+    Math.min(-.18,a)
+  );
 
-  if(angle<min)angle=min;
-  if(angle>max)angle=max;
+  return a;
 
-  return angle;
 }
 
 function cannonStyle(){
-  const id=cannonData().id;
 
   const styles={
-    basic:{
-      body:"#566573",
-      barrel:"#95a5a6",
-      ring:"#2c3e50"
-    },
-    bronze:{
-      body:"#a66a3f",
-      barrel:"#d39b6a",
-      ring:"#6f4527"
-    },
-    silver:{
-      body:"#aab7b8",
-      barrel:"#ecf0f1",
-      ring:"#566573"
-    },
-    gold:{
-      body:"#d4ac0d",
-      barrel:"#f7dc6f",
-      ring:"#9a7d0a"
-    },
-    plasma:{
-      body:"#2e86de",
-      barrel:"#48dbfb",
-      ring:"#154360"
-    },
-    legend:{
-      body:"#c0392b",
-      barrel:"#ff8c42",
-      ring:"#641e16"
-    }
+
+    basic:["#566573","#95a5a6","#2c3e50"],
+
+    bronze:["#a66a3f","#d39b6a","#6f4527"],
+
+    silver:["#aab7b8","#ecf0f1","#566573"],
+
+    gold:["#d4ac0d","#f7dc6f","#9a7d0a"],
+
+    plasma:["#2e86de","#48dbfb","#154360"],
+
+    legend:["#c0392b","#ff8c42","#641e16"]
+
   };
 
-  return styles[id]||styles.basic;
+  return styles[
+    cannonData().id
+  ]||styles.basic;
+
 }
 
 function barrelPosition(){
-  const angle=getAimAngle();
 
-  /*
-    Cannon recoil moves the barrel slightly backward.
-  */
-  const distance=70-recoil;
+  const a=aimAngle();
 
-  return {
-    x:shooterX+Math.cos(angle)*distance,
-    y:shooterY+Math.sin(angle)*distance,
-    angle:angle
+  const distance=
+  70-recoil;
+
+  return{
+    x:
+    shooterX+
+    Math.cos(a)*distance,
+
+    y:
+    shooterY+
+    Math.sin(a)*distance,
+
+    angle:a
   };
+
 }
 
 function drawCannon(){
-  const angle=getAimAngle();
-  const style=cannonStyle();
 
-  const recoilX=-Math.cos(angle)*recoil;
-  const recoilY=-Math.sin(angle)*recoil;
+  const a=aimAngle();
 
-  const cx=shooterX+recoilX;
-  const cy=shooterY+recoilY;
+  const s=cannonStyle();
 
   ctx.save();
 
-  ctx.translate(cx,cy);
-  ctx.rotate(angle);
-
-  const barrelLength=58;
-  const barrelWidth=22;
-
-  const grad=ctx.createLinearGradient(
-    0,-barrelWidth/2,
-    0,barrelWidth/2
+  ctx.translate(
+    shooterX,
+    shooterY
   );
 
-  grad.addColorStop(0,"#fff");
-  grad.addColorStop(.25,style.barrel);
-  grad.addColorStop(1,style.body);
+  ctx.rotate(a);
 
-  ctx.fillStyle=grad;
+  const g=
+  ctx.createLinearGradient(
+    0,-11,
+    0,11
+  );
+
+  g.addColorStop(0,"#fff");
+  g.addColorStop(.25,s[1]);
+  g.addColorStop(1,s[0]);
+
+  ctx.fillStyle=g;
 
   ctx.beginPath();
+
   ctx.roundRect(
-    0,
-    -barrelWidth/2,
-    barrelLength,
-    barrelWidth,
+    0,-11,
+    58,22,
     7
   );
+
   ctx.fill();
 
   ctx.beginPath();
-  ctx.arc(barrelLength,0,14,0,Math.PI*2);
-  ctx.fillStyle=style.ring;
+
+  ctx.arc(
+    58,0,
+    14,
+    0,Math.PI*2
+  );
+
+  ctx.fillStyle=s[2];
+
   ctx.fill();
 
   ctx.restore();
 
-  const baseGrad=ctx.createRadialGradient(
-    shooterX-10,
-    shooterY-10,
-    2,
+  ctx.beginPath();
+
+  ctx.arc(
     shooterX,
     shooterY,
-    31
+    30,
+    0,Math.PI*2
   );
 
-  baseGrad.addColorStop(0,"#fff");
-  baseGrad.addColorStop(.25,style.body);
-  baseGrad.addColorStop(1,style.ring);
+  ctx.fillStyle=s[0];
 
-  ctx.beginPath();
-  ctx.arc(shooterX,shooterY,31,0,Math.PI*2);
-  ctx.fillStyle=baseGrad;
   ctx.fill();
 
-  ctx.strokeStyle="rgba(255,255,255,.4)";
-  ctx.lineWidth=3;
+  ctx.strokeStyle=s[1];
+  ctx.lineWidth=4;
   ctx.stroke();
 
-  ctx.beginPath();
-  ctx.arc(shooterX,shooterY,8,0,Math.PI*2);
-  ctx.fillStyle=style.barrel;
-  ctx.fill();
 }
 
-function drawAim(){
-  const barrel=barrelPosition();
-  const length=cannonData().aim;
+/* ==================================================
+   AIM LINE
+================================================== */
 
-  const ux=Math.cos(barrel.angle);
-  const uy=Math.sin(barrel.angle);
+function drawAim(){
+
+  const b=barrelPosition();
+
+  const len=
+  cannonData().aim;
+
+  const ux=
+  Math.cos(b.angle);
+
+  const uy=
+  Math.sin(b.angle);
 
   ctx.setLineDash([6,9]);
 
   ctx.beginPath();
-  ctx.moveTo(barrel.x,barrel.y);
-  ctx.lineTo(
-    barrel.x+ux*length,
-    barrel.y+uy*length
+
+  ctx.moveTo(
+    b.x,b.y
   );
 
-  ctx.strokeStyle="rgba(255,255,255,.65)";
-  ctx.lineWidth=2.5;
+  ctx.lineTo(
+    b.x+ux*len,
+    b.y+uy*len
+  );
+
+  ctx.strokeStyle=
+  "rgba(255,255,255,.65)";
+
+  ctx.lineWidth=2;
+
   ctx.stroke();
 
   ctx.setLineDash([]);
+
 }
 
-/* =========================
-   MAIN DRAW LOOP
-========================= */
+/* ==================================================
+   DRAW LOOP
+================================================== */
 
 function draw(){
-  ctx.clearRect(0,0,W,H);
 
-  if(!running)return;
+  if(!running || paused)
+    return;
+
+  ctx.clearRect(
+    0,0,W,H
+  );
 
   ctx.save();
 
   if(shake>0){
+
     ctx.translate(
       (Math.random()-.5)*shake,
       (Math.random()-.5)*shake
     );
 
-    shake*=.82;
+    shake*=.8;
 
-    if(shake<.2)shake=0;
   }
 
   for(let r=0;r<ROWS;r++){
+
     for(let c=0;c<COLS;c++){
+
       if(grid[r][c]){
-        const p=bubblePos(r,c);
+
+        const p=
+        bubblePos(r,c);
 
         drawBubble(
-          p.x,
-          p.y,
+          p.x,p.y,
           grid[r][c].color
         );
+
       }
+
     }
+
   }
 
-  if(current && !current.moving){
+  if(
+    current &&
+    !current.moving
+  ){
+
     drawAim();
+
   }
 
   drawCannon();
 
   if(current){
+
     drawBubble(
       current.x,
       current.y,
       current.color,
       current.type
     );
+
   }
 
   updateParticles();
@@ -1094,50 +2445,37 @@ function draw(){
   ctx.restore();
 
   if(recoil>0){
-    recoil*=.72;
-    if(recoil<.2)recoil=0;
 
-    if(current && !current.moving){
+    recoil*=.7;
+
+    if(
+      current &&
+      !current.moving
+    ){
       updateLoadedBubble();
     }
+
   }
 
   requestAnimationFrame(draw);
+
 }
 
-/* =========================
+/* ==================================================
    SHOOTER
-========================= */
-
-function updateNextDisplay(){
-  const dot=document.getElementById("nextDot");
-
-  dot.textContent="";
-  dot.style.background="";
-
-  if(nextShot.type==="bomb"){
-    dot.textContent="💣";
-    dot.style.background="#252a35";
-  }
-  else if(nextShot.type==="rainbow"){
-    dot.textContent="🌈";
-    dot.style.background="white";
-  }
-  else{
-    dot.style.background=nextShot.color;
-  }
-}
+================================================== */
 
 function newShooter(){
-  const barrel=barrelPosition();
 
-  if(!nextShot){
-    nextShot=createShot();
-  }
+  const b=
+  barrelPosition();
+
+  if(!nextShot)
+    nextShot=randomShot();
 
   current={
-    x:barrel.x,
-    y:barrel.y,
+    x:b.x,
+    y:b.y,
     color:nextShot.color,
     type:nextShot.type,
     moving:false,
@@ -1145,679 +2483,1491 @@ function newShooter(){
     vy:0
   };
 
-  nextShot=createShot();
+  nextShot=randomShot();
 
-  updateNextDisplay();
+  updateNext();
 
-  if(current.type==="bomb"){
-    showSpecial("💣 BOMB BUBBLE READY!");
+}
+
+function updateNext(){
+
+  const el=
+  document.getElementById("nextDot");
+
+  el.textContent="";
+  el.style.background="";
+
+  if(nextShot.type==="normal"){
+
+    el.style.background=
+    nextShot.color;
+
+  }else{
+
+    const icons={
+      bomb:"💣",
+      rainbow:"🌈",
+      lightning:"⚡",
+      color:"🎨"
+    };
+
+    el.textContent=
+    icons[nextShot.type];
+
+    el.style.background="#fff";
+
   }
 
-  if(current.type==="rainbow"){
-    showSpecial("🌈 RAINBOW BUBBLE READY!");
-  }
 }
 
 function updateLoadedBubble(){
-  if(current && !current.moving){
-    const barrel=barrelPosition();
 
-    current.x=barrel.x;
-    current.y=barrel.y;
+  if(
+    current &&
+    !current.moving
+  ){
+
+    const b=
+    barrelPosition();
+
+    current.x=b.x;
+    current.y=b.y;
+
   }
+
 }
 
 function shoot(){
-  if(!running || !current || current.moving)return;
+
+  if(
+    !running ||
+    paused ||
+    !current ||
+    current.moving ||
+    shotsRemaining<=0
+  )return;
 
   ensureAudio();
 
-  const angle=getAimAngle();
-  const speed=cannonData().speed;
-  const barrel=barrelPosition();
+  const a=aimAngle();
 
-  current.x=barrel.x;
-  current.y=barrel.y;
+  const speed=
+  cannonData().speed;
 
-  current.vx=Math.cos(angle)*speed;
-  current.vy=Math.sin(angle)*speed;
+  const b=
+  barrelPosition();
+
+  current.x=b.x;
+  current.y=b.y;
+
+  current.vx=
+  Math.cos(a)*speed;
+
+  current.vy=
+  Math.sin(a)*speed;
+
   current.moving=true;
+
+  shotsRemaining--;
 
   recoil=12;
 
-  soundShoot();
+  tone(
+    170,.08,
+    "square",
+    .025
+  );
+
+  vibrate(15);
+
+  updateGameUI();
+
   animateShot();
+
 }
 
-/* =========================
-   SHOT MOVEMENT
-========================= */
+/* ==================================================
+   MOVEMENT
+================================================== */
 
 function animateShot(){
-  if(!current || !current.moving)return;
+
+  if(
+    !current ||
+    !current.moving ||
+    paused
+  )return;
 
   current.x+=current.vx;
   current.y+=current.vy;
 
   if(current.x-radius<0){
+
     current.x=radius;
+
     current.vx*=-1;
+
   }
 
   if(current.x+radius>W){
+
     current.x=W-radius;
+
     current.vx*=-1;
+
   }
 
   if(current.y-radius<=0){
-    attachCurrent();
+
+    attachShot();
     return;
+
   }
 
   for(let r=0;r<ROWS;r++){
+
     for(let c=0;c<COLS;c++){
-      if(!grid[r][c])continue;
 
-      const p=bubblePos(r,c);
-      const dx=current.x-p.x;
-      const dy=current.y-p.y;
+      if(!grid[r][c])
+        continue;
 
-      if(Math.sqrt(dx*dx+dy*dy)<diameter-3){
-        attachCurrent();
+      const p=
+      bubblePos(r,c);
+
+      const dx=
+      current.x-p.x;
+
+      const dy=
+      current.y-p.y;
+
+      if(
+        Math.sqrt(
+          dx*dx+dy*dy
+        )<diameter-3
+      ){
+
+        attachShot();
+
         return;
+
       }
+
     }
+
   }
 
-  requestAnimationFrame(animateShot);
+  requestAnimationFrame(
+    animateShot
+  );
+
 }
 
-/* =========================
-   ATTACH / SPECIAL BUBBLES
-========================= */
+/* ==================================================
+   SLOT
+================================================== */
 
 function nearestSlot(){
-  let slot=null;
-  let distance=Infinity;
+
+  let best=null;
+  let dist=Infinity;
 
   for(let r=0;r<ROWS;r++){
+
     for(let c=0;c<COLS;c++){
-      if(grid[r][c])continue;
 
-      const p=bubblePos(r,c);
-      const dx=current.x-p.x;
-      const dy=current.y-p.y;
-      const d=dx*dx+dy*dy;
+      if(grid[r][c])
+        continue;
 
-      if(d<distance){
-        distance=d;
-        slot={r:r,c:c};
+      const p=
+      bubblePos(r,c);
+
+      const dx=
+      current.x-p.x;
+
+      const dy=
+      current.y-p.y;
+
+      const d=
+      dx*dx+dy*dy;
+
+      if(d<dist){
+
+        dist=d;
+        best={r:r,c:c};
+
       }
+
     }
+
   }
 
-  return slot;
+  return best;
+
 }
 
-function attachCurrent(){
-  const slot=nearestSlot();
+/* ==================================================
+   ATTACH
+================================================== */
+
+function attachShot(){
+
+  const slot=
+  nearestSlot();
 
   if(!slot){
-    failLevel();
+
+    failLevel(
+      "No space remaining."
+    );
+
     return;
+
   }
 
   if(current.type==="bomb"){
-    explodeBomb(slot.r,slot.c);
-    afterShot();
+
+    bombShot(
+      slot.r,
+      slot.c
+    );
+
+    finishShot();
     return;
+
   }
 
   if(current.type==="rainbow"){
-    useRainbow(slot.r,slot.c);
-    afterShot();
+
+    rainbowShot(
+      slot.r,
+      slot.c
+    );
+
+    finishShot();
     return;
+
+  }
+
+  if(current.type==="lightning"){
+
+    lightningShot(
+      slot.r
+    );
+
+    finishShot();
+    return;
+
+  }
+
+  if(current.type==="color"){
+
+    colorShot(
+      slot.r,
+      slot.c
+    );
+
+    finishShot();
+    return;
+
   }
 
   grid[slot.r][slot.c]={
     color:current.color
   };
 
-  const matched=findMatch(slot.r,slot.c);
+  const match=
+  findMatch(
+    slot.r,
+    slot.c
+  );
 
-  if(matched.length>=3){
-    matched.forEach(p=>{
-      const bp=bubblePos(p.r,p.c);
+  if(match.length>=3){
 
-      createParticles(
-        bp.x,
-        bp.y,
-        grid[p.r][p.c].color,
-        10
-      );
+    comboStreak++;
 
-      grid[p.r][p.c]=null;
-    });
-
-    const gain=matched.length*10;
-    levelScore+=gain;
-    misses=0;
-
-    soundPop();
-
-    showCombo(
-      matched.length>=6
-        ?"🔥 MEGA POP! +"+gain
-        :"POP! +"+gain
+    multiplier=
+    Math.min(
+      5,
+      comboStreak
     );
 
+    if(multiplier>=3)
+      unlockAchievement("combo3");
+
+    popCells(match);
+
+    const gain=
+    match.length*
+    10*
+    multiplier;
+
+    levelScore+=gain;
+
+    misses=0;
+
+    unlockAchievement(
+      "firstPop"
+    );
+
+    showCombo(
+      "🔥 x"+
+      multiplier+
+      "  +"+
+      gain
+    );
+
+    tone(
+      600,.08,
+      "sine",
+      .03
+    );
+
+    vibrate(30);
+
     removeFloating();
-  }
-  else{
+
+  }else{
+
+    comboStreak=0;
+    multiplier=1;
+
     misses++;
 
     if(misses>=5){
+
       addNewRow();
+
       misses=0;
+
     }
+
   }
 
-  afterShot();
+  finishShot();
+
 }
 
-function explodeBomb(r,c){
+/* ==================================================
+   SPECIAL BUBBLES
+================================================== */
+
+function bombShot(r,c){
+
   const targets=[
     {r:r,c:c},
     ...neighbors(r,c)
   ];
 
-  let destroyed=0;
+  let count=0;
 
   targets.forEach(p=>{
-    if(
-      p.r>=0 && p.r<ROWS &&
-      p.c>=0 && p.c<COLS &&
-      grid[p.r][p.c]
-    ){
-      const bp=bubblePos(p.r,p.c);
 
-      createParticles(
-        bp.x,
-        bp.y,
-        grid[p.r][p.c].color,
-        14
+    if(grid[p.r]?.[p.c]){
+
+      popOne(
+        p.r,p.c
       );
 
-      grid[p.r][p.c]=null;
-      destroyed++;
+      count++;
+
     }
+
   });
 
-  const center=bubblePos(r,c);
-
-  createParticles(
-    center.x,
-    center.y,
-    "#ffb21c",
-    25
+  const gain=
+  Math.max(
+    60,
+    count*20
   );
 
-  const gain=Math.max(40,destroyed*20);
-
   levelScore+=gain;
-  misses=0;
+
   shake=12;
 
-  soundBomb();
-  showCombo("💣 BOOM! +"+gain);
+  misses=0;
+
+  unlockAchievement("bomb");
+
+  showCombo(
+    "💣 BOOM +"+gain
+  );
+
+  tone(
+    80,.25,
+    "sawtooth",
+    .05
+  );
+
+  vibrate(80);
 
   removeFloating();
+
 }
 
-function useRainbow(r,c){
-  /*
-    Rainbow adopts the color of the nearest
-    neighboring bubble, then behaves as a
-    normal matching bubble.
-  */
+function rainbowShot(r,c){
 
-  const nearby=neighbors(r,c)
-    .filter(p=>grid[p.r][p.c]);
+  const near=
+  neighbors(r,c)
+  .filter(p=>grid[p.r][p.c]);
 
-  let chosenColor=randomColor();
+  let bestColor=
+  randomColor();
 
-  if(nearby.length){
-    chosenColor=
-      grid[
-        nearby[Math.floor(Math.random()*nearby.length)].r
-      ][
-        nearby[Math.floor(Math.random()*nearby.length)].c
-      ]?.color || grid[nearby[0].r][nearby[0].c].color;
-  }
+  let bestCount=0;
 
-  grid[r][c]={color:chosenColor};
+  near.forEach(n=>{
 
-  const matched=findMatch(r,c);
+    const col=
+    grid[n.r][n.c].color;
 
-  if(matched.length>=3){
-    matched.forEach(p=>{
-      const bp=bubblePos(p.r,p.c);
+    grid[r][c]={
+      color:col
+    };
 
-      createParticles(
-        bp.x,
-        bp.y,
-        grid[p.r][p.c].color,
-        13
-      );
+    const test=
+    findMatch(r,c);
 
-      grid[p.r][p.c]=null;
-    });
+    if(test.length>bestCount){
 
-    const gain=matched.length*15;
+      bestCount=
+      test.length;
+
+      bestColor=
+      col;
+
+    }
+
+  });
+
+  grid[r][c]={
+    color:bestColor
+  };
+
+  const match=
+  findMatch(r,c);
+
+  if(match.length>=3){
+
+    popCells(match);
+
+    const gain=
+    match.length*18;
 
     levelScore+=gain;
-    misses=0;
 
-    soundRainbow();
-    showCombo("🌈 RAINBOW! +"+gain);
+    showCombo(
+      "🌈 RAINBOW +"+
+      gain
+    );
 
     removeFloating();
+
   }
-  else{
-    /*
-      Rainbow still stays as the adopted
-      color if it doesn't make a match.
-    */
-    misses++;
-  }
+
 }
 
-function afterShot(){
-  updateGameUI();
+function lightningShot(row){
 
-  if(boardCleared()){
-    completeLevel();
-    return;
+  let count=0;
+
+  for(let c=0;c<COLS;c++){
+
+    if(grid[row][c]){
+
+      popOne(row,c);
+
+      count++;
+
+    }
+
   }
 
-  if(checkLose()){
-    failLevel();
-    return;
-  }
+  const gain=
+  Math.max(80,count*18);
 
-  newShooter();
+  levelScore+=gain;
+
+  unlockAchievement(
+    "lightning"
+  );
+
+  showCombo(
+    "⚡ LIGHTNING +"+
+    gain
+  );
+
+  tone(
+    900,.1,
+    "square",
+    .04
+  );
+
+  vibrate(70);
+
+  removeFloating();
+
 }
 
-/* =========================
-   MATCHING
-========================= */
+function colorShot(r,c){
+
+  let target=null;
+
+  const near=
+  neighbors(r,c)
+  .find(p=>grid[p.r][p.c]);
+
+  if(near){
+
+    target=
+    grid[near.r][near.c].color;
+
+  }else{
+
+    target=randomColor();
+
+  }
+
+  let count=0;
+
+  for(let rr=0;rr<ROWS;rr++){
+
+    for(let cc=0;cc<COLS;cc++){
+
+      if(
+        grid[rr][cc] &&
+        grid[rr][cc].color===
+        target
+      ){
+
+        popOne(rr,cc);
+
+        count++;
+
+      }
+
+    }
+
+  }
+
+  const gain=
+  Math.max(
+    100,
+    count*15
+  );
+
+  levelScore+=gain;
+
+  showCombo(
+    "🎨 COLOR CLEAR +"+
+    gain
+  );
+
+  removeFloating();
+
+}
+
+/* ==================================================
+   POP HELPERS
+================================================== */
+
+function popOne(r,c){
+
+  if(!grid[r][c])
+    return;
+
+  const p=
+  bubblePos(r,c);
+
+  createParticles(
+    p.x,p.y,
+    grid[r][c].color,
+    10
+  );
+
+  grid[r][c]=null;
+
+}
+
+function popCells(list){
+
+  list.forEach(p=>{
+
+    popOne(
+      p.r,p.c
+    );
+
+  });
+
+}
+
+/* ==================================================
+   MATCH LOGIC
+================================================== */
 
 function neighbors(r,c){
+
   const dirs=
-    r%2===0
-      ?[
-        [-1,-1],[-1,0],
-        [0,-1],[0,1],
-        [1,-1],[1,0]
-      ]
-      :[
-        [-1,0],[-1,1],
-        [0,-1],[0,1],
-        [1,0],[1,1]
-      ];
+  r%2===0
+  ?[
+    [-1,-1],[-1,0],
+    [0,-1],[0,1],
+    [1,-1],[1,0]
+  ]
+  :[
+    [-1,0],[-1,1],
+    [0,-1],[0,1],
+    [1,0],[1,1]
+  ];
 
   return dirs
-    .map(d=>({
-      r:r+d[0],
-      c:c+d[1]
-    }))
-    .filter(p=>
-      p.r>=0 &&
-      p.r<ROWS &&
-      p.c>=0 &&
-      p.c<COLS
-    );
+  .map(d=>({
+    r:r+d[0],
+    c:c+d[1]
+  }))
+  .filter(p=>
+    p.r>=0 &&
+    p.r<ROWS &&
+    p.c>=0 &&
+    p.c<COLS
+  );
+
 }
 
 function findMatch(sr,sc){
-  const color=grid[sr][sc].color;
-  const stack=[{r:sr,c:sc}];
-  const seen=new Set();
+
+  const color=
+  grid[sr][sc].color;
+
+  const stack=[
+    {r:sr,c:sc}
+  ];
+
+  const seen=
+  new Set();
+
   const result=[];
 
   while(stack.length){
-    const p=stack.pop();
-    const key=p.r+","+p.c;
 
-    if(seen.has(key))continue;
+    const p=
+    stack.pop();
+
+    const key=
+    p.r+","+p.c;
+
+    if(seen.has(key))
+      continue;
+
     seen.add(key);
 
-    const cell=grid[p.r][p.c];
+    const cell=
+    grid[p.r][p.c];
 
-    if(!cell || cell.color!==color)continue;
+    if(
+      !cell ||
+      cell.color!==color
+    )continue;
 
     result.push(p);
 
-    neighbors(p.r,p.c).forEach(n=>stack.push(n));
+    neighbors(
+      p.r,p.c
+    ).forEach(
+      n=>stack.push(n)
+    );
+
   }
 
   return result;
+
 }
 
-/* =========================
-   FLOATING BUBBLES
-========================= */
+/* ==================================================
+   FLOATING
+================================================== */
 
 function removeFloating(){
-  const connected=new Set();
+
+  const connected=
+  new Set();
+
   const stack=[];
 
   for(let c=0;c<COLS;c++){
-    if(grid[0][c]){
-      stack.push({r:0,c:c});
-    }
+
+    if(grid[0][c])
+      stack.push({
+        r:0,c:c
+      });
+
   }
 
   while(stack.length){
-    const p=stack.pop();
-    const key=p.r+","+p.c;
 
-    if(connected.has(key))continue;
+    const p=
+    stack.pop();
+
+    const key=
+    p.r+","+p.c;
+
+    if(connected.has(key))
+      continue;
 
     connected.add(key);
 
-    neighbors(p.r,p.c).forEach(n=>{
-      if(grid[n.r][n.c]){
+    neighbors(
+      p.r,p.c
+    ).forEach(n=>{
+
+      if(grid[n.r][n.c])
         stack.push(n);
-      }
+
     });
+
   }
 
   let dropped=0;
 
   for(let r=0;r<ROWS;r++){
+
     for(let c=0;c<COLS;c++){
+
       if(
         grid[r][c] &&
-        !connected.has(r+","+c)
+        !connected.has(
+          r+","+c
+        )
       ){
-        const bp=bubblePos(r,c);
 
-        createParticles(
-          bp.x,
-          bp.y,
-          grid[r][c].color,
-          9
-        );
+        popOne(r,c);
 
-        grid[r][c]=null;
         dropped++;
+
       }
+
     }
+
   }
 
-  if(dropped>0){
-    const gain=dropped*15;
+  if(dropped){
+
+    const gain=
+    dropped*
+    15*
+    multiplier;
+
     levelScore+=gain;
 
-    soundDrop();
-    showCombo("🔥 DROP x"+dropped+" +"+gain);
+    showCombo(
+      "⬇️ DROP x"+
+      dropped+
+      " +"+
+      gain
+    );
+
   }
+
 }
 
-/* =========================
+/* ==================================================
    NEW ROW
-========================= */
+================================================== */
 
 function addNewRow(){
+
   grid.pop();
 
   grid.unshift(
     Array.from(
       {length:COLS},
-      ()=>({color:randomColor()})
+      ()=>({
+        color:randomColor()
+      })
     )
   );
 
-  showSpecial("⚠️ NEW ROW!");
+  showToast(
+    "⚠️ NEW ROW!"
+  );
+
 }
 
-/* =========================
-   CHECKS
-========================= */
+/* ==================================================
+   INVENTORY POWER
+================================================== */
 
-function boardCleared(){
-  for(let r=0;r<ROWS;r++){
-    for(let c=0;c<COLS;c++){
-      if(grid[r][c])return false;
-    }
+function useInventory(type){
+
+  if(
+    !running ||
+    paused ||
+    current?.moving
+  )return;
+
+  if(
+    saveData.inventory[type]<=0
+  ){
+
+    showToast(
+      "Visit the shop to buy more."
+    );
+
+    return;
+
   }
 
-  return true;
+  saveData.inventory[type]--;
+
+  saveProgress();
+
+  current.type=type;
+
+  if(type==="bomb")
+    current.color="#222";
+
+  if(type!=="bomb")
+    current.color="#fff";
+
+  updateInventoryUI();
+
+  showToast(
+    "SPECIAL BUBBLE READY!"
+  );
+
+}
+
+function updateInventoryUI(){
+
+  document.getElementById(
+    "bombCount"
+  ).textContent=
+  saveData.inventory.bomb;
+
+  document.getElementById(
+    "rainbowCount"
+  ).textContent=
+  saveData.inventory.rainbow;
+
+  document.getElementById(
+    "lightningCount"
+  ).textContent=
+  saveData.inventory.lightning;
+
+  document.getElementById(
+    "colorCount"
+  ).textContent=
+  saveData.inventory.color;
+
+}
+
+/* ==================================================
+   SHOT FINISH
+================================================== */
+
+function finishShot(){
+
+  updateGameUI();
+
+  if(levelScore>=goal){
+
+    completeLevel();
+    return;
+
+  }
+
+  if(checkLose()){
+
+    failLevel(
+      "The bubbles reached the bottom."
+    );
+
+    return;
+
+  }
+
+  if(shotsRemaining<=0){
+
+    failLevel(
+      "You ran out of shots."
+    );
+
+    return;
+
+  }
+
+  newShooter();
+
 }
 
 function checkLose(){
-  return grid[ROWS-1].some(Boolean);
+
+  return grid[
+    ROWS-1
+  ].some(Boolean);
+
 }
 
-/* =========================
-   MESSAGES
-========================= */
-
-function showCombo(text){
-  const el=document.getElementById("combo");
-
-  el.textContent=text;
-  el.classList.add("show");
-
-  setTimeout(()=>{
-    el.classList.remove("show");
-  },800);
-}
-
-function showSpecial(text){
-  const el=document.getElementById("specialBanner");
-
-  el.textContent=text;
-  el.classList.add("show");
-
-  setTimeout(()=>{
-    el.classList.remove("show");
-  },1100);
-}
-
-/* =========================
-   UI
-========================= */
+/* ==================================================
+   GAME UI
+================================================== */
 
 function updateGameUI(){
-  document.getElementById("levelScore").textContent=levelScore;
 
-  document.getElementById("gameTotal").textContent=
-    saveData.totalScore+levelScore;
+  document.getElementById(
+    "levelScore"
+  ).textContent=
+  levelScore;
 
-  document.getElementById("misses").textContent=
-    misses+" / 5";
+  document.getElementById(
+    "goalScore"
+  ).textContent=
+  goal;
+
+  document.getElementById(
+    "shotsText"
+  ).textContent=
+  shotsRemaining;
+
+  document.getElementById(
+    "multiplierText"
+  ).textContent=
+  "x"+multiplier;
+
 }
 
-/* =========================
-   START LEVEL
-========================= */
+/* ==================================================
+   START
+================================================== */
 
 function startLevel(){
+
   resize();
 
-  running=false;
+  const world=worldData();
+
+  document.getElementById(
+    "app"
+  ).style.background=
+  world.bg;
+
   levelScore=0;
+
+  goal=levelGoal();
+
+  shotsRemaining=
+  levelShots();
+
+  comboStreak=0;
+  multiplier=1;
   misses=0;
+
   particles=[];
   recoil=0;
   shake=0;
 
-  document.getElementById("homeScreen").classList.add("hidden");
-  document.getElementById("completeOverlay").classList.add("hidden");
-  document.getElementById("failedOverlay").classList.add("hidden");
-  document.getElementById("gameScreen").classList.remove("hidden");
+  document.getElementById(
+    "homeScreen"
+  ).classList.add("hidden");
 
-  document.getElementById("gameAvatar").textContent=
-    saveData.profile.avatar;
+  document.getElementById(
+    "completeOverlay"
+  ).classList.add("hidden");
 
-  document.getElementById("gameName").textContent=
-    saveData.profile.name;
+  document.getElementById(
+    "failedOverlay"
+  ).classList.add("hidden");
 
-  document.getElementById("gameLevel").textContent=
-    "LEVEL "+saveData.level;
+  document.getElementById(
+    "gameScreen"
+  ).classList.remove("hidden");
+
+  document.getElementById(
+    "gameAvatar"
+  ).textContent=
+  saveData.profile.avatar;
+
+  document.getElementById(
+    "gameName"
+  ).textContent=
+  saveData.profile.name;
+
+  document.getElementById(
+    "gameLevel"
+  ).textContent=
+  "LEVEL "+
+  saveData.level+
+  " • "+
+  world.name.toUpperCase();
 
   makeGrid();
 
   aimX=W/2;
   aimY=H/3;
 
-  nextShot=createShot();
+  nextShot=randomShot();
+
   newShooter();
 
+  updateInventoryUI();
   updateGameUI();
 
   running=true;
+  paused=false;
+
   requestAnimationFrame(draw);
+
 }
 
-/* =========================
+/* ==================================================
    COMPLETE
-========================= */
+================================================== */
+
+function calculateStars(){
+
+  const ratio=
+  levelScore/goal;
+
+  if(
+    ratio>=1.7 ||
+    shotsRemaining>=
+    levelShots()*.55
+  )return 3;
+
+  if(
+    ratio>=1.3 ||
+    shotsRemaining>=
+    levelShots()*.25
+  )return 2;
+
+  return 1;
+
+}
 
 function completeLevel(){
+
   running=false;
 
-  const oldTotal=saveData.totalScore;
+  const stars=
+  calculateStars();
 
-  saveData.totalScore+=levelScore;
+  const oldTotal=
+  saveData.totalScore;
 
-  if(levelScore>saveData.bestLevelScore){
-    saveData.bestLevelScore=levelScore;
+  saveData.totalScore+=
+  levelScore;
+
+  saveData.totalStars+=
+  stars;
+
+  if(
+    levelScore>
+    saveData.bestLevelScore
+  ){
+
+    saveData.bestLevelScore=
+    levelScore;
+
   }
+
+  const coins=
+  Math.floor(
+    levelScore/10
+  )+
+  stars*25;
+
+  saveData.coins+=coins;
+
+  if(stars===3)
+    unlockAchievement(
+      "threeStar"
+    );
+
+  if(saveData.level>=5)
+    unlockAchievement(
+      "level5"
+    );
+
+  if(saveData.totalScore>=5000)
+    unlockAchievement(
+      "score5000"
+    );
 
   saveProgress();
 
-  soundWin();
+  document.getElementById(
+    "completeLevel"
+  ).textContent=
+  "Level "+
+  saveData.level+
+  " completed!";
 
-  document.getElementById("completeLevel").textContent=
-    "Level "+saveData.level+" cleared!";
+  document.getElementById(
+    "starResult"
+  ).textContent=
+  "⭐".repeat(stars);
 
-  document.getElementById("completeScore").textContent=
-    "+"+levelScore;
+  document.getElementById(
+    "completeScore"
+  ).textContent=
+  "+"+levelScore;
 
-  document.getElementById("completeTotal").textContent=
-    saveData.totalScore;
+  document.getElementById(
+    "earnedCoins"
+  ).textContent=
+  coins;
 
-  document.getElementById("completeOverlay").classList.remove("hidden");
+  document.getElementById(
+    "completeOverlay"
+  ).classList.remove("hidden");
+
+  tone(
+    523,.12,
+    "sine",
+    .03
+  );
+
+  tone(
+    659,.12,
+    "sine",
+    .03,.12
+  );
+
+  tone(
+    784,.18,
+    "sine",
+    .03,.24
+  );
+
+  vibrate([
+    50,30,50
+  ]);
 
   checkCannonUnlock(
     oldTotal,
     saveData.totalScore
   );
+
 }
 
 function nextLevel(){
-  document.getElementById("completeOverlay").classList.add("hidden");
+
+  document.getElementById(
+    "completeOverlay"
+  ).classList.add("hidden");
 
   saveData.level++;
+
   saveProgress();
 
   showHome();
+
 }
 
-/* =========================
+/* ==================================================
    FAIL
-========================= */
+================================================== */
 
-function failLevel(){
+function failLevel(reason){
+
   running=false;
 
-  document.getElementById("failedScore").textContent=
-    "Level Score: "+levelScore;
+  document.getElementById(
+    "failReason"
+  ).textContent=
+  reason;
 
-  document.getElementById("failedOverlay").classList.remove("hidden");
+  document.getElementById(
+    "failedScore"
+  ).textContent=
+  "Score: "+levelScore;
+
+  document.getElementById(
+    "failedOverlay"
+  ).classList.remove("hidden");
+
 }
 
 function retryLevel(){
-  document.getElementById("failedOverlay").classList.add("hidden");
+
+  document.getElementById(
+    "failedOverlay"
+  ).classList.add("hidden");
+
   startLevel();
+
 }
 
 function goHome(){
-  document.getElementById("failedOverlay").classList.add("hidden");
+
+  document.getElementById(
+    "failedOverlay"
+  ).classList.add("hidden");
+
   showHome();
+
 }
 
-/* =========================
-   CANNON UNLOCK
-========================= */
+/* ==================================================
+   PAUSE
+================================================== */
 
-function checkCannonUnlock(oldScore,newScore){
-  const unlocked=cannons.find(c=>
+function pauseGame(){
+
+  if(!running)
+    return;
+
+  paused=true;
+
+  document.getElementById(
+    "pauseOverlay"
+  ).classList.remove("hidden");
+
+}
+
+function resumeGame(){
+
+  document.getElementById(
+    "pauseOverlay"
+  ).classList.add("hidden");
+
+  paused=false;
+
+  requestAnimationFrame(draw);
+
+}
+
+function goHomeFromPause(){
+
+  document.getElementById(
+    "pauseOverlay"
+  ).classList.add("hidden");
+
+  running=false;
+  paused=false;
+
+  showHome();
+
+}
+
+/* ==================================================
+   CANNON UNLOCK
+================================================== */
+
+function checkCannonUnlock(
+  oldScore,
+  newScore
+){
+
+  const unlock=
+  cannons.find(c=>
     c.need>oldScore &&
     c.need<=newScore
   );
 
-  if(!unlocked)return;
+  if(!unlock)
+    return;
 
   setTimeout(()=>{
-    document.getElementById("newCannonIcon").textContent=
-      unlocked.icon;
 
-    document.getElementById("newCannonName").textContent=
-      unlocked.name+" Cannon";
+    document.getElementById(
+      "newCannonIcon"
+    ).textContent=
+    unlock.icon;
 
-    document.getElementById("unlockOverlay").classList.remove("hidden");
-  },500);
+    document.getElementById(
+      "newCannonName"
+    ).textContent=
+    unlock.name+
+    " Cannon";
+
+    document.getElementById(
+      "unlockOverlay"
+    ).classList.remove("hidden");
+
+  },450);
+
 }
 
 function closeUnlock(){
-  document.getElementById("unlockOverlay").classList.add("hidden");
+
+  document.getElementById(
+    "unlockOverlay"
+  ).classList.add("hidden");
+
 }
 
-/* =========================
+/* ==================================================
+   TOAST / COMBO
+================================================== */
+
+function showCombo(text){
+
+  const el=
+  document.getElementById("combo");
+
+  el.textContent=text;
+
+  el.classList.add("show");
+
+  setTimeout(
+    ()=>el.classList.remove("show"),
+    750
+  );
+
+}
+
+function showToast(text){
+
+  const el=
+  document.getElementById("toast");
+
+  el.textContent=text;
+
+  el.classList.add("show");
+
+  setTimeout(
+    ()=>el.classList.remove("show"),
+    1300
+  );
+
+}
+
+/* ==================================================
+   SHARE
+================================================== */
+
+function shareGame(){
+
+  const text=
+  "🎮 I am playing Bubble Blast! "+
+  "I'm on Level "+
+  saveData.level+
+  " with "+
+  saveData.totalScore+
+  " points. Can you beat me? 🫧🔥\n"+
+  "https://shasi31.github.io/MyVirtualPet/";
+
+  if(navigator.share){
+
+    navigator.share({
+      title:"Bubble Blast",
+      text:text
+    }).catch(()=>{});
+
+  }else{
+
+    navigator.clipboard
+    ?.writeText(text);
+
+    alert(
+      "Game invitation copied!"
+    );
+
+  }
+
+}
+
+function shareScore(){
+
+  const text=
+  "🏆 Bubble Blast result!\n"+
+  saveData.profile.name+
+  " • Level "+
+  saveData.level+
+  " • Score "+
+  levelScore+
+  "\nCan you beat me? 🎮🫧\n"+
+  "https://shasi31.github.io/MyVirtualPet/";
+
+  if(navigator.share){
+
+    navigator.share({
+      title:"Bubble Blast",
+      text:text
+    }).catch(()=>{});
+
+  }else{
+
+    navigator.clipboard
+    ?.writeText(text);
+
+    alert(
+      "Score copied!"
+    );
+
+  }
+
+}
+
+/* ==================================================
    INPUT
-========================= */
+================================================== */
 
 function pointerPosition(e){
-  const rect=canvas.getBoundingClientRect();
 
-  const p=e.touches
-    ?e.touches[0]
-    :e;
+  const rect=
+  canvas.getBoundingClientRect();
 
-  return {
+  const p=
+  e.touches
+  ?e.touches[0]
+  :e;
+
+  return{
     x:p.clientX-rect.left,
     y:p.clientY-rect.top
   };
+
 }
 
-canvas.addEventListener("mousemove",e=>{
-  const p=pointerPosition(e);
+canvas.addEventListener(
+  "mousemove",
+  e=>{
 
-  aimX=p.x;
-  aimY=p.y;
+    const p=
+    pointerPosition(e);
 
-  updateLoadedBubble();
-});
+    aimX=p.x;
+    aimY=p.y;
 
-canvas.addEventListener("click",e=>{
-  const p=pointerPosition(e);
+    updateLoadedBubble();
 
-  aimX=p.x;
-  aimY=p.y;
+  }
+);
 
-  updateLoadedBubble();
-  shoot();
-});
+canvas.addEventListener(
+  "click",
+  e=>{
+
+    const p=
+    pointerPosition(e);
+
+    aimX=p.x;
+    aimY=p.y;
+
+    updateLoadedBubble();
+
+    shoot();
+
+  }
+);
 
 canvas.addEventListener(
   "touchstart",
   e=>{
+
     e.preventDefault();
+
     ensureAudio();
+
+    const p=
+    pointerPosition(e);
+
+    aimX=p.x;
+    aimY=p.y;
+
+    updateLoadedBubble();
+
   },
   {passive:false}
 );
@@ -1825,14 +3975,17 @@ canvas.addEventListener(
 canvas.addEventListener(
   "touchmove",
   e=>{
+
     e.preventDefault();
 
-    const p=pointerPosition(e);
+    const p=
+    pointerPosition(e);
 
     aimX=p.x;
     aimY=p.y;
 
     updateLoadedBubble();
+
   },
   {passive:false}
 );
@@ -1840,23 +3993,36 @@ canvas.addEventListener(
 canvas.addEventListener(
   "touchend",
   e=>{
+
     e.preventDefault();
+
     shoot();
+
   },
   {passive:false}
 );
 
-/* =========================
+window.addEventListener(
+  "resize",
+  resize
+);
+
+/* ==================================================
    LOAD
-========================= */
+================================================== */
 
 loadSave();
 resize();
 
 if(saveData.profile){
-  selectedAvatar=saveData.profile.avatar;
+
+  selectedAvatar=
+  saveData.profile.avatar;
+
   showHome();
+
 }
 </script>
+
 </body>
 </html>
