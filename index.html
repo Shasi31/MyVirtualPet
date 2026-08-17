@@ -9,352 +9,624 @@
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{
- margin:0;width:100%;height:100%;overflow:hidden;
- font-family:Arial,sans-serif;background:#071229
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  background:#071229;
 }
+
 button,input{font:inherit}
 button{cursor:pointer}
+
 #app{
- width:100%;max-width:500px;height:100vh;margin:auto;
- position:relative;overflow:hidden;color:white;
- background:radial-gradient(circle at 50% 5%,#3758b9,#182d68 38%,#09152f 82%)
+  width:100%;
+  max-width:500px;
+  height:100dvh;
+  margin:auto;
+  position:relative;
+  overflow:hidden;
+  color:#fff;
+  background:radial-gradient(circle at 50% 5%,#3758b9,#182d68 38%,#09152f 82%);
 }
+
 .hidden{display:none!important}
 .full{position:absolute;inset:0;overflow:auto}
 
 .primary{
- width:100%;border:0;border-radius:18px;padding:16px;
- color:#fff;font-weight:800;font-size:17px;
- background:linear-gradient(135deg,#5d7dff,#8658ff);
- box-shadow:0 8px 20px rgba(70,91,230,.3)
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:16px;
+  color:#fff;
+  font-weight:800;
+  font-size:17px;
+  background:linear-gradient(135deg,#5d7dff,#8658ff);
+  box-shadow:0 8px 20px rgba(70,91,230,.3);
 }
+
 .green{background:linear-gradient(135deg,#43cf82,#13a76a)}
 .orange{background:linear-gradient(135deg,#ff9e42,#ff5f45)}
+
 .secondary{
- width:100%;border:0;background:none;color:#6075dc;
- padding:13px;text-decoration:underline
+  width:100%;
+  border:0;
+  background:none;
+  color:#6075dc;
+  padding:13px;
+  text-decoration:underline;
 }
 
 .overlay{
- position:absolute;inset:0;z-index:100;display:flex;
- justify-content:center;align-items:center;padding:18px;
- background:rgba(2,7,22,.88)
+  position:absolute;
+  inset:0;
+  z-index:100;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:18px;
+  background:rgba(2,7,22,.88);
 }
+
 .modal{
- width:100%;max-width:380px;max-height:90vh;overflow:auto;
- padding:24px;border-radius:28px;text-align:center;
- color:#15203b;background:#fff;
- box-shadow:0 22px 60px rgba(0,0,0,.45)
+  width:100%;
+  max-width:380px;
+  max-height:90vh;
+  overflow:auto;
+  padding:24px;
+  border-radius:28px;
+  text-align:center;
+  color:#15203b;
+  background:#fff;
+  box-shadow:0 22px 60px rgba(0,0,0,.45);
 }
+
 .modal h1,.modal h2{margin:7px 0}
 .modal p{color:#778198}
 .modalIcon{font-size:64px}
-.bigNumber{
- font-size:38px;font-weight:900;color:#5872e1;margin:8px 0
-}
+.bigNumber{font-size:38px;font-weight:900;color:#5872e1;margin:8px 0}
 
 /* PROFILE */
 
 #profileScreen{
- z-index:50;padding:25px 20px;
- background:
- radial-gradient(circle at 15% 10%,rgba(91,125,255,.5),transparent 35%),
- radial-gradient(circle at 90% 30%,rgba(185,70,255,.3),transparent 35%),
- linear-gradient(#17306f,#08142e)
+  z-index:50;
+  padding:25px 20px;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(91,125,255,.5),transparent 35%),
+    radial-gradient(circle at 90% 30%,rgba(185,70,255,.3),transparent 35%),
+    linear-gradient(#17306f,#08142e);
 }
+
 .logo{text-align:center;margin:8px 0 24px}
 .logoIcon{font-size:70px}
 .logo h1{font-size:39px;margin:0}
 .logo p{color:#c3d2f9;margin:5px}
+
 .whiteCard{
- background:#fff;color:#15203b;border-radius:27px;padding:21px;
- box-shadow:0 20px 45px rgba(0,0,0,.3)
+  background:#fff;
+  color:#15203b;
+  border-radius:27px;
+  padding:21px;
+  box-shadow:0 20px 45px rgba(0,0,0,.3);
 }
+
 .label{display:block;font-size:12px;font-weight:800;margin:5px 0 7px}
+
 input{
- width:100%;padding:15px;margin-bottom:19px;border:2px solid #e1e7f0;
- border-radius:15px;outline:none;font-size:17px
+  width:100%;
+  padding:15px;
+  margin-bottom:19px;
+  border:2px solid #e1e7f0;
+  border-radius:15px;
+  outline:none;
+  font-size:17px;
 }
+
 .avatarGrid{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:9px;margin:11px 0 20px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin:11px 0 20px;
 }
+
 .avatar{
- padding:11px 3px;border:3px solid transparent;border-radius:18px;
- text-align:center;font-size:37px;background:#f2f5fa
+  padding:11px 3px;
+  border:3px solid transparent;
+  border-radius:18px;
+  text-align:center;
+  font-size:37px;
+  background:#f2f5fa;
 }
+
 .avatar small{display:block;margin-top:4px;font-size:9px;font-weight:800}
 .avatar.selected{border-color:#637dff;background:#edf0ff}
 
 /* HOME */
 
 #homeScreen{z-index:30;padding:16px}
+
 .playerHeader{
- display:flex;align-items:center;justify-content:space-between;
- padding:12px;border:1px solid rgba(255,255,255,.1);
- border-radius:21px;background:rgba(255,255,255,.11)
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:21px;
+  background:rgba(255,255,255,.11);
 }
+
 .playerInfo{display:flex;align-items:center;gap:9px}
+
 .playerAvatar{
- width:51px;height:51px;display:flex;align-items:center;justify-content:center;
- border-radius:50%;font-size:29px;background:#fff
+  width:51px;
+  height:51px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-size:29px;
+  background:#fff;
 }
+
 .welcome{font-size:9px;color:#bcd0ff}
 .playerName{font-size:18px;font-weight:800}
+
 .coinBox{
- border-radius:18px;padding:8px 11px;font-size:12px;
- font-weight:800;background:rgba(255,255,255,.12)
+  border-radius:18px;
+  padding:8px 11px;
+  font-size:12px;
+  font-weight:800;
+  background:rgba(255,255,255,.12);
 }
+
 .hero{text-align:center;margin:16px 0 11px}
 .heroIcon{font-size:48px}
 .hero h1{margin:0;font-size:30px}
 .hero p{margin:5px;color:#b9cbf3;font-size:12px}
 
 .levelCard{
- padding:18px;border-radius:27px;color:#15203b;
- background:linear-gradient(145deg,#fff,#edf3ff);
- box-shadow:0 15px 35px rgba(0,0,0,.25)
+  padding:18px;
+  border-radius:27px;
+  color:#15203b;
+  background:linear-gradient(145deg,#fff,#edf3ff);
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
 }
+
 .levelTop{display:flex;justify-content:space-between;align-items:flex-start}
 .levelTitle{color:#7a849a;font-size:10px}
 .bigLevel{font-size:33px;font-weight:900}
+
 .worldBadge{
- padding:8px 11px;border-radius:18px;background:#e8edff;
- color:#536de2;font-size:10px;font-weight:800
+  padding:8px 11px;
+  border-radius:18px;
+  background:#e8edff;
+  color:#536de2;
+  font-size:10px;
+  font-weight:800;
 }
+
 .stats{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:8px;margin:15px 0
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:15px 0;
 }
+
 .stat{
- padding:10px 4px;border-radius:15px;text-align:center;background:#f3f6fb
+  padding:10px 4px;
+  border-radius:15px;
+  text-align:center;
+  background:#f3f6fb;
 }
+
 .stat b{display:block;font-size:18px}
 .stat small{display:block;margin-top:3px;color:#7a859d;font-size:8px}
 
 .homeActions{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:8px;margin-top:13px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:13px;
 }
+
 .homeAction{
- padding:12px 4px;border:1px solid rgba(255,255,255,.12);
- border-radius:17px;color:#fff;background:rgba(255,255,255,.1)
+  padding:12px 4px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:17px;
+  color:#fff;
+  background:rgba(255,255,255,.1);
 }
+
 .homeAction span{display:block;font-size:24px}
 .homeAction small{display:block;margin-top:4px;font-size:9px}
 
 .dailyCard{
- margin-top:13px;padding:14px;border-radius:22px;
- background:linear-gradient(135deg,#ffd764,#ff9d4d);
- color:#4e3300
+  margin-top:13px;
+  padding:14px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#ffd764,#ff9d4d);
+  color:#4e3300;
 }
+
 .dailyTop{display:flex;justify-content:space-between;align-items:center}
 .dailyTitle{font-weight:900}
 .dailyDesc{font-size:10px;margin-top:4px}
+
 .dailyReward{
- margin-top:8px;padding:7px 9px;border-radius:12px;
- background:rgba(255,255,255,.35);font-size:10px;font-weight:800
+  margin-top:8px;
+  padding:7px 9px;
+  border-radius:12px;
+  background:rgba(255,255,255,.35);
+  font-size:10px;
+  font-weight:800;
 }
 
 .cannonPanel{
- margin-top:13px;padding:14px;border-radius:22px;background:rgba(255,255,255,.1)
+  margin-top:13px;
+  padding:14px;
+  border-radius:22px;
+  background:rgba(255,255,255,.1);
 }
+
 .panelTop{display:flex;justify-content:space-between;margin-bottom:10px;font-size:11px}
 .cannonGrid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+
 .cannon{
- padding:7px 1px;border:2px solid transparent;border-radius:13px;
- text-align:center;background:rgba(255,255,255,.09)
+  padding:7px 1px;
+  border:2px solid transparent;
+  border-radius:13px;
+  text-align:center;
+  background:rgba(255,255,255,.09);
 }
+
 .cannon .icon{font-size:22px}
 .cannon small{display:block;font-size:6px}
 .cannon.locked{opacity:.3}
-.cannon.active{
- border-color:#73efbf;background:rgba(70,220,160,.18)
-}
+.cannon.active{border-color:#73efbf;background:rgba(70,220,160,.18)}
+
 .unlockText{
- margin-top:8px;text-align:center;color:#bfd1fa;font-size:9px
+  margin-top:8px;
+  text-align:center;
+  color:#bfd1fa;
+  font-size:9px;
 }
 
 /* LEVEL MAP */
 
 #mapOverlay .modal{
- background:linear-gradient(#f9fbff,#eaf0ff)
+  background:linear-gradient(#f9fbff,#eaf0ff);
 }
+
 .mapHeader{
- display:flex;justify-content:space-between;align-items:center;margin-bottom:14px
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
 }
+
 .mapWorldTitle{text-align:left}
 .mapWorldTitle small{display:block;color:#7d87a0;font-size:9px}
 .mapWorldTitle b{font-size:20px}
+
 .levelMap{
- position:relative;padding:15px 5px 25px;
- display:grid;grid-template-columns:repeat(3,1fr);gap:18px 12px
+  position:relative;
+  padding:15px 5px 25px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px 12px;
 }
+
 .mapNode{
- position:relative;border:0;background:none
+  position:relative;
+  border:0;
+  background:none;
 }
+
 .nodeCircle{
- width:63px;height:63px;margin:auto;border-radius:50%;
- display:flex;align-items:center;justify-content:center;
- font-size:19px;font-weight:900;color:#fff;
- background:linear-gradient(135deg,#6a82ff,#8d5eff);
- border:4px solid rgba(255,255,255,.9);
- box-shadow:0 8px 14px rgba(70,80,180,.28)
+  width:63px;
+  height:63px;
+  margin:auto;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:19px;
+  font-weight:900;
+  color:#fff;
+  background:linear-gradient(135deg,#6a82ff,#8d5eff);
+  border:4px solid rgba(255,255,255,.9);
+  box-shadow:0 8px 14px rgba(70,80,180,.28);
 }
+
 .mapNode.completed .nodeCircle{
- background:linear-gradient(135deg,#45c987,#1fa866)
+  background:linear-gradient(135deg,#45c987,#1fa866);
 }
+
 .mapNode.current .nodeCircle{
- transform:scale(1.13);
- box-shadow:0 0 0 6px rgba(92,124,255,.15),0 10px 20px rgba(70,80,180,.35)
+  transform:scale(1.13);
+  box-shadow:0 0 0 6px rgba(92,124,255,.15),0 10px 20px rgba(70,80,180,.35);
 }
+
 .mapNode.locked .nodeCircle{
- background:#b7c0d2;color:#eef1f7;box-shadow:none
+  background:#b7c0d2;
+  color:#eef1f7;
+  box-shadow:none;
 }
+
 .mapNode.boss .nodeCircle{
- background:linear-gradient(135deg,#ff613e,#aa1d24);
- width:72px;height:72px;font-size:25px
+  background:linear-gradient(135deg,#ff613e,#aa1d24);
+  width:72px;
+  height:72px;
+  font-size:25px;
 }
-.nodeStars{
- height:14px;margin-top:4px;font-size:10px;color:#f3af18
-}
-.nodeLabel{
- font-size:8px;color:#65718c;font-weight:800
-}
+
+.nodeStars{height:14px;margin-top:4px;font-size:10px;color:#f3af18}
+.nodeLabel{font-size:8px;color:#65718c;font-weight:800}
 
 /* GAME */
 
-#gameScreen{z-index:20;overflow:hidden}
+#gameScreen{
+  z-index:20;
+  overflow:hidden;
+  padding-bottom:76px;
+}
+
 .gameTop{
- height:105px;padding:8px 10px;background:rgba(3,12,35,.4)
+  height:105px;
+  padding:8px 10px;
+  background:rgba(3,12,35,.4);
 }
+
 .gameTopRow{
- display:flex;justify-content:space-between;align-items:center
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
+
 .gamePlayer{display:flex;align-items:center;gap:6px}
 .gameAvatar{font-size:25px}
 .gameName{font-size:12px;font-weight:800}
 .gameSub{color:#b8c9ef;font-size:8px}
+
 .pauseBtn{
- width:35px;height:35px;border:0;border-radius:50%;
- color:#fff;background:rgba(255,255,255,.13)
+  width:35px;
+  height:35px;
+  border:0;
+  border-radius:50%;
+  color:#fff;
+  background:rgba(255,255,255,.13);
 }
+
 .gameStats{
- display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:7px
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+  margin-top:7px;
 }
+
 .gameStat{
- padding:5px;border-radius:11px;text-align:center;background:rgba(255,255,255,.1)
+  padding:5px;
+  border-radius:11px;
+  text-align:center;
+  background:rgba(255,255,255,.1);
 }
+
 .gameStat b{display:block;font-size:12px}
 .gameStat small{font-size:7px;color:#bdcced}
-canvas{width:100%;display:block;touch-action:none}
+
+canvas{
+  width:100%;
+  display:block;
+  touch-action:none;
+}
+
+/* FIXED GAME BOTTOM TOOLBAR */
+
+.gameBottomBar{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:72px;
+  z-index:15;
+  display:grid;
+  grid-template-columns:64px 1fr;
+  align-items:center;
+  gap:8px;
+  padding:
+    8px
+    10px
+    max(8px,env(safe-area-inset-bottom))
+    10px;
+  background:rgba(5,14,40,.96);
+  border-top:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(12px);
+}
+
 .nextBox{
- position:absolute;left:12px;bottom:11px;padding:6px 9px;
- border-radius:15px;text-align:center;font-size:7px;
- background:rgba(255,255,255,.11)
+  position:static;
+  padding:4px 6px;
+  border-radius:14px;
+  text-align:center;
+  font-size:7px;
+  background:rgba(255,255,255,.11);
 }
+
 .nextDot{
- width:28px;height:28px;margin:3px auto 0;display:flex;
- align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.7);
- border-radius:50%;font-size:16px
+  width:28px;
+  height:28px;
+  margin:3px auto 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid rgba(255,255,255,.7);
+  border-radius:50%;
+  font-size:16px;
 }
+
 .powerBar{
- position:absolute;right:8px;bottom:9px;display:flex;gap:4px
+  position:static;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
 }
+
 .powerBtn{
- min-width:42px;padding:5px 3px;border:1px solid rgba(255,255,255,.15);
- border-radius:12px;text-align:center;color:#fff;background:rgba(255,255,255,.12)
+  min-width:0;
+  padding:5px 2px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;
+  text-align:center;
+  color:#fff;
+  background:rgba(255,255,255,.12);
 }
-.powerBtn span{display:block;font-size:17px}
-.powerBtn small{display:block;font-size:7px}
+
+.powerBtn span{
+  display:block;
+  font-size:19px;
+  line-height:20px;
+}
+
+.powerBtn small{
+  display:block;
+  margin-top:2px;
+  font-size:8px;
+  font-weight:800;
+}
+
 .combo{
- position:absolute;top:111px;width:100%;z-index:10;text-align:center;
- font-size:24px;font-weight:900;opacity:0;transition:.2s;
- pointer-events:none;text-shadow:0 3px 8px #000
+  position:absolute;
+  top:111px;
+  width:100%;
+  z-index:10;
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+  opacity:0;
+  transition:.2s;
+  pointer-events:none;
+  text-shadow:0 3px 8px #000;
 }
+
 .combo.show{opacity:1;transform:scale(1.12)}
+
 .toast{
- position:absolute;top:145px;left:50%;transform:translateX(-50%);
- z-index:11;padding:8px 13px;border-radius:18px;white-space:nowrap;
- font-size:10px;opacity:0;transition:.2s;background:rgba(5,14,40,.86)
+  position:absolute;
+  top:145px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:11;
+  padding:8px 13px;
+  border-radius:18px;
+  white-space:nowrap;
+  font-size:10px;
+  opacity:0;
+  transition:.2s;
+  background:rgba(5,14,40,.86);
 }
+
 .toast.show{opacity:1}
 
 /* BOSS */
 
 .bossIntro{
- background:
- radial-gradient(circle at 50% 20%,rgba(255,104,48,.4),transparent 35%),
- linear-gradient(#4e0c18,#160510)
+  background:
+    radial-gradient(circle at 50% 20%,rgba(255,104,48,.4),transparent 35%),
+    linear-gradient(#4e0c18,#160510);
 }
+
 .bossIcon{font-size:90px}
+
 .bossTag{
- display:inline-block;padding:7px 13px;border-radius:18px;
- color:#fff;background:#e04437;font-size:11px;font-weight:900
+  display:inline-block;
+  padding:7px 13px;
+  border-radius:18px;
+  color:#fff;
+  background:#e04437;
+  font-size:11px;
+  font-weight:900;
 }
+
 .bossGoal{
- margin:14px 0;padding:13px;border-radius:16px;background:#fff3ee
+  margin:14px 0;
+  padding:13px;
+  border-radius:16px;
+  background:#fff3ee;
 }
 
 /* SHOP */
 
 .shopBalance{
- padding:10px;margin:10px 0;border-radius:15px;font-weight:800;background:#fff5cf
+  padding:10px;
+  margin:10px 0;
+  border-radius:15px;
+  font-weight:800;
+  background:#fff5cf;
 }
-.shopGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.shopItem{padding:13px 8px;border-radius:16px;background:#f2f5fa}
+
+.shopGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.shopItem{
+  padding:13px 8px;
+  border-radius:16px;
+  background:#f2f5fa;
+}
+
 .shopItem .shopIcon{font-size:34px}
 .shopItem b{display:block;font-size:12px}
 .shopItem small{display:block;margin:5px;color:#788198}
+
 .buyBtn{
- width:100%;border:0;padding:8px;border-radius:11px;
- color:#fff;font-size:10px;font-weight:800;background:#5d77e7
+  width:100%;
+  border:0;
+  padding:8px;
+  border-radius:11px;
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  background:#5d77e7;
 }
-
-/* ACHIEVEMENTS */
-
-.achievementList{text-align:left}
-.achievement{
- display:flex;align-items:center;gap:10px;margin:8px 0;
- padding:10px;border-radius:14px;background:#f2f5fa
-}
-.achievement.locked{opacity:.4}
-.achIcon{font-size:29px}
-.achievement b{display:block;font-size:12px}
-.achievement small{color:#7c8598;font-size:9px}
 </style>
 </head>
 
 <body>
+
 <div id="app">
 
 <!-- PROFILE -->
 
 <div id="profileScreen" class="full">
 
- <div class="logo">
-  <div class="logoIcon">🫧</div>
-  <h1>Bubble Blast</h1>
-  <p>Pop • Upgrade • Conquer</p>
- </div>
-
- <div class="whiteCard">
-  <span class="label">PLAYER NAME</span>
-  <input id="username" maxlength="15" placeholder="Enter your name">
-
-  <span class="label">CHOOSE AVATAR</span>
-
-  <div class="avatarGrid">
-   <div class="avatar selected" data-avatar="😎" onclick="chooseAvatar('😎',this)">😎<small>COOL</small></div>
-   <div class="avatar" data-avatar="🥷" onclick="chooseAvatar('🥷',this)">🥷<small>NINJA</small></div>
-   <div class="avatar" data-avatar="🤖" onclick="chooseAvatar('🤖',this)">🤖<small>ROBOT</small></div>
-   <div class="avatar" data-avatar="🦸" onclick="chooseAvatar('🦸',this)">🦸<small>HERO</small></div>
-   <div class="avatar" data-avatar="👾" onclick="chooseAvatar('👾',this)">👾<small>ALIEN</small></div>
-   <div class="avatar" data-avatar="🧙" onclick="chooseAvatar('🧙',this)">🧙<small>WIZARD</small></div>
+  <div class="logo">
+    <div class="logoIcon">🫧</div>
+    <h1>Bubble Blast</h1>
+    <p>Pop • Upgrade • Conquer</p>
   </div>
 
-  <button class="primary" onclick="createProfile()">START ADVENTURE 🚀</button>
- </div>
+  <div class="whiteCard">
+
+    <span class="label">PLAYER NAME</span>
+    <input id="username" maxlength="15" placeholder="Enter your name">
+
+    <span class="label">CHOOSE AVATAR</span>
+
+    <div class="avatarGrid">
+      <div class="avatar selected" data-avatar="😎" onclick="chooseAvatar('😎',this)">😎<small>COOL</small></div>
+      <div class="avatar" data-avatar="🥷" onclick="chooseAvatar('🥷',this)">🥷<small>NINJA</small></div>
+      <div class="avatar" data-avatar="🤖" onclick="chooseAvatar('🤖',this)">🤖<small>ROBOT</small></div>
+      <div class="avatar" data-avatar="🦸" onclick="chooseAvatar('🦸',this)">🦸<small>HERO</small></div>
+      <div class="avatar" data-avatar="👾" onclick="chooseAvatar('👾',this)">👾<small>ALIEN</small></div>
+      <div class="avatar" data-avatar="🧙" onclick="chooseAvatar('🧙',this)">🧙<small>WIZARD</small></div>
+    </div>
+
+    <button class="primary" onclick="createProfile()">START ADVENTURE 🚀</button>
+
+  </div>
 
 </div>
 
@@ -362,96 +634,112 @@ canvas{width:100%;display:block;touch-action:none}
 
 <div id="homeScreen" class="full hidden">
 
- <div class="playerHeader">
-  <div class="playerInfo">
-   <div id="homeAvatar" class="playerAvatar">😎</div>
-   <div>
-    <div class="welcome">WELCOME BACK</div>
-    <div id="homeName" class="playerName">Player</div>
-   </div>
-  </div>
-  <div id="coinBox" class="coinBox">🪙 0</div>
- </div>
+  <div class="playerHeader">
 
- <div class="hero">
-  <div class="heroIcon">🫧</div>
-  <h1>BUBBLE BLAST</h1>
-  <p id="worldName">Galaxy World</p>
- </div>
+    <div class="playerInfo">
+      <div id="homeAvatar" class="playerAvatar">😎</div>
 
- <div class="levelCard">
+      <div>
+        <div class="welcome">WELCOME BACK</div>
+        <div id="homeName" class="playerName">Player</div>
+      </div>
+    </div>
 
-  <div class="levelTop">
-   <div>
-    <div class="levelTitle">CURRENT MISSION</div>
-    <div id="homeLevel" class="bigLevel">Level 1</div>
-   </div>
-   <div id="worldBadge" class="worldBadge">🌌 GALAXY</div>
+    <div id="coinBox" class="coinBox">🪙 0</div>
+
   </div>
 
-  <div class="stats">
-   <div class="stat">
-    <b id="totalScore">0</b>
-    <small>TOTAL SCORE</small>
-   </div>
-   <div class="stat">
-    <b id="totalStars">0 ⭐</b>
-    <small>TOTAL STARS</small>
-   </div>
-   <div class="stat">
-    <b id="bestLevel">0</b>
-    <small>BEST LEVEL</small>
-   </div>
+  <div class="hero">
+    <div class="heroIcon">🫧</div>
+    <h1>BUBBLE BLAST</h1>
+    <p id="worldName">Galaxy World</p>
   </div>
 
-  <button id="continueButton" class="primary green" onclick="prepareCurrentLevel()">
-   ▶ PLAY LEVEL 1
-  </button>
+  <div class="levelCard">
 
- </div>
+    <div class="levelTop">
+      <div>
+        <div class="levelTitle">CURRENT MISSION</div>
+        <div id="homeLevel" class="bigLevel">Level 1</div>
+      </div>
 
- <div class="dailyCard">
-  <div class="dailyTop">
-   <div>
-    <div class="dailyTitle">📅 DAILY CHALLENGE</div>
-    <div id="dailyDescription" class="dailyDesc"></div>
-   </div>
-   <div style="font-size:32px">🎯</div>
+      <div id="worldBadge" class="worldBadge">🌌 GALAXY</div>
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <b id="totalScore">0</b>
+        <small>TOTAL SCORE</small>
+      </div>
+
+      <div class="stat">
+        <b id="totalStars">0 ⭐</b>
+        <small>TOTAL STARS</small>
+      </div>
+
+      <div class="stat">
+        <b id="bestLevel">0</b>
+        <small>BEST LEVEL</small>
+      </div>
+
+    </div>
+
+    <button id="continueButton" class="primary green" onclick="prepareCurrentLevel()">
+      ▶ PLAY LEVEL 1
+    </button>
+
   </div>
 
-  <div id="dailyReward" class="dailyReward"></div>
+  <div class="dailyCard">
 
-  <button id="dailyPlayBtn" class="primary orange" style="margin-top:10px" onclick="startDailyChallenge()">
-   PLAY DAILY CHALLENGE
-  </button>
- </div>
+    <div class="dailyTop">
+      <div>
+        <div class="dailyTitle">📅 DAILY CHALLENGE</div>
+        <div id="dailyDescription" class="dailyDesc"></div>
+      </div>
 
- <div class="homeActions">
-  <button class="homeAction" onclick="openMap()">
-   <span>🗺️</span>
-   <small>LEVEL MAP</small>
-  </button>
+      <div style="font-size:32px">🎯</div>
+    </div>
 
-  <button class="homeAction" onclick="openShop()">
-   <span>🛒</span>
-   <small>SHOP</small>
-  </button>
+    <div id="dailyReward" class="dailyReward"></div>
 
-  <button class="homeAction" onclick="shareGame()">
-   <span>📤</span>
-   <small>SHARE</small>
-  </button>
- </div>
+    <button id="dailyPlayBtn" class="primary orange" style="margin-top:10px" onclick="startDailyChallenge()">
+      PLAY DAILY CHALLENGE
+    </button>
 
- <div class="cannonPanel">
-  <div class="panelTop">
-   <b>🔫 CANNONS</b>
-   <span id="activeCannonText">Basic</span>
   </div>
 
-  <div id="cannonGrid" class="cannonGrid"></div>
-  <div id="unlockText" class="unlockText"></div>
- </div>
+  <div class="homeActions">
+
+    <button class="homeAction" onclick="openMap()">
+      <span>🗺️</span>
+      <small>LEVEL MAP</small>
+    </button>
+
+    <button class="homeAction" onclick="openShop()">
+      <span>🛒</span>
+      <small>SHOP</small>
+    </button>
+
+    <button class="homeAction" onclick="shareGame()">
+      <span>📤</span>
+      <small>SHARE</small>
+    </button>
+
+  </div>
+
+  <div class="cannonPanel">
+
+    <div class="panelTop">
+      <b>🔫 CANNONS</b>
+      <span id="activeCannonText">Basic</span>
+    </div>
+
+    <div id="cannonGrid" class="cannonGrid"></div>
+    <div id="unlockText" class="unlockText"></div>
+
+  </div>
 
 </div>
 
@@ -459,20 +747,22 @@ canvas{width:100%;display:block;touch-action:none}
 
 <div id="mapOverlay" class="overlay hidden">
 
- <div class="modal">
+  <div class="modal">
 
-  <div class="mapHeader">
-   <div class="mapWorldTitle">
-    <small>YOUR JOURNEY</small>
-    <b>🗺️ Level Map</b>
-   </div>
+    <div class="mapHeader">
 
-   <button onclick="closeMap()" style="border:0;background:#edf1fa;border-radius:50%;width:35px;height:35px">✕</button>
+      <div class="mapWorldTitle">
+        <small>YOUR JOURNEY</small>
+        <b>🗺️ Level Map</b>
+      </div>
+
+      <button onclick="closeMap()" style="border:0;background:#edf1fa;border-radius:50%;width:35px;height:35px">✕</button>
+
+    </div>
+
+    <div id="levelMap" class="levelMap"></div>
+
   </div>
-
-  <div id="levelMap" class="levelMap"></div>
-
- </div>
 
 </div>
 
@@ -480,26 +770,26 @@ canvas{width:100%;display:block;touch-action:none}
 
 <div id="bossOverlay" class="overlay bossIntro hidden">
 
- <div class="modal">
+  <div class="modal">
 
-  <div class="bossTag">⚠ BOSS LEVEL</div>
-  <div class="bossIcon">👹</div>
+    <div class="bossTag">⚠ BOSS LEVEL</div>
+    <div class="bossIcon">👹</div>
 
-  <h1 id="bossLevelTitle">LEVEL 5</h1>
+    <h1 id="bossLevelTitle">LEVEL 5</h1>
 
-  <p>The Bubble Guardian is blocking your path!</p>
+    <p>The Bubble Guardian is blocking your path!</p>
 
-  <div class="bossGoal">
-   <b id="bossGoalText"></b>
+    <div class="bossGoal">
+      <b id="bossGoalText"></b>
+    </div>
+
+    <button class="primary orange" onclick="startBossBattle()">
+      ⚔️ START BOSS BATTLE
+    </button>
+
+    <button class="secondary" onclick="cancelBoss()">Back</button>
+
   </div>
-
-  <button class="primary orange" onclick="startBossBattle()">
-   ⚔️ START BOSS BATTLE
-  </button>
-
-  <button class="secondary" onclick="cancelBoss()">Back</button>
-
- </div>
 
 </div>
 
@@ -507,82 +797,88 @@ canvas{width:100%;display:block;touch-action:none}
 
 <div id="gameScreen" class="full hidden">
 
- <div class="gameTop">
+  <div class="gameTop">
 
-  <div class="gameTopRow">
+    <div class="gameTopRow">
 
-   <div class="gamePlayer">
-    <div id="gameAvatar" class="gameAvatar">😎</div>
+      <div class="gamePlayer">
 
-    <div>
-     <div id="gameName" class="gameName">Player</div>
-     <div id="gameLevel" class="gameSub">LEVEL 1</div>
+        <div id="gameAvatar" class="gameAvatar">😎</div>
+
+        <div>
+          <div id="gameName" class="gameName">Player</div>
+          <div id="gameLevel" class="gameSub">LEVEL 1</div>
+        </div>
+
+      </div>
+
+      <button class="pauseBtn" onclick="pauseGame()">⏸</button>
+
     </div>
-   </div>
 
-   <button class="pauseBtn" onclick="pauseGame()">⏸</button>
+    <div class="gameStats">
 
-  </div>
+      <div class="gameStat">
+        <b id="levelScore">0</b>
+        <small>SCORE</small>
+      </div>
 
-  <div class="gameStats">
+      <div class="gameStat">
+        <b id="goalScore">300</b>
+        <small>GOAL</small>
+      </div>
 
-   <div class="gameStat">
-    <b id="levelScore">0</b>
-    <small>SCORE</small>
-   </div>
+      <div class="gameStat">
+        <b id="shotsText">30</b>
+        <small>SHOTS</small>
+      </div>
 
-   <div class="gameStat">
-    <b id="goalScore">300</b>
-    <small>GOAL</small>
-   </div>
+      <div class="gameStat">
+        <b id="multiplierText">x1</b>
+        <small>COMBO</small>
+      </div>
 
-   <div class="gameStat">
-    <b id="shotsText">30</b>
-    <small>SHOTS</small>
-   </div>
-
-   <div class="gameStat">
-    <b id="multiplierText">x1</b>
-    <small>COMBO</small>
-   </div>
+    </div>
 
   </div>
 
- </div>
+  <div id="combo" class="combo"></div>
+  <div id="toast" class="toast"></div>
 
- <div id="combo" class="combo"></div>
- <div id="toast" class="toast"></div>
+  <canvas id="game"></canvas>
 
- <canvas id="game"></canvas>
+  <div class="gameBottomBar">
 
- <div class="nextBox">
-  NEXT
-  <div id="nextDot" class="nextDot"></div>
- </div>
+    <div class="nextBox">
+      NEXT
+      <div id="nextDot" class="nextDot"></div>
+    </div>
 
- <div class="powerBar">
+    <div class="powerBar">
 
-  <button class="powerBtn" onclick="useInventory('bomb')">
-   <span>💣</span>
-   <small id="bombCount">0</small>
-  </button>
+      <button class="powerBtn" onclick="useInventory('bomb')">
+        <span>💣</span>
+        <small id="bombCount">0</small>
+      </button>
 
-  <button class="powerBtn" onclick="useInventory('rainbow')">
-   <span>🌈</span>
-   <small id="rainbowCount">0</small>
-  </button>
+      <button class="powerBtn" onclick="useInventory('rainbow')">
+        <span>🌈</span>
+        <small id="rainbowCount">0</small>
+      </button>
 
-  <button class="powerBtn" onclick="useInventory('lightning')">
-   <span>⚡</span>
-   <small id="lightningCount">0</small>
-  </button>
+      <button class="powerBtn" onclick="useInventory('lightning')">
+        <span>⚡</span>
+        <small id="lightningCount">0</small>
+      </button>
 
-  <button class="powerBtn" onclick="useInventory('color')">
-   <span>🎨</span>
-   <small id="colorCount">0</small>
-  </button>
+      <button class="powerBtn" onclick="useInventory('color')">
+        <span>🎨</span>
+        <small id="colorCount">0</small>
+      </button>
 
- </div>
+    </div>
+
+  </div>
 
 </div>
 
@@ -590,30 +886,30 @@ canvas{width:100%;display:block;touch-action:none}
 
 <div id="completeOverlay" class="overlay hidden">
 
- <div class="modal">
+  <div class="modal">
 
-  <div id="completeIcon" class="modalIcon">🏆</div>
+    <div id="completeIcon" class="modalIcon">🏆</div>
 
-  <h1 id="completeTitle">LEVEL COMPLETE!</h1>
+    <h1 id="completeTitle">LEVEL COMPLETE!</h1>
 
-  <p id="completeLevel"></p>
+    <p id="completeLevel"></p>
 
-  <div id="starResult" style="font-size:42px">⭐</div>
+    <div id="starResult" style="font-size:42px">⭐</div>
 
-  <div id="completeScore" class="bigNumber">+0</div>
+    <div id="completeScore" class="bigNumber">+0</div>
 
-  <p>
-   Coins earned:
-   <b id="earnedCoins">0</b> 🪙
-  </p>
+    <p>
+      Coins earned:
+      <b id="earnedCoins">0</b> 🪙
+    </p>
 
-  <button id="completeButton" class="primary green" onclick="nextLevel()">
-   NEXT LEVEL →
-  </button>
+    <button id="completeButton" class="primary green" onclick="nextLevel()">
+      NEXT LEVEL →
+    </button>
 
-  <button class="secondary" onclick="shareScore()">Share Result</button>
+    <button class="secondary" onclick="shareScore()">Share Result</button>
 
- </div>
+  </div>
 
 </div>
 
@@ -621,21 +917,21 @@ canvas{width:100%;display:block;touch-action:none}
 
 <div id="failedOverlay" class="overlay hidden">
 
- <div class="modal">
+  <div class="modal">
 
-  <div class="modalIcon">💥</div>
+    <div class="modalIcon">💥</div>
 
-  <h1>MISSION FAILED</h1>
+    <h1>MISSION FAILED</h1>
 
-  <p id="failReason">Try again.</p>
+    <p id="failReason">Try again.</p>
 
-  <div id="failedScore" class="bigNumber">0</div>
+    <div id="failedScore" class="bigNumber">0</div>
 
-  <button class="primary" onclick="retryLevel()">🔄 RETRY</button>
+    <button class="primary" onclick="retryLevel()">🔄 RETRY</button>
 
-  <button class="secondary" onclick="goHome()">Back Home</button>
+    <button class="secondary" onclick="goHome()">Back Home</button>
 
- </div>
+  </div>
 
 </div>
 
@@ -643,17 +939,17 @@ canvas{width:100%;display:block;touch-action:none}
 
 <div id="pauseOverlay" class="overlay hidden">
 
- <div class="modal">
+  <div class="modal">
 
-  <div class="modalIcon">⏸️</div>
+    <div class="modalIcon">⏸️</div>
 
-  <h1>PAUSED</h1>
+    <h1>PAUSED</h1>
 
-  <button class="primary green" onclick="resumeGame()">▶ RESUME</button>
+    <button class="primary green" onclick="resumeGame()">▶ RESUME</button>
 
-  <button class="secondary" onclick="goHomeFromPause()">Quit to Home</button>
+    <button class="secondary" onclick="goHomeFromPause()">Quit to Home</button>
 
- </div>
+  </div>
 
 </div>
 
@@ -661,47 +957,47 @@ canvas{width:100%;display:block;touch-action:none}
 
 <div id="shopOverlay" class="overlay hidden">
 
- <div class="modal">
+  <div class="modal">
 
-  <h1>🛒 Power Shop</h1>
+    <h1>🛒 Power Shop</h1>
 
-  <div id="shopBalance" class="shopBalance">🪙 0 Coins</div>
+    <div id="shopBalance" class="shopBalance">🪙 0 Coins</div>
 
-  <div class="shopGrid">
+    <div class="shopGrid">
 
-   <div class="shopItem">
-    <div class="shopIcon">💣</div>
-    <b>Bomb</b>
-    <small>Explodes nearby bubbles</small>
-    <button class="buyBtn" onclick="buyPower('bomb',100)">100 🪙</button>
-   </div>
+      <div class="shopItem">
+        <div class="shopIcon">💣</div>
+        <b>Bomb</b>
+        <small>Explodes nearby bubbles</small>
+        <button class="buyBtn" onclick="buyPower('bomb',100)">100 🪙</button>
+      </div>
 
-   <div class="shopItem">
-    <div class="shopIcon">🌈</div>
-    <b>Rainbow</b>
-    <small>Matches nearby colors</small>
-    <button class="buyBtn" onclick="buyPower('rainbow',120)">120 🪙</button>
-   </div>
+      <div class="shopItem">
+        <div class="shopIcon">🌈</div>
+        <b>Rainbow</b>
+        <small>Matches nearby colors</small>
+        <button class="buyBtn" onclick="buyPower('rainbow',120)">120 🪙</button>
+      </div>
 
-   <div class="shopItem">
-    <div class="shopIcon">⚡</div>
-    <b>Lightning</b>
-    <small>Clears a full row</small>
-    <button class="buyBtn" onclick="buyPower('lightning',150)">150 🪙</button>
-   </div>
+      <div class="shopItem">
+        <div class="shopIcon">⚡</div>
+        <b>Lightning</b>
+        <small>Clears a full row</small>
+        <button class="buyBtn" onclick="buyPower('lightning',150)">150 🪙</button>
+      </div>
 
-   <div class="shopItem">
-    <div class="shopIcon">🎨</div>
-    <b>Color Clear</b>
-    <small>Removes one color</small>
-    <button class="buyBtn" onclick="buyPower('color',180)">180 🪙</button>
-   </div>
+      <div class="shopItem">
+        <div class="shopIcon">🎨</div>
+        <b>Color Clear</b>
+        <small>Removes one color</small>
+        <button class="buyBtn" onclick="buyPower('color',180)">180 🪙</button>
+      </div>
+
+    </div>
+
+    <button class="secondary" onclick="closeShop()">Close</button>
 
   </div>
-
-  <button class="secondary" onclick="closeShop()">Close</button>
-
- </div>
 
 </div>
 
@@ -709,19 +1005,19 @@ canvas{width:100%;display:block;touch-action:none}
 
 <div id="unlockOverlay" class="overlay hidden">
 
- <div class="modal">
+  <div class="modal">
 
-  <div class="modalIcon">🔓</div>
+    <div class="modalIcon">🔓</div>
 
-  <h2>NEW CANNON!</h2>
+    <h2>NEW CANNON!</h2>
 
-  <div id="newCannonIcon" style="font-size:70px">🟤</div>
+    <div id="newCannonIcon" style="font-size:70px">🟤</div>
 
-  <h1 id="newCannonName">Bronze Cannon</h1>
+    <h1 id="newCannonName">Bronze Cannon</h1>
 
-  <button class="primary" onclick="closeUnlock()">AWESOME!</button>
+    <button class="primary" onclick="closeUnlock()">AWESOME!</button>
 
- </div>
+  </div>
 
 </div>
 
@@ -729,699 +1025,654 @@ canvas{width:100%;display:block;touch-action:none}
 
 <script>
 
-/* =============================
-SAVE
-============================= */
+/* SAVE */
 
 const SAVE_KEY="bubbleBlastV4";
 
 let selectedAvatar="😎";
 
 let saveData={
- profile:null,
- level:1,
- totalScore:0,
- bestLevelScore:0,
- selectedCannon:"basic",
- coins:0,
- totalStars:0,
- levelStars:{},
- dailyDate:"",
- dailyCompleted:"",
- inventory:{
-  bomb:1,
-  rainbow:1,
-  lightning:0,
-  color:0
- }
+  profile:null,
+  level:1,
+  totalScore:0,
+  bestLevelScore:0,
+  selectedCannon:"basic",
+  coins:0,
+  totalStars:0,
+  levelStars:{},
+  dailyDate:"",
+  dailyCompleted:"",
+  inventory:{
+    bomb:1,
+    rainbow:1,
+    lightning:0,
+    color:0
+  }
 };
 
 function loadSave(){
 
- const raw=
- localStorage.getItem(SAVE_KEY);
+  const raw=localStorage.getItem(SAVE_KEY);
 
- if(raw){
+  if(raw){
 
-  try{
+    try{
 
-   const old=
-   JSON.parse(raw);
+      const old=JSON.parse(raw);
 
-   saveData={
-    ...saveData,
-    ...old,
-    levelStars:{
-     ...saveData.levelStars,
-     ...(old.levelStars||{})
-    },
-    inventory:{
-     ...saveData.inventory,
-     ...(old.inventory||{})
-    }
-   };
+      saveData={
+        ...saveData,
+        ...old,
+        levelStars:{
+          ...saveData.levelStars,
+          ...(old.levelStars||{})
+        },
+        inventory:{
+          ...saveData.inventory,
+          ...(old.inventory||{})
+        }
+      };
 
-  }catch(e){}
+    }catch(e){}
 
- }
+  }
 
 }
 
 function saveProgress(){
 
- localStorage.setItem(
-  SAVE_KEY,
-  JSON.stringify(saveData)
- );
+  localStorage.setItem(
+    SAVE_KEY,
+    JSON.stringify(saveData)
+  );
 
 }
 
-/* =============================
-PROFILE
-============================= */
+/* PROFILE */
 
 function chooseAvatar(a,el){
 
- selectedAvatar=a;
+  selectedAvatar=a;
 
- document.querySelectorAll(".avatar")
- .forEach(x=>x.classList.remove("selected"));
+  document.querySelectorAll(".avatar")
+  .forEach(x=>x.classList.remove("selected"));
 
- el.classList.add("selected");
+  el.classList.add("selected");
 
 }
 
 function createProfile(){
 
- const name=
- document.getElementById("username")
- .value.trim();
+  const name=
+  document.getElementById("username")
+  .value.trim();
 
- if(!name){
+  if(!name){
 
-  alert("Please enter your player name.");
+    alert("Please enter your player name.");
+    return;
 
-  return;
+  }
 
- }
+  saveData.profile={
+    name:name,
+    avatar:selectedAvatar
+  };
 
- saveData.profile={
-  name:name,
-  avatar:selectedAvatar
- };
+  saveProgress();
 
- saveProgress();
-
- showHome();
+  showHome();
 
 }
 
-/* =============================
-WORLDS
-============================= */
+/* WORLDS */
 
 function getWorld(level){
 
- if(level<=5)
- return{
-  name:"Galaxy World",
-  badge:"🌌 GALAXY",
-  bg:"radial-gradient(circle at 50% 10%,#4c5ccf,#182b66 42%,#070f29)"
- };
+  if(level<=5)
+  return{
+    name:"Galaxy World",
+    badge:"🌌 GALAXY",
+    bg:"radial-gradient(circle at 50% 10%,#4c5ccf,#182b66 42%,#070f29)"
+  };
 
- if(level<=10)
- return{
-  name:"Jungle World",
-  badge:"🌴 JUNGLE",
-  bg:"radial-gradient(circle at 50% 10%,#44b978,#145b49 45%,#05271f)"
- };
+  if(level<=10)
+  return{
+    name:"Jungle World",
+    badge:"🌴 JUNGLE",
+    bg:"radial-gradient(circle at 50% 10%,#44b978,#145b49 45%,#05271f)"
+  };
 
- if(level<=15)
- return{
-  name:"Candy World",
-  badge:"🍭 CANDY",
-  bg:"radial-gradient(circle at 50% 10%,#ff83c6,#9f4cba 45%,#40255f)"
- };
+  if(level<=15)
+  return{
+    name:"Candy World",
+    badge:"🍭 CANDY",
+    bg:"radial-gradient(circle at 50% 10%,#ff83c6,#9f4cba 45%,#40255f)"
+  };
 
- if(level<=20)
- return{
-  name:"Ice World",
-  badge:"❄️ ICE",
-  bg:"radial-gradient(circle at 50% 10%,#9be7ff,#3777a8 45%,#0d3156)"
- };
+  if(level<=20)
+  return{
+    name:"Ice World",
+    badge:"❄️ ICE",
+    bg:"radial-gradient(circle at 50% 10%,#9be7ff,#3777a8 45%,#0d3156)"
+  };
 
- return{
-  name:"Lava World",
-  badge:"🌋 LAVA",
-  bg:"radial-gradient(circle at 50% 10%,#ff9a3d,#9a2e20 45%,#360b0b)"
- };
+  return{
+    name:"Lava World",
+    badge:"🌋 LAVA",
+    bg:"radial-gradient(circle at 50% 10%,#ff9a3d,#9a2e20 45%,#360b0b)"
+  };
 
 }
 
 function worldData(){
- return getWorld(saveData.level);
+  return getWorld(saveData.level);
 }
 
-/* =============================
-CANNONS
-============================= */
+/* CANNONS */
 
 const cannons=[
-
- {id:"basic",name:"Basic",icon:"⚙️",need:0,speed:10,aim:180},
-
- {id:"bronze",name:"Bronze",icon:"🟤",need:500,speed:10.5,aim:205},
-
- {id:"silver",name:"Silver",icon:"⚪",need:1500,speed:11,aim:230},
-
- {id:"gold",name:"Gold",icon:"🟡",need:3000,speed:11.5,aim:255},
-
- {id:"plasma",name:"Plasma",icon:"🔵",need:5000,speed:12,aim:285},
-
- {id:"legend",name:"Legend",icon:"🔥",need:10000,speed:13,aim:320}
-
+  {id:"basic",name:"Basic",icon:"⚙️",need:0,speed:10,aim:180},
+  {id:"bronze",name:"Bronze",icon:"🟤",need:500,speed:10.5,aim:205},
+  {id:"silver",name:"Silver",icon:"⚪",need:1500,speed:11,aim:230},
+  {id:"gold",name:"Gold",icon:"🟡",need:3000,speed:11.5,aim:255},
+  {id:"plasma",name:"Plasma",icon:"🔵",need:5000,speed:12,aim:285},
+  {id:"legend",name:"Legend",icon:"🔥",need:10000,speed:13,aim:320}
 ];
 
 function cannonData(){
 
- return cannons.find(
-  c=>c.id===saveData.selectedCannon
- )||cannons[0];
+  return cannons.find(
+    c=>c.id===saveData.selectedCannon
+  )||cannons[0];
 
 }
 
 function renderCannons(){
 
- const grid=
- document.getElementById("cannonGrid");
+  const grid=
+  document.getElementById("cannonGrid");
 
- grid.innerHTML="";
+  grid.innerHTML="";
 
- cannons.forEach(c=>{
+  cannons.forEach(c=>{
 
-  const unlocked=
-  saveData.totalScore>=c.need;
+    const unlocked=
+    saveData.totalScore>=c.need;
 
-  const div=
-  document.createElement("div");
+    const div=
+    document.createElement("div");
 
-  div.className=
-   "cannon "+
-   (!unlocked?"locked ":"")+
-   (saveData.selectedCannon===c.id?"active":"");
+    div.className=
+      "cannon "+
+      (!unlocked?"locked ":"")+
+      (saveData.selectedCannon===c.id?"active":"");
 
-  div.innerHTML=
-   '<div class="icon">'+
-   (unlocked?c.icon:"🔒")+
-   '</div>'+
-   '<small>'+c.name+'</small>';
+    div.innerHTML=
+      '<div class="icon">'+
+      (unlocked?c.icon:"🔒")+
+      '</div>'+
+      '<small>'+c.name+'</small>';
 
-  if(unlocked){
+    if(unlocked){
 
-   div.onclick=()=>{
+      div.onclick=()=>{
 
-    saveData.selectedCannon=c.id;
+        saveData.selectedCannon=c.id;
 
-    saveProgress();
+        saveProgress();
 
-    renderCannons();
+        renderCannons();
 
-   };
+      };
 
-  }
+    }
 
-  grid.appendChild(div);
+    grid.appendChild(div);
 
- });
+  });
 
- const active=
- cannonData();
+  const active=cannonData();
 
- document.getElementById(
-  "activeCannonText"
- ).textContent=
- active.icon+" "+active.name;
+  document.getElementById(
+    "activeCannonText"
+  ).textContent=
+  active.icon+" "+active.name;
 
- const next=
- cannons.find(
-  c=>c.need>saveData.totalScore
- );
+  const next=
+  cannons.find(
+    c=>c.need>saveData.totalScore
+  );
 
- document.getElementById(
-  "unlockText"
- ).textContent=
- next
- ?"Next cannon: "+next.name+" at "+next.need+" points"
- :"👑 All cannons unlocked!";
+  document.getElementById(
+    "unlockText"
+  ).textContent=
+  next
+  ?"Next cannon: "+next.name+" at "+next.need+" points"
+  :"👑 All cannons unlocked!";
 
 }
 
-/* =============================
-HOME
-============================= */
+/* HOME */
 
 function showHome(){
 
- running=false;
- paused=false;
+  running=false;
+  paused=false;
 
- const world=
- worldData();
+  const world=
+  worldData();
 
- document.getElementById("app")
- .style.background=
- world.bg;
+  document.getElementById("app")
+  .style.background=
+  world.bg;
 
- document.getElementById(
-  "profileScreen"
- ).classList.add("hidden");
+  document.getElementById(
+    "profileScreen"
+  ).classList.add("hidden");
 
- document.getElementById(
-  "gameScreen"
- ).classList.add("hidden");
+  document.getElementById(
+    "gameScreen"
+  ).classList.add("hidden");
 
- document.getElementById(
-  "homeScreen"
- ).classList.remove("hidden");
+  document.getElementById(
+    "homeScreen"
+  ).classList.remove("hidden");
 
- document.getElementById(
-  "homeAvatar"
- ).textContent=
- saveData.profile.avatar;
+  document.getElementById(
+    "homeAvatar"
+  ).textContent=
+  saveData.profile.avatar;
 
- document.getElementById(
-  "homeName"
- ).textContent=
- saveData.profile.name;
+  document.getElementById(
+    "homeName"
+  ).textContent=
+  saveData.profile.name;
 
- document.getElementById(
-  "homeLevel"
- ).textContent=
- "Level "+saveData.level;
+  document.getElementById(
+    "homeLevel"
+  ).textContent=
+  "Level "+saveData.level;
 
- document.getElementById(
-  "worldName"
- ).textContent=
- world.name;
+  document.getElementById(
+    "worldName"
+  ).textContent=
+  world.name;
 
- document.getElementById(
-  "worldBadge"
- ).textContent=
- world.badge;
+  document.getElementById(
+    "worldBadge"
+  ).textContent=
+  world.badge;
 
- document.getElementById(
-  "totalScore"
- ).textContent=
- saveData.totalScore;
+  document.getElementById(
+    "totalScore"
+  ).textContent=
+  saveData.totalScore;
 
- document.getElementById(
-  "totalStars"
- ).textContent=
- saveData.totalStars+" ⭐";
+  document.getElementById(
+    "totalStars"
+  ).textContent=
+  saveData.totalStars+" ⭐";
 
- document.getElementById(
-  "bestLevel"
- ).textContent=
- saveData.bestLevelScore;
+  document.getElementById(
+    "bestLevel"
+  ).textContent=
+  saveData.bestLevelScore;
 
- document.getElementById(
-  "coinBox"
- ).textContent=
- "🪙 "+saveData.coins;
+  document.getElementById(
+    "coinBox"
+  ).textContent=
+  "🪙 "+saveData.coins;
 
- document.getElementById(
-  "continueButton"
- ).textContent=
- isBossLevel(saveData.level)
- ?"👹 ENTER BOSS LEVEL "+saveData.level
- :"▶ CONTINUE LEVEL "+saveData.level;
+  document.getElementById(
+    "continueButton"
+  ).textContent=
+  isBossLevel(saveData.level)
+  ?"👹 ENTER BOSS LEVEL "+saveData.level
+  :"▶ CONTINUE LEVEL "+saveData.level;
 
- renderCannons();
+  renderCannons();
 
- updateDailyChallengeCard();
+  updateDailyChallengeCard();
 
 }
 
-/* =============================
-LEVEL MAP
-============================= */
+/* LEVEL MAP */
 
 function isBossLevel(level){
- return level%5===0;
+  return level%5===0;
 }
 
 function openMap(){
 
- const map=
- document.getElementById("levelMap");
+  const map=
+  document.getElementById("levelMap");
 
- map.innerHTML="";
+  map.innerHTML="";
 
- const maxShown=
- Math.max(
-  20,
-  saveData.level+5
- );
+  const maxShown=
+  Math.max(
+    20,
+    saveData.level+5
+  );
 
- for(let level=1;level<=maxShown;level++){
+  for(let level=1;level<=maxShown;level++){
 
-  const btn=
-  document.createElement("button");
+    const btn=
+    document.createElement("button");
 
-  const completed=
-  level<saveData.level;
+    const completed=
+    level<saveData.level;
 
-  const current=
-  level===saveData.level;
+    const current=
+    level===saveData.level;
 
-  const locked=
-  level>saveData.level;
+    const locked=
+    level>saveData.level;
 
-  const boss=
-  isBossLevel(level);
+    const boss=
+    isBossLevel(level);
 
-  btn.className=
-   "mapNode "+
-   (completed?"completed ":"")+
-   (current?"current ":"")+
-   (locked?"locked ":"")+
-   (boss?"boss ":"");
+    btn.className=
+      "mapNode "+
+      (completed?"completed ":"")+
+      (current?"current ":"")+
+      (locked?"locked ":"")+
+      (boss?"boss ":"");
 
-  const stars=
-  saveData.levelStars[level]||0;
+    const stars=
+    saveData.levelStars[level]||0;
 
-  btn.innerHTML=
-   '<div class="nodeCircle">'+
-   (locked
-    ?"🔒"
-    :boss
-     ?"👹"
-     :level)+
-   '</div>'+
-   '<div class="nodeStars">'+
-   (stars
-    ?"⭐".repeat(stars)
-    :"")+
-   '</div>'+
-   '<div class="nodeLabel">'+
-   (boss
-    ?"BOSS "+level
-    :"LEVEL "+level)+
-   '</div>';
+    btn.innerHTML=
+      '<div class="nodeCircle">'+
+      (locked
+       ?"🔒"
+       :boss
+        ?"👹"
+        :level)+
+      '</div>'+
+      '<div class="nodeStars">'+
+      (stars
+       ?"⭐".repeat(stars)
+       :"")+
+      '</div>'+
+      '<div class="nodeLabel">'+
+      (boss
+       ?"BOSS "+level
+       :"LEVEL "+level)+
+      '</div>';
 
-  if(!locked){
+    if(!locked){
 
-   btn.onclick=()=>{
+      btn.onclick=()=>{
 
-    if(level===saveData.level){
+        if(level===saveData.level){
 
-     closeMap();
+          closeMap();
 
-     prepareLevel(level);
+          prepareLevel(level);
+
+        }
+
+      };
 
     }
 
-   };
+    map.appendChild(btn);
 
   }
 
-  map.appendChild(btn);
-
- }
-
- document.getElementById(
-  "mapOverlay"
- ).classList.remove("hidden");
+  document.getElementById(
+    "mapOverlay"
+  ).classList.remove("hidden");
 
 }
 
 function closeMap(){
 
- document.getElementById(
-  "mapOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "mapOverlay"
+  ).classList.add("hidden");
 
 }
 
-/* =============================
-DAILY CHALLENGE
-============================= */
+/* DAILY */
 
 function localDateKey(){
 
- const d=
- new Date();
+  const d=new Date();
 
- return[
-  d.getFullYear(),
-  d.getMonth()+1,
-  d.getDate()
- ].join("-");
+  return[
+    d.getFullYear(),
+    d.getMonth()+1,
+    d.getDate()
+  ].join("-");
 
 }
 
 function dailySeed(){
 
- const key=
- localDateKey();
+  const key=
+  localDateKey();
 
- return key
- .split("")
- .reduce(
-  (a,c)=>a+c.charCodeAt(0),
-  0
- );
+  return key
+  .split("")
+  .reduce(
+    (a,c)=>a+c.charCodeAt(0),
+    0
+  );
 
 }
 
 function dailyConfig(){
 
- const seed=
- dailySeed();
+  const seed=
+  dailySeed();
 
- const goal=
- 500+
- (seed%5)*100;
-
- const shots=
- 20+
- (seed%6);
-
- return{
-  goal:goal,
-  shots:shots,
-  rewardCoins:
-  200+(seed%4)*50
- };
+  return{
+    goal:500+(seed%5)*100,
+    shots:20+(seed%6),
+    rewardCoins:200+(seed%4)*50
+  };
 
 }
 
 function updateDailyChallengeCard(){
 
- const cfg=
- dailyConfig();
+  const cfg=
+  dailyConfig();
 
- document.getElementById(
-  "dailyDescription"
- ).textContent=
- "Score "+
- cfg.goal+
- " points using only "+
- cfg.shots+
- " shots.";
+  document.getElementById(
+    "dailyDescription"
+  ).textContent=
+  "Score "+
+  cfg.goal+
+  " points using only "+
+  cfg.shots+
+  " shots.";
 
- document.getElementById(
-  "dailyReward"
- ).textContent=
- "Reward: 🪙 "+
- cfg.rewardCoins+
- " + 💣 Bomb";
+  document.getElementById(
+    "dailyReward"
+  ).textContent=
+  "Reward: 🪙 "+
+  cfg.rewardCoins+
+  " + 💣 Bomb";
 
- const btn=
- document.getElementById(
-  "dailyPlayBtn"
- );
+  const btn=
+  document.getElementById(
+    "dailyPlayBtn"
+  );
 
- if(
-  saveData.dailyCompleted===
-  localDateKey()
- ){
+  if(
+    saveData.dailyCompleted===
+    localDateKey()
+  ){
 
-  btn.textContent=
-  "✅ COMPLETED TODAY";
+    btn.textContent=
+    "✅ COMPLETED TODAY";
 
-  btn.disabled=true;
+    btn.disabled=true;
 
-  btn.style.opacity=.7;
+    btn.style.opacity=.7;
 
- }else{
+  }else{
 
-  btn.textContent=
-  "PLAY DAILY CHALLENGE";
+    btn.textContent=
+    "PLAY DAILY CHALLENGE";
 
-  btn.disabled=false;
+    btn.disabled=false;
 
-  btn.style.opacity=1;
+    btn.style.opacity=1;
 
- }
+  }
 
 }
 
 function startDailyChallenge(){
 
- if(
-  saveData.dailyCompleted===
-  localDateKey()
- )return;
+  if(
+    saveData.dailyCompleted===
+    localDateKey()
+  )return;
 
- gameMode="daily";
+  gameMode="daily";
 
- const cfg=
- dailyConfig();
+  const cfg=
+  dailyConfig();
 
- customGoal=
- cfg.goal;
+  customGoal=
+  cfg.goal;
 
- customShots=
- cfg.shots;
+  customShots=
+  cfg.shots;
 
- startLevel();
+  startLevel();
 
 }
 
-/* =============================
-BOSS LEVEL
-============================= */
+/* BOSS */
 
 let pendingBossLevel=null;
 
 function prepareCurrentLevel(){
 
- prepareLevel(
-  saveData.level
- );
+  prepareLevel(
+    saveData.level
+  );
 
 }
 
 function prepareLevel(level){
 
- gameMode="normal";
+  gameMode="normal";
 
- if(isBossLevel(level)){
+  if(isBossLevel(level)){
 
-  pendingBossLevel=level;
+    pendingBossLevel=level;
 
-  const bossGoal=
-  levelGoal(level)+
-  350;
+    const bossGoal=
+    levelGoal(level)+350;
 
-  document.getElementById(
-   "bossLevelTitle"
-  ).textContent=
-  "LEVEL "+level;
+    document.getElementById(
+      "bossLevelTitle"
+    ).textContent=
+    "LEVEL "+level;
 
-  document.getElementById(
-   "bossGoalText"
-  ).textContent=
-  "Score "+
-  bossGoal+
-  " points with only "+
-  Math.max(
-   17,
-   levelShots(level)-5
-  )+
-  " shots.";
+    document.getElementById(
+      "bossGoalText"
+    ).textContent=
+    "Score "+
+    bossGoal+
+    " points with only "+
+    Math.max(
+      17,
+      levelShots(level)-5
+    )+
+    " shots.";
 
-  document.getElementById(
-   "bossOverlay"
-  ).classList.remove(
-   "hidden"
-  );
+    document.getElementById(
+      "bossOverlay"
+    ).classList.remove("hidden");
 
- }else{
+  }else{
 
-  startLevel();
+    startLevel();
 
- }
+  }
 
 }
 
 function startBossBattle(){
 
- document.getElementById(
-  "bossOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "bossOverlay"
+  ).classList.add("hidden");
 
- gameMode="boss";
+  gameMode="boss";
 
- startLevel();
+  startLevel();
 
 }
 
 function cancelBoss(){
 
- document.getElementById(
-  "bossOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "bossOverlay"
+  ).classList.add("hidden");
 
 }
 
-/* =============================
-SHOP
-============================= */
+/* SHOP */
 
 function openShop(){
 
- updateShop();
+  updateShop();
 
- document.getElementById(
-  "shopOverlay"
- ).classList.remove("hidden");
+  document.getElementById(
+    "shopOverlay"
+  ).classList.remove("hidden");
 
 }
 
 function closeShop(){
 
- document.getElementById(
-  "shopOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "shopOverlay"
+  ).classList.add("hidden");
 
- showHome();
+  showHome();
 
 }
 
 function updateShop(){
 
- document.getElementById(
-  "shopBalance"
- ).textContent=
- "🪙 "+saveData.coins+" Coins";
+  document.getElementById(
+    "shopBalance"
+  ).textContent=
+  "🪙 "+saveData.coins+" Coins";
 
 }
 
 function buyPower(type,cost){
 
- if(saveData.coins<cost){
+  if(saveData.coins<cost){
 
-  alert("Not enough coins.");
+    alert("Not enough coins.");
+    return;
 
-  return;
+  }
 
- }
+  saveData.coins-=cost;
 
- saveData.coins-=cost;
+  saveData.inventory[type]++;
 
- saveData.inventory[type]++;
+  saveProgress();
 
- saveProgress();
-
- updateShop();
+  updateShop();
 
 }
 
-/* =============================
-GAME CORE
-============================= */
+/* GAME */
 
 const canvas=
 document.getElementById("game");
@@ -1430,12 +1681,12 @@ const ctx=
 canvas.getContext("2d");
 
 const colors=[
- "#ff4d67",
- "#ffb21c",
- "#24d18b",
- "#3f8cff",
- "#9b59ff",
- "#ff60c5"
+  "#ff4d67",
+  "#ffb21c",
+  "#24d18b",
+  "#3f8cff",
+  "#9b59ff",
+  "#ff60c5"
 ];
 
 const ROWS=12;
@@ -1475,2120 +1726,2135 @@ let gameMode="normal";
 let customGoal=null;
 let customShots=null;
 
-/* =============================
-LEVEL DIFFICULTY
-============================= */
+/* LEVEL */
 
 function levelGoal(level=saveData.level){
-
- return 250+
- (level-1)*90;
-
+  return 250+(level-1)*90;
 }
 
 function levelShots(level=saveData.level){
 
- return Math.max(
-  20,
-  31-
-  Math.floor(level/3)
- );
+  return Math.max(
+    20,
+    31-Math.floor(level/3)
+  );
 
 }
 
 function availableColors(){
 
- if(saveData.level<=2)
- return colors.slice(0,4);
+  if(saveData.level<=2)
+  return colors.slice(0,4);
 
- if(saveData.level<=6)
- return colors.slice(0,5);
+  if(saveData.level<=6)
+  return colors.slice(0,5);
 
- return colors;
+  return colors;
 
 }
 
 function randomColor(){
 
- const list=
- availableColors();
+  const list=
+  availableColors();
 
- return list[
-  Math.floor(
-   Math.random()*list.length
-  )
- ];
+  return list[
+    Math.floor(
+      Math.random()*list.length
+    )
+  ];
 
 }
 
-/* =============================
-CANVAS
-============================= */
+/* SIZE */
 
 function resize(){
 
- const app=
- document.getElementById("app")
- .getBoundingClientRect();
+  const app=
+  document.getElementById("app")
+  .getBoundingClientRect();
 
- W=app.width;
+  W=app.width;
 
- H=app.height-105;
+  /*
+    Reserve gameTop + fixed bottom toolbar.
+  */
+  H=Math.max(
+    420,
+    app.height-105-72
+  );
 
- const dpr=
- window.devicePixelRatio||1;
+  const dpr=
+  window.devicePixelRatio||1;
 
- canvas.width=W*dpr;
- canvas.height=H*dpr;
+  canvas.width=W*dpr;
+  canvas.height=H*dpr;
 
- canvas.style.width=W+"px";
- canvas.style.height=H+"px";
+  canvas.style.width=W+"px";
+  canvas.style.height=H+"px";
 
- ctx.setTransform(
-  dpr,0,0,dpr,0,0
- );
+  ctx.setTransform(
+    dpr,0,0,dpr,0,0
+  );
 
- radius=
- Math.min(
-  20,
-  (W-20)/(COLS*2)
- );
+  radius=
+  Math.min(
+    20,
+    (W-20)/(COLS*2)
+  );
 
- diameter=
- radius*2;
+  diameter=
+  radius*2;
 
- shooterX=
- W/2;
+  shooterX=
+  W/2;
 
- shooterY=
- H-56;
+  shooterY=
+  H-46;
 
 }
 
-/* =============================
-BOARD
-============================= */
+/* BOARD */
 
 function makeGrid(){
 
- grid=[];
+  grid=[];
 
- let filled=
- Math.min(
-  4+
-  Math.floor(
-   (saveData.level-1)/3
-  ),
-  7
- );
+  let filled=
+  Math.min(
+    4+
+    Math.floor(
+      (saveData.level-1)/3
+    ),
+    7
+  );
 
- if(gameMode==="boss")
- filled=Math.min(
-  8,
-  filled+1
- );
+  if(gameMode==="boss")
+  filled=Math.min(
+    8,
+    filled+1
+  );
 
- const pattern=
- gameMode==="daily"
- ?dailySeed()%4
- :saveData.level%4;
+  const pattern=
+  gameMode==="daily"
+  ?dailySeed()%4
+  :saveData.level%4;
 
- for(let r=0;r<ROWS;r++){
+  for(let r=0;r<ROWS;r++){
 
-  const row=[];
+    const row=[];
 
-  for(let c=0;c<COLS;c++){
+    for(let c=0;c<COLS;c++){
 
-   let fill=
-   r<filled;
+      let fill=
+      r<filled;
 
-   if(fill){
+      if(fill){
 
-    if(
-     pattern===2 &&
-     r>1 &&
-     (r+c)%4===0
-    ){
-     fill=false;
+        if(
+          pattern===2 &&
+          r>1 &&
+          (r+c)%4===0
+        ){
+          fill=false;
+        }
+
+        if(
+          pattern===3 &&
+          r>1 &&
+          (
+            c<Math.floor(r/3) ||
+            c>COLS-1-Math.floor(r/3)
+          )
+        ){
+          fill=false;
+        }
+
+        if(
+          pattern===0 &&
+          r>1 &&
+          c%4===2
+        ){
+          fill=false;
+        }
+
+      }
+
+      row.push(
+        fill
+        ?{color:randomColor()}
+        :null
+      );
+
     }
 
-    if(
-     pattern===3 &&
-     r>1 &&
-     (
-      c<Math.floor(r/3) ||
-      c>COLS-1-Math.floor(r/3)
-     )
-    ){
-     fill=false;
-    }
-
-    if(
-     pattern===0 &&
-     r>1 &&
-     c%4===2
-    ){
-     fill=false;
-    }
-
-   }
-
-   row.push(
-    fill
-    ?{color:randomColor()}
-    :null
-   );
+    grid.push(row);
 
   }
-
-  grid.push(row);
-
- }
 
 }
 
 function bubblePos(r,c){
 
- const offset=
- r%2?radius:0;
+  const offset=
+  r%2?radius:0;
 
- return{
-  x:
-  radius+8+
-  c*diameter+
-  offset,
+  return{
+    x:
+    radius+8+
+    c*diameter+
+    offset,
 
-  y:
-  radius+8+
-  r*(radius*1.72)
- };
+    y:
+    radius+8+
+    r*(radius*1.72)
+  };
 
 }
 
-/* =============================
-SHOT
-============================= */
+/* SHOT */
 
 function randomShot(){
 
- const roll=
- Math.random();
+  const roll=
+  Math.random();
 
- if(
-  saveData.level>=4 &&
-  roll<.035
- ){
+  if(
+    saveData.level>=4 &&
+    roll<.035
+  ){
+    return{
+      type:"lightning",
+      color:"#fff"
+    };
+  }
+
+  if(
+    saveData.level>=3 &&
+    roll<.07
+  ){
+    return{
+      type:"bomb",
+      color:"#222"
+    };
+  }
+
+  if(
+    saveData.level>=2 &&
+    roll<.105
+  ){
+    return{
+      type:"rainbow",
+      color:"#fff"
+    };
+  }
+
   return{
-   type:"lightning",
-   color:"#fff"
+    type:"normal",
+    color:randomColor()
   };
- }
-
- if(
-  saveData.level>=3 &&
-  roll<.07
- ){
-  return{
-   type:"bomb",
-   color:"#222"
-  };
- }
-
- if(
-  saveData.level>=2 &&
-  roll<.105
- ){
-  return{
-   type:"rainbow",
-   color:"#fff"
-  };
- }
-
- return{
-  type:"normal",
-  color:randomColor()
- };
 
 }
 
-/* =============================
-DRAW BUBBLE
-============================= */
+/* DRAW BUBBLE */
 
 function drawBubble(
- x,y,color,type="normal"
+  x,y,color,type="normal"
 ){
 
- if(type!=="normal"){
+  if(type!=="normal"){
 
-  const icons={
-   bomb:"💣",
-   rainbow:"🌈",
-   lightning:"⚡",
-   color:"🎨"
-  };
+    const icons={
+      bomb:"💣",
+      rainbow:"🌈",
+      lightning:"⚡",
+      color:"🎨"
+    };
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x,y,radius,
+      0,Math.PI*2
+    );
+
+    ctx.fillStyle=
+    type==="bomb"
+    ?"#222a37"
+    :"#fff";
+
+    ctx.fill();
+
+    ctx.font=
+    (radius*1.05)+
+    "px Arial";
+
+    ctx.textAlign="center";
+
+    ctx.textBaseline="middle";
+
+    ctx.fillText(
+      icons[type],
+      x,
+      y+1
+    );
+
+    return;
+
+  }
+
+  const g=
+  ctx.createRadialGradient(
+    x-radius*.35,
+    y-radius*.4,
+    radius*.1,
+    x,y,radius
+  );
+
+  g.addColorStop(
+    0,
+    "#fff"
+  );
+
+  g.addColorStop(
+    .18,
+    color
+  );
+
+  g.addColorStop(
+    1,
+    color
+  );
 
   ctx.beginPath();
 
   ctx.arc(
-   x,y,radius,
-   0,Math.PI*2
+    x,y,radius,
+    0,Math.PI*2
   );
 
-  ctx.fillStyle=
-  type==="bomb"
-  ?"#222a37"
-  :"#fff";
+  ctx.fillStyle=g;
 
   ctx.fill();
 
-  ctx.font=
-  (radius*1.05)+
-  "px Arial";
+  ctx.strokeStyle=
+  "rgba(255,255,255,.5)";
 
-  ctx.textAlign="center";
-
-  ctx.textBaseline="middle";
-
-  ctx.fillText(
-   icons[type],
-   x,
-   y+1
-  );
-
-  return;
-
- }
-
- const g=
- ctx.createRadialGradient(
-  x-radius*.35,
-  y-radius*.4,
-  radius*.1,
-  x,y,radius
- );
-
- g.addColorStop(
-  0,
-  "#fff"
- );
-
- g.addColorStop(
-  .18,
-  color
- );
-
- g.addColorStop(
-  1,
-  color
- );
-
- ctx.beginPath();
-
- ctx.arc(
-  x,y,radius,
-  0,Math.PI*2
- );
-
- ctx.fillStyle=g;
-
- ctx.fill();
-
- ctx.strokeStyle=
- "rgba(255,255,255,.5)";
-
- ctx.stroke();
+  ctx.stroke();
 
 }
 
-/* =============================
-PARTICLES
-============================= */
+/* PARTICLES */
 
 function createParticles(
- x,y,color,count=12
+  x,y,color,count=12
 ){
 
- for(let i=0;i<count;i++){
+  for(let i=0;i<count;i++){
 
-  const a=
-  Math.random()*Math.PI*2;
+    const a=
+    Math.random()*Math.PI*2;
 
-  const speed=
-  1+Math.random()*4;
+    const speed=
+    1+Math.random()*4;
 
-  particles.push({
-   x:x,
-   y:y,
-   vx:Math.cos(a)*speed,
-   vy:Math.sin(a)*speed,
-   life:1,
-   size:2+Math.random()*4,
-   color:color
-  });
+    particles.push({
+      x:x,
+      y:y,
+      vx:Math.cos(a)*speed,
+      vy:Math.sin(a)*speed,
+      life:1,
+      size:2+Math.random()*4,
+      color:color
+    });
 
- }
+  }
 
 }
 
 function updateParticles(){
 
- for(
-  let i=
-  particles.length-1;
-  i>=0;
-  i--
- ){
+  for(
+    let i=
+    particles.length-1;
+    i>=0;
+    i--
+  ){
 
-  const p=
-  particles[i];
+    const p=
+    particles[i];
 
-  p.x+=p.vx;
-  p.y+=p.vy;
+    p.x+=p.vx;
+    p.y+=p.vy;
 
-  p.vy+=.05;
+    p.vy+=.05;
 
-  p.life-=.04;
+    p.life-=.04;
 
-  if(p.life<=0)
-  particles.splice(i,1);
+    if(p.life<=0)
+    particles.splice(i,1);
 
- }
+  }
 
 }
 
 function drawParticles(){
 
- particles.forEach(p=>{
+  particles.forEach(p=>{
 
-  ctx.globalAlpha=
-  p.life;
+    ctx.globalAlpha=
+    p.life;
 
-  ctx.beginPath();
+    ctx.beginPath();
 
-  ctx.arc(
-   p.x,p.y,p.size,
-   0,Math.PI*2
-  );
+    ctx.arc(
+      p.x,p.y,p.size,
+      0,Math.PI*2
+    );
 
-  ctx.fillStyle=
-  p.color;
+    ctx.fillStyle=
+    p.color;
 
-  ctx.fill();
+    ctx.fill();
 
- });
+  });
 
- ctx.globalAlpha=1;
+  ctx.globalAlpha=1;
 
 }
 
-/* =============================
-CANNON
-============================= */
+/* CANNON */
 
 function aimAngle(){
 
- let dx=
- aimX-shooterX;
+  let dx=
+  aimX-shooterX;
 
- let dy=
- aimY-shooterY;
+  let dy=
+  aimY-shooterY;
 
- if(dy>0)
- dy=-10;
+  if(dy>0)
+  dy=-10;
 
- let a=
- Math.atan2(dy,dx);
+  let a=
+  Math.atan2(dy,dx);
 
- a=
- Math.max(
-  -Math.PI+.18,
-  Math.min(-.18,a)
- );
+  a=
+  Math.max(
+    -Math.PI+.18,
+    Math.min(-.18,a)
+  );
 
- return a;
+  return a;
 
 }
 
 function cannonStyle(){
 
- const styles={
+  const styles={
 
-  basic:[
-   "#566573",
-   "#95a5a6",
-   "#2c3e50"
-  ],
+    basic:[
+      "#566573",
+      "#95a5a6",
+      "#2c3e50"
+    ],
 
-  bronze:[
-   "#a66a3f",
-   "#d39b6a",
-   "#6f4527"
-  ],
+    bronze:[
+      "#a66a3f",
+      "#d39b6a",
+      "#6f4527"
+    ],
 
-  silver:[
-   "#aab7b8",
-   "#ecf0f1",
-   "#566573"
-  ],
+    silver:[
+      "#aab7b8",
+      "#ecf0f1",
+      "#566573"
+    ],
 
-  gold:[
-   "#d4ac0d",
-   "#f7dc6f",
-   "#9a7d0a"
-  ],
+    gold:[
+      "#d4ac0d",
+      "#f7dc6f",
+      "#9a7d0a"
+    ],
 
-  plasma:[
-   "#2e86de",
-   "#48dbfb",
-   "#154360"
-  ],
+    plasma:[
+      "#2e86de",
+      "#48dbfb",
+      "#154360"
+    ],
 
-  legend:[
-   "#c0392b",
-   "#ff8c42",
-   "#641e16"
-  ]
+    legend:[
+      "#c0392b",
+      "#ff8c42",
+      "#641e16"
+    ]
 
- };
+  };
 
- return styles[
-  cannonData().id
- ]||styles.basic;
+  return styles[
+    cannonData().id
+  ]||styles.basic;
 
 }
 
 function barrelPosition(){
 
- const a=
- aimAngle();
+  const a=
+  aimAngle();
 
- const distance=
- 70-recoil;
+  const distance=
+  70-recoil;
 
- return{
-  x:
-  shooterX+
-  Math.cos(a)*distance,
+  return{
+    x:
+    shooterX+
+    Math.cos(a)*distance,
 
-  y:
-  shooterY+
-  Math.sin(a)*distance,
+    y:
+    shooterY+
+    Math.sin(a)*distance,
 
-  angle:a
- };
+    angle:a
+  };
 
 }
 
 function drawCannon(){
 
- const a=
- aimAngle();
+  const a=
+  aimAngle();
 
- const s=
- cannonStyle();
+  const s=
+  cannonStyle();
 
- ctx.save();
+  ctx.save();
 
- ctx.translate(
-  shooterX,
-  shooterY
- );
+  ctx.translate(
+    shooterX,
+    shooterY
+  );
 
- ctx.rotate(a);
+  ctx.rotate(a);
 
- const g=
- ctx.createLinearGradient(
-  0,-11,
-  0,11
- );
+  const g=
+  ctx.createLinearGradient(
+    0,-11,
+    0,11
+  );
 
- g.addColorStop(
-  0,"#fff"
- );
+  g.addColorStop(
+    0,"#fff"
+  );
 
- g.addColorStop(
-  .25,s[1]
- );
+  g.addColorStop(
+    .25,s[1]
+  );
 
- g.addColorStop(
-  1,s[0]
- );
+  g.addColorStop(
+    1,s[0]
+  );
 
- ctx.fillStyle=g;
+  ctx.fillStyle=g;
 
- ctx.beginPath();
+  ctx.beginPath();
 
- ctx.roundRect(
-  0,-11,
-  58,22,
-  7
- );
+  ctx.roundRect(
+    0,-11,
+    58,22,
+    7
+  );
 
- ctx.fill();
+  ctx.fill();
 
- ctx.beginPath();
+  ctx.beginPath();
 
- ctx.arc(
-  58,0,
-  14,
-  0,Math.PI*2
- );
+  ctx.arc(
+    58,0,
+    14,
+    0,Math.PI*2
+  );
 
- ctx.fillStyle=
- s[2];
+  ctx.fillStyle=
+  s[2];
 
- ctx.fill();
+  ctx.fill();
 
- ctx.restore();
+  ctx.restore();
 
- ctx.beginPath();
+  ctx.beginPath();
 
- ctx.arc(
-  shooterX,
-  shooterY,
-  30,
-  0,
-  Math.PI*2
- );
+  ctx.arc(
+    shooterX,
+    shooterY,
+    30,
+    0,
+    Math.PI*2
+  );
 
- ctx.fillStyle=
- s[0];
+  ctx.fillStyle=
+  s[0];
 
- ctx.fill();
+  ctx.fill();
 
- ctx.strokeStyle=
- s[1];
+  ctx.strokeStyle=
+  s[1];
 
- ctx.lineWidth=4;
+  ctx.lineWidth=4;
 
- ctx.stroke();
+  ctx.stroke();
 
 }
 
 function drawAim(){
 
- const b=
- barrelPosition();
+  const b=
+  barrelPosition();
 
- const len=
- cannonData().aim;
+  const len=
+  cannonData().aim;
 
- const ux=
- Math.cos(b.angle);
+  const ux=
+  Math.cos(b.angle);
 
- const uy=
- Math.sin(b.angle);
+  const uy=
+  Math.sin(b.angle);
 
- ctx.setLineDash(
-  [6,9]
- );
+  ctx.setLineDash(
+    [6,9]
+  );
 
- ctx.beginPath();
+  ctx.beginPath();
 
- ctx.moveTo(
-  b.x,b.y
- );
+  ctx.moveTo(
+    b.x,b.y
+  );
 
- ctx.lineTo(
-  b.x+ux*len,
-  b.y+uy*len
- );
+  ctx.lineTo(
+    b.x+ux*len,
+    b.y+uy*len
+  );
 
- ctx.strokeStyle=
- "rgba(255,255,255,.65)";
+  ctx.strokeStyle=
+  "rgba(255,255,255,.65)";
 
- ctx.lineWidth=2;
+  ctx.lineWidth=2;
 
- ctx.stroke();
+  ctx.stroke();
 
- ctx.setLineDash([]);
+  ctx.setLineDash([]);
 
 }
 
-/* =============================
-DRAW LOOP
-============================= */
+/* DRAW LOOP */
 
 function draw(){
 
- if(
-  !running ||
-  paused
- )return;
+  if(
+    !running ||
+    paused
+  )return;
 
- ctx.clearRect(
-  0,0,W,H
- );
-
- ctx.save();
-
- if(shake>0){
-
-  ctx.translate(
-   (Math.random()-.5)*shake,
-   (Math.random()-.5)*shake
+  ctx.clearRect(
+    0,0,W,H
   );
 
-  shake*=.8;
+  ctx.save();
 
- }
+  if(shake>0){
 
- for(let r=0;r<ROWS;r++){
-
-  for(let c=0;c<COLS;c++){
-
-   if(grid[r][c]){
-
-    const p=
-    bubblePos(r,c);
-
-    drawBubble(
-     p.x,p.y,
-     grid[r][c].color
+    ctx.translate(
+      (Math.random()-.5)*shake,
+      (Math.random()-.5)*shake
     );
 
-   }
+    shake*=.8;
 
   }
 
- }
+  for(let r=0;r<ROWS;r++){
 
- if(
-  current &&
-  !current.moving
- ){
+    for(let c=0;c<COLS;c++){
 
-  drawAim();
+      if(grid[r][c]){
 
- }
+        const p=
+        bubblePos(r,c);
 
- drawCannon();
+        drawBubble(
+          p.x,p.y,
+          grid[r][c].color
+        );
 
- if(current){
+      }
 
-  drawBubble(
-   current.x,
-   current.y,
-   current.color,
-   current.type
-  );
+    }
 
- }
-
- updateParticles();
-
- drawParticles();
-
- ctx.restore();
-
- if(recoil>0){
-
-  recoil*=.7;
+  }
 
   if(
-   current &&
-   !current.moving
+    current &&
+    !current.moving
   ){
 
-   updateLoadedBubble();
+    drawAim();
 
   }
 
- }
+  drawCannon();
 
- requestAnimationFrame(draw);
+  if(current){
+
+    drawBubble(
+      current.x,
+      current.y,
+      current.color,
+      current.type
+    );
+
+  }
+
+  updateParticles();
+
+  drawParticles();
+
+  ctx.restore();
+
+  if(recoil>0){
+
+    recoil*=.7;
+
+    if(
+      current &&
+      !current.moving
+    ){
+
+      updateLoadedBubble();
+
+    }
+
+  }
+
+  requestAnimationFrame(draw);
 
 }
 
-/* =============================
-SHOOTER
-============================= */
+/* SHOOTER */
 
 function newShooter(){
 
- const b=
- barrelPosition();
+  const b=
+  barrelPosition();
 
- if(!nextShot)
- nextShot=
- randomShot();
+  if(!nextShot)
+  nextShot=
+  randomShot();
 
- current={
-  x:b.x,
-  y:b.y,
-  color:nextShot.color,
-  type:nextShot.type,
-  moving:false,
-  vx:0,
-  vy:0
- };
+  current={
+    x:b.x,
+    y:b.y,
+    color:nextShot.color,
+    type:nextShot.type,
+    moving:false,
+    vx:0,
+    vy:0
+  };
 
- nextShot=
- randomShot();
+  nextShot=
+  randomShot();
 
- updateNext();
+  updateNext();
 
 }
 
 function updateNext(){
 
- const el=
- document.getElementById(
-  "nextDot"
- );
+  const el=
+  document.getElementById(
+    "nextDot"
+  );
 
- el.textContent="";
- el.style.background="";
+  el.textContent="";
+  el.style.background="";
 
- if(
-  nextShot.type===
-  "normal"
- ){
+  if(
+    nextShot.type===
+    "normal"
+  ){
 
-  el.style.background=
-  nextShot.color;
+    el.style.background=
+    nextShot.color;
 
- }else{
+  }else{
 
-  const icons={
-   bomb:"💣",
-   rainbow:"🌈",
-   lightning:"⚡",
-   color:"🎨"
-  };
+    const icons={
+      bomb:"💣",
+      rainbow:"🌈",
+      lightning:"⚡",
+      color:"🎨"
+    };
 
-  el.textContent=
-  icons[nextShot.type];
+    el.textContent=
+    icons[nextShot.type];
 
-  el.style.background=
-  "#fff";
+    el.style.background=
+    "#fff";
 
- }
+  }
 
 }
 
 function updateLoadedBubble(){
 
- if(
-  current &&
-  !current.moving
- ){
+  if(
+    current &&
+    !current.moving
+  ){
 
-  const b=
-  barrelPosition();
+    const b=
+    barrelPosition();
 
-  current.x=b.x;
+    current.x=b.x;
 
-  current.y=b.y;
+    current.y=b.y;
 
- }
+  }
 
 }
 
 function shoot(){
 
- if(
-  !running ||
-  paused ||
-  !current ||
-  current.moving ||
-  shotsRemaining<=0
- )return;
+  if(
+    !running ||
+    paused ||
+    !current ||
+    current.moving ||
+    shotsRemaining<=0
+  )return;
 
- const a=
- aimAngle();
+  const a=
+  aimAngle();
 
- const speed=
- cannonData().speed;
+  const speed=
+  cannonData().speed;
 
- const b=
- barrelPosition();
+  const b=
+  barrelPosition();
 
- current.x=b.x;
- current.y=b.y;
+  current.x=b.x;
+  current.y=b.y;
 
- current.vx=
- Math.cos(a)*speed;
+  current.vx=
+  Math.cos(a)*speed;
 
- current.vy=
- Math.sin(a)*speed;
+  current.vy=
+  Math.sin(a)*speed;
 
- current.moving=true;
+  current.moving=true;
 
- shotsRemaining--;
+  shotsRemaining--;
 
- recoil=12;
+  recoil=12;
 
- updateGameUI();
+  updateGameUI();
 
- animateShot();
+  animateShot();
 
 }
 
-/* =============================
-SHOT MOVEMENT
-============================= */
+/* SHOT MOVEMENT */
 
 function animateShot(){
 
- if(
-  !current ||
-  !current.moving ||
-  paused
- )return;
+  if(
+    !current ||
+    !current.moving ||
+    paused
+  )return;
 
- current.x+=
- current.vx;
+  current.x+=
+  current.vx;
 
- current.y+=
- current.vy;
+  current.y+=
+  current.vy;
 
- if(
-  current.x-radius<0
- ){
+  if(
+    current.x-radius<0
+  ){
 
-  current.x=radius;
+    current.x=radius;
 
-  current.vx*=-1;
+    current.vx*=-1;
 
- }
+  }
 
- if(
-  current.x+radius>W
- ){
+  if(
+    current.x+radius>W
+  ){
 
-  current.x=
-  W-radius;
+    current.x=
+    W-radius;
 
-  current.vx*=-1;
+    current.vx*=-1;
 
- }
+  }
 
- if(
-  current.y-radius<=0
- ){
-
-  attachShot();
-
-  return;
-
- }
-
- for(let r=0;r<ROWS;r++){
-
-  for(let c=0;c<COLS;c++){
-
-   if(!grid[r][c])
-   continue;
-
-   const p=
-   bubblePos(r,c);
-
-   const dx=
-   current.x-p.x;
-
-   const dy=
-   current.y-p.y;
-
-   if(
-    Math.sqrt(
-     dx*dx+
-     dy*dy
-    )<
-    diameter-3
-   ){
+  if(
+    current.y-radius<=0
+  ){
 
     attachShot();
 
     return;
 
-   }
+  }
+
+  for(let r=0;r<ROWS;r++){
+
+    for(let c=0;c<COLS;c++){
+
+      if(!grid[r][c])
+      continue;
+
+      const p=
+      bubblePos(r,c);
+
+      const dx=
+      current.x-p.x;
+
+      const dy=
+      current.y-p.y;
+
+      if(
+        Math.sqrt(
+          dx*dx+
+          dy*dy
+        )<
+        diameter-3
+      ){
+
+        attachShot();
+
+        return;
+
+      }
+
+    }
 
   }
 
- }
-
- requestAnimationFrame(
-  animateShot
- );
+  requestAnimationFrame(
+    animateShot
+  );
 
 }
 
-/* =============================
-NEAREST SLOT
-============================= */
+/* SLOT */
 
 function nearestSlot(){
 
- let best=null;
+  let best=null;
 
- let dist=
- Infinity;
+  let dist=
+  Infinity;
 
- for(let r=0;r<ROWS;r++){
+  for(let r=0;r<ROWS;r++){
 
-  for(let c=0;c<COLS;c++){
+    for(let c=0;c<COLS;c++){
 
-   if(grid[r][c])
-   continue;
+      if(grid[r][c])
+      continue;
 
-   const p=
-   bubblePos(r,c);
+      const p=
+      bubblePos(r,c);
 
-   const dx=
-   current.x-p.x;
+      const dx=
+      current.x-p.x;
 
-   const dy=
-   current.y-p.y;
+      const dy=
+      current.y-p.y;
 
-   const d=
-   dx*dx+
-   dy*dy;
+      const d=
+      dx*dx+
+      dy*dy;
 
-   if(d<dist){
+      if(d<dist){
 
-    dist=d;
+        dist=d;
 
-    best={
-     r:r,
-     c:c
-    };
+        best={
+          r:r,
+          c:c
+        };
 
-   }
+      }
+
+    }
 
   }
 
- }
-
- return best;
+  return best;
 
 }
 
-/* =============================
-ATTACH
-============================= */
+/* ATTACH */
 
 function attachShot(){
 
- const slot=
- nearestSlot();
+  const slot=
+  nearestSlot();
 
- if(!slot){
+  if(!slot){
 
-  failLevel(
-   "No space remaining."
+    failLevel(
+      "No space remaining."
+    );
+
+    return;
+
+  }
+
+  if(
+    current.type===
+    "bomb"
+  ){
+
+    bombShot(
+      slot.r,
+      slot.c
+    );
+
+    finishShot();
+
+    return;
+
+  }
+
+  if(
+    current.type===
+    "rainbow"
+  ){
+
+    rainbowShot(
+      slot.r,
+      slot.c
+    );
+
+    finishShot();
+
+    return;
+
+  }
+
+  if(
+    current.type===
+    "lightning"
+  ){
+
+    lightningShot(
+      slot.r
+    );
+
+    finishShot();
+
+    return;
+
+  }
+
+  if(
+    current.type===
+    "color"
+  ){
+
+    colorShot(
+      slot.r,
+      slot.c
+    );
+
+    finishShot();
+
+    return;
+
+  }
+
+  grid[
+    slot.r
+  ][
+    slot.c
+  ]={
+    color:
+    current.color
+  };
+
+  const match=
+  findMatch(
+    slot.r,
+    slot.c
   );
 
-  return;
+  if(
+    match.length>=3
+  ){
 
- }
+    comboStreak++;
 
- if(
-  current.type===
-  "bomb"
- ){
+    multiplier=
+    Math.min(
+      5,
+      comboStreak
+    );
 
-  bombShot(
-   slot.r,
-   slot.c
-  );
+    popCells(
+      match
+    );
+
+    const gain=
+    match.length*
+    10*
+    multiplier;
+
+    levelScore+=
+    gain;
+
+    misses=0;
+
+    showCombo(
+      "🔥 x"+
+      multiplier+
+      " +"+
+      gain
+    );
+
+    removeFloating();
+
+  }else{
+
+    comboStreak=0;
+
+    multiplier=1;
+
+    misses++;
+
+    if(misses>=5){
+
+      addNewRow();
+
+      misses=0;
+
+    }
+
+  }
 
   finishShot();
 
-  return;
+}
 
- }
+/* SPECIAL */
 
- if(
-  current.type===
-  "rainbow"
- ){
+function bombShot(r,c){
 
-  rainbowShot(
-   slot.r,
-   slot.c
-  );
+  const targets=[
+    {r:r,c:c},
+    ...neighbors(r,c)
+  ];
 
-  finishShot();
+  let count=0;
 
-  return;
+  targets.forEach(p=>{
 
- }
+    if(
+      grid[p.r]?.[p.c]
+    ){
 
- if(
-  current.type===
-  "lightning"
- ){
+      popOne(
+        p.r,p.c
+      );
 
-  lightningShot(
-   slot.r
-  );
+      count++;
 
-  finishShot();
+    }
 
-  return;
-
- }
-
- if(
-  current.type===
-  "color"
- ){
-
-  colorShot(
-   slot.r,
-   slot.c
-  );
-
-  finishShot();
-
-  return;
-
- }
-
- grid[
-  slot.r
- ][
-  slot.c
- ]={
-  color:
-  current.color
- };
-
- const match=
- findMatch(
-  slot.r,
-  slot.c
- );
-
- if(
-  match.length>=3
- ){
-
-  comboStreak++;
-
-  multiplier=
-  Math.min(
-   5,
-   comboStreak
-  );
-
-  popCells(
-   match
-  );
+  });
 
   const gain=
-  match.length*
-  10*
-  multiplier;
+  Math.max(
+    60,
+    count*20
+  );
 
-  levelScore+=
-  gain;
+  levelScore+=gain;
+
+  shake=12;
 
   misses=0;
 
   showCombo(
-   "🔥 x"+
-   multiplier+
-   " +"+
-   gain
+    "💣 BOOM +"+
+    gain
   );
 
   removeFloating();
-
- }else{
-
-  comboStreak=0;
-
-  multiplier=1;
-
-  misses++;
-
-  if(misses>=5){
-
-   addNewRow();
-
-   misses=0;
-
-  }
-
- }
-
- finishShot();
-
-}
-
-/* =============================
-SPECIAL
-============================= */
-
-function bombShot(r,c){
-
- const targets=[
-  {r:r,c:c},
-  ...neighbors(r,c)
- ];
-
- let count=0;
-
- targets.forEach(p=>{
-
-  if(
-   grid[p.r]?.[p.c]
-  ){
-
-   popOne(
-    p.r,p.c
-   );
-
-   count++;
-
-  }
-
- });
-
- const gain=
- Math.max(
-  60,
-  count*20
- );
-
- levelScore+=gain;
-
- shake=12;
-
- misses=0;
-
- showCombo(
-  "💣 BOOM +"+
-  gain
- );
-
- removeFloating();
 
 }
 
 function rainbowShot(r,c){
 
- const near=
- neighbors(r,c)
- .filter(
-  p=>grid[p.r][p.c]
- );
+  const near=
+  neighbors(r,c)
+  .filter(
+    p=>grid[p.r][p.c]
+  );
 
- let bestColor=
- randomColor();
+  let bestColor=
+  randomColor();
 
- let bestCount=0;
+  let bestCount=0;
 
- near.forEach(n=>{
+  near.forEach(n=>{
 
-  const col=
-  grid[n.r][n.c]
-  .color;
+    const col=
+    grid[n.r][n.c]
+    .color;
+
+    grid[r][c]={
+      color:col
+    };
+
+    const test=
+    findMatch(r,c);
+
+    if(
+      test.length>
+      bestCount
+    ){
+
+      bestCount=
+      test.length;
+
+      bestColor=
+      col;
+
+    }
+
+  });
 
   grid[r][c]={
-   color:col
+    color:bestColor
   };
 
-  const test=
+  const match=
   findMatch(r,c);
 
   if(
-   test.length>
-   bestCount
+    match.length>=3
   ){
 
-   bestCount=
-   test.length;
+    popCells(match);
 
-   bestColor=
-   col;
+    const gain=
+    match.length*18;
+
+    levelScore+=gain;
+
+    showCombo(
+      "🌈 RAINBOW +"+
+      gain
+    );
+
+    removeFloating();
 
   }
-
- });
-
- grid[r][c]={
-  color:bestColor
- };
-
- const match=
- findMatch(r,c);
-
- if(
-  match.length>=3
- ){
-
-  popCells(match);
-
-  const gain=
-  match.length*18;
-
-  levelScore+=gain;
-
-  showCombo(
-   "🌈 RAINBOW +"+
-   gain
-  );
-
-  removeFloating();
-
- }
 
 }
 
 function lightningShot(row){
 
- let count=0;
+  let count=0;
 
- for(let c=0;c<COLS;c++){
+  for(let c=0;c<COLS;c++){
 
-  if(grid[row][c]){
+    if(grid[row][c]){
 
-   popOne(
-    row,c
-   );
+      popOne(
+        row,c
+      );
 
-   count++;
+      count++;
+
+    }
 
   }
 
- }
+  const gain=
+  Math.max(
+    80,
+    count*18
+  );
 
- const gain=
- Math.max(
-  80,
-  count*18
- );
+  levelScore+=gain;
 
- levelScore+=gain;
+  showCombo(
+    "⚡ LIGHTNING +"+
+    gain
+  );
 
- showCombo(
-  "⚡ LIGHTNING +"+
-  gain
- );
-
- removeFloating();
+  removeFloating();
 
 }
 
 function colorShot(r,c){
 
- let target=null;
+  let target=null;
 
- const near=
- neighbors(r,c)
- .find(
-  p=>grid[p.r][p.c]
- );
+  const near=
+  neighbors(r,c)
+  .find(
+    p=>grid[p.r][p.c]
+  );
 
- if(near){
+  if(near){
 
-  target=
-  grid[
-   near.r
-  ][
-   near.c
-  ].color;
+    target=
+    grid[
+      near.r
+    ][
+      near.c
+    ].color;
 
- }else{
+  }else{
 
-  target=
-  randomColor();
-
- }
-
- let count=0;
-
- for(let rr=0;rr<ROWS;rr++){
-
-  for(let cc=0;cc<COLS;cc++){
-
-   if(
-    grid[rr][cc] &&
-    grid[rr][cc].color===
-    target
-   ){
-
-    popOne(
-     rr,cc
-    );
-
-    count++;
-
-   }
+    target=
+    randomColor();
 
   }
 
- }
+  let count=0;
 
- const gain=
- Math.max(
-  100,
-  count*15
- );
+  for(let rr=0;rr<ROWS;rr++){
 
- levelScore+=gain;
+    for(let cc=0;cc<COLS;cc++){
 
- showCombo(
-  "🎨 COLOR CLEAR +"+
-  gain
- );
+      if(
+        grid[rr][cc] &&
+        grid[rr][cc].color===
+        target
+      ){
 
- removeFloating();
+        popOne(
+          rr,cc
+        );
+
+        count++;
+
+      }
+
+    }
+
+  }
+
+  const gain=
+  Math.max(
+    100,
+    count*15
+  );
+
+  levelScore+=gain;
+
+  showCombo(
+    "🎨 COLOR CLEAR +"+
+    gain
+  );
+
+  removeFloating();
 
 }
 
-/* =============================
-POP
-============================= */
+/* POP */
 
 function popOne(r,c){
 
- if(!grid[r][c])
- return;
+  if(!grid[r][c])
+  return;
 
- const p=
- bubblePos(r,c);
+  const p=
+  bubblePos(r,c);
 
- createParticles(
-  p.x,p.y,
-  grid[r][c].color,
-  10
- );
+  createParticles(
+    p.x,p.y,
+    grid[r][c].color,
+    10
+  );
 
- grid[r][c]=null;
+  grid[r][c]=null;
 
 }
 
 function popCells(list){
 
- list.forEach(
-  p=>popOne(
-   p.r,p.c
-  )
- );
+  list.forEach(
+    p=>popOne(
+      p.r,p.c
+    )
+  );
 
 }
 
-/* =============================
-MATCH
-============================= */
+/* MATCH */
 
 function neighbors(r,c){
 
- const dirs=
- r%2===0
- ?[
-  [-1,-1],[-1,0],
-  [0,-1],[0,1],
-  [1,-1],[1,0]
- ]
- :[
-  [-1,0],[-1,1],
-  [0,-1],[0,1],
-  [1,0],[1,1]
- ];
+  const dirs=
+  r%2===0
+  ?[
+    [-1,-1],[-1,0],
+    [0,-1],[0,1],
+    [1,-1],[1,0]
+  ]
+  :[
+    [-1,0],[-1,1],
+    [0,-1],[0,1],
+    [1,0],[1,1]
+  ];
 
- return dirs
- .map(d=>({
-  r:r+d[0],
-  c:c+d[1]
- }))
- .filter(p=>
-  p.r>=0 &&
-  p.r<ROWS &&
-  p.c>=0 &&
-  p.c<COLS
- );
+  return dirs
+  .map(d=>({
+    r:r+d[0],
+    c:c+d[1]
+  }))
+  .filter(p=>
+    p.r>=0 &&
+    p.r<ROWS &&
+    p.c>=0 &&
+    p.c<COLS
+  );
 
 }
 
 function findMatch(sr,sc){
 
- const color=
- grid[sr][sc].color;
+  const color=
+  grid[sr][sc].color;
 
- const stack=[
-  {r:sr,c:sc}
- ];
-
- const seen=
- new Set();
-
- const result=[];
-
- while(stack.length){
-
-  const p=
-  stack.pop();
-
-  const key=
-  p.r+","+p.c;
-
-  if(
-   seen.has(key)
-  )continue;
-
-  seen.add(key);
-
-  const cell=
-  grid[
-   p.r
-  ][
-   p.c
+  const stack=[
+    {r:sr,c:sc}
   ];
 
-  if(
-   !cell ||
-   cell.color!==color
-  )continue;
+  const seen=
+  new Set();
 
-  result.push(p);
+  const result=[];
 
-  neighbors(
-   p.r,p.c
-  ).forEach(
-   n=>stack.push(n)
-  );
+  while(stack.length){
 
- }
+    const p=
+    stack.pop();
 
- return result;
+    const key=
+    p.r+","+p.c;
+
+    if(
+      seen.has(key)
+    )continue;
+
+    seen.add(key);
+
+    const cell=
+    grid[
+      p.r
+    ][
+      p.c
+    ];
+
+    if(
+      !cell ||
+      cell.color!==color
+    )continue;
+
+    result.push(p);
+
+    neighbors(
+      p.r,p.c
+    ).forEach(
+      n=>stack.push(n)
+    );
+
+  }
+
+  return result;
 
 }
 
-/* =============================
-FLOATING
-============================= */
+/* FLOATING */
 
 function removeFloating(){
 
- const connected=
- new Set();
+  const connected=
+  new Set();
 
- const stack=[];
-
- for(let c=0;c<COLS;c++){
-
-  if(grid[0][c]){
-
-   stack.push({
-    r:0,c:c
-   });
-
-  }
-
- }
-
- while(stack.length){
-
-  const p=
-  stack.pop();
-
-  const key=
-  p.r+","+p.c;
-
-  if(
-   connected.has(key)
-  )continue;
-
-  connected.add(key);
-
-  neighbors(
-   p.r,p.c
-  ).forEach(n=>{
-
-   if(
-    grid[
-     n.r
-    ][
-     n.c
-    ]
-   ){
-
-    stack.push(n);
-
-   }
-
-  });
-
- }
-
- let dropped=0;
-
- for(let r=0;r<ROWS;r++){
+  const stack=[];
 
   for(let c=0;c<COLS;c++){
 
-   if(
-    grid[r][c] &&
-    !connected.has(
-     r+","+c
-    )
-   ){
+    if(grid[0][c]){
 
-    popOne(
-     r,c
-    );
+      stack.push({
+        r:0,c:c
+      });
 
-    dropped++;
-
-   }
+    }
 
   }
 
- }
+  while(stack.length){
 
- if(dropped){
+    const p=
+    stack.pop();
 
-  const gain=
-  dropped*
-  15*
-  multiplier;
+    const key=
+    p.r+","+p.c;
 
-  levelScore+=gain;
+    if(
+      connected.has(key)
+    )continue;
 
-  showCombo(
-   "⬇️ DROP x"+
-   dropped+
-   " +"+
-   gain
-  );
+    connected.add(key);
 
- }
+    neighbors(
+      p.r,p.c
+    ).forEach(n=>{
+
+      if(
+        grid[
+          n.r
+        ][
+          n.c
+        ]
+      ){
+
+        stack.push(n);
+
+      }
+
+    });
+
+  }
+
+  let dropped=0;
+
+  for(let r=0;r<ROWS;r++){
+
+    for(let c=0;c<COLS;c++){
+
+      if(
+        grid[r][c] &&
+        !connected.has(
+          r+","+c
+        )
+      ){
+
+        popOne(
+          r,c
+        );
+
+        dropped++;
+
+      }
+
+    }
+
+  }
+
+  if(dropped){
+
+    const gain=
+    dropped*
+    15*
+    multiplier;
+
+    levelScore+=gain;
+
+    showCombo(
+      "⬇️ DROP x"+
+      dropped+
+      " +"+
+      gain
+    );
+
+  }
 
 }
 
-/* =============================
-NEW ROW
-============================= */
+/* ROW */
 
 function addNewRow(){
 
- grid.pop();
+  grid.pop();
 
- grid.unshift(
-  Array.from(
-   {length:COLS},
-   ()=>({
-    color:randomColor()
-   })
-  )
- );
+  grid.unshift(
+    Array.from(
+      {length:COLS},
+      ()=>({
+        color:randomColor()
+      })
+    )
+  );
 
- showToast(
-  "⚠️ NEW ROW!"
- );
+  showToast(
+    "⚠️ NEW ROW!"
+  );
 
 }
 
-/* =============================
-INVENTORY
-============================= */
+/* INVENTORY */
 
 function useInventory(type){
 
- if(
-  !running ||
-  paused ||
-  current?.moving
- )return;
+  if(
+    !running ||
+    paused ||
+    current?.moving
+  )return;
 
- if(
+  if(
+    saveData.inventory[
+      type
+    ]<=0
+  ){
+
+    showToast(
+      "Buy more in Shop"
+    );
+
+    return;
+
+  }
+
   saveData.inventory[
-   type
-  ]<=0
- ){
+    type
+  ]--;
+
+  saveProgress();
+
+  current.type=
+  type;
+
+  current.color=
+  type==="bomb"
+  ?"#222"
+  :"#fff";
+
+  updateInventoryUI();
 
   showToast(
-   "Buy more in Shop"
+    "SPECIAL READY!"
   );
-
-  return;
-
- }
-
- saveData.inventory[
-  type
- ]--;
-
- saveProgress();
-
- current.type=
- type;
-
- current.color=
- type==="bomb"
- ?"#222"
- :"#fff";
-
- updateInventoryUI();
-
- showToast(
-  "SPECIAL READY!"
- );
 
 }
 
 function updateInventoryUI(){
 
- document.getElementById(
-  "bombCount"
- ).textContent=
- saveData.inventory.bomb;
+  document.getElementById(
+    "bombCount"
+  ).textContent=
+  saveData.inventory.bomb;
 
- document.getElementById(
-  "rainbowCount"
- ).textContent=
- saveData.inventory.rainbow;
+  document.getElementById(
+    "rainbowCount"
+  ).textContent=
+  saveData.inventory.rainbow;
 
- document.getElementById(
-  "lightningCount"
- ).textContent=
- saveData.inventory.lightning;
+  document.getElementById(
+    "lightningCount"
+  ).textContent=
+  saveData.inventory.lightning;
 
- document.getElementById(
-  "colorCount"
- ).textContent=
- saveData.inventory.color;
+  document.getElementById(
+    "colorCount"
+  ).textContent=
+  saveData.inventory.color;
 
 }
 
-/* =============================
-FINISH SHOT
-============================= */
+/* FINISH */
 
 function finishShot(){
 
- updateGameUI();
+  updateGameUI();
 
- if(levelScore>=goal){
+  if(levelScore>=goal){
 
-  completeLevel();
+    completeLevel();
 
-  return;
+    return;
 
- }
+  }
 
- if(checkLose()){
+  if(checkLose()){
 
-  failLevel(
-   gameMode==="boss"
-   ?"The Boss overwhelmed you!"
-   :"The bubbles reached the bottom."
-  );
+    failLevel(
+      gameMode==="boss"
+      ?"The Boss overwhelmed you!"
+      :"The bubbles reached the bottom."
+    );
 
-  return;
+    return;
 
- }
+  }
 
- if(
-  shotsRemaining<=0
- ){
+  if(
+    shotsRemaining<=0
+  ){
 
-  failLevel(
-   "You ran out of shots."
-  );
+    failLevel(
+      "You ran out of shots."
+    );
 
-  return;
+    return;
 
- }
+  }
 
- newShooter();
+  newShooter();
 
 }
 
 function checkLose(){
 
- return grid[
-  ROWS-1
- ].some(Boolean);
+  return grid[
+    ROWS-1
+  ].some(Boolean);
 
 }
 
-/* =============================
-UI
-============================= */
+/* UI */
 
 function updateGameUI(){
 
- document.getElementById(
-  "levelScore"
- ).textContent=
- levelScore;
+  document.getElementById(
+    "levelScore"
+  ).textContent=
+  levelScore;
 
- document.getElementById(
-  "goalScore"
- ).textContent=
- goal;
+  document.getElementById(
+    "goalScore"
+  ).textContent=
+  goal;
 
- document.getElementById(
-  "shotsText"
- ).textContent=
- shotsRemaining;
+  document.getElementById(
+    "shotsText"
+  ).textContent=
+  shotsRemaining;
 
- document.getElementById(
-  "multiplierText"
- ).textContent=
- "x"+multiplier;
+  document.getElementById(
+    "multiplierText"
+  ).textContent=
+  "x"+multiplier;
 
 }
 
-/* =============================
-START
-============================= */
+/* START */
 
 function startLevel(){
 
- resize();
+  resize();
 
- const world=
- worldData();
+  const world=
+  worldData();
 
- document.getElementById(
-  "app"
- ).style.background=
- world.bg;
+  document.getElementById(
+    "app"
+  ).style.background=
+  world.bg;
 
- levelScore=0;
+  levelScore=0;
 
- if(gameMode==="daily"){
+  if(gameMode==="daily"){
 
-  goal=
-  customGoal;
+    goal=
+    customGoal;
 
-  shotsRemaining=
-  customShots;
+    shotsRemaining=
+    customShots;
 
- }else if(
-  gameMode==="boss"
- ){
+  }else if(
+    gameMode==="boss"
+  ){
 
-  goal=
-  levelGoal()+
-  350;
+    goal=
+    levelGoal()+
+    350;
 
-  shotsRemaining=
-  Math.max(
-   17,
-   levelShots()-5
-  );
+    shotsRemaining=
+    Math.max(
+      17,
+      levelShots()-5
+    );
 
- }else{
+  }else{
 
-  goal=
-  levelGoal();
+    goal=
+    levelGoal();
 
-  shotsRemaining=
-  levelShots();
+    shotsRemaining=
+    levelShots();
 
- }
+  }
 
- comboStreak=0;
- multiplier=1;
- misses=0;
+  comboStreak=0;
+  multiplier=1;
+  misses=0;
 
- particles=[];
- recoil=0;
- shake=0;
+  particles=[];
+  recoil=0;
+  shake=0;
 
- document.getElementById(
-  "homeScreen"
- ).classList.add("hidden");
+  document.getElementById(
+    "homeScreen"
+  ).classList.add("hidden");
 
- document.getElementById(
-  "completeOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "completeOverlay"
+  ).classList.add("hidden");
 
- document.getElementById(
-  "failedOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "failedOverlay"
+  ).classList.add("hidden");
 
- document.getElementById(
-  "gameScreen"
- ).classList.remove("hidden");
+  document.getElementById(
+    "gameScreen"
+  ).classList.remove("hidden");
 
- document.getElementById(
-  "gameAvatar"
- ).textContent=
- saveData.profile.avatar;
+  document.getElementById(
+    "gameAvatar"
+  ).textContent=
+  saveData.profile.avatar;
 
- document.getElementById(
-  "gameName"
- ).textContent=
- saveData.profile.name;
+  document.getElementById(
+    "gameName"
+  ).textContent=
+  saveData.profile.name;
 
- document.getElementById(
-  "gameLevel"
- ).textContent=
- gameMode==="daily"
- ?"📅 DAILY CHALLENGE"
- :gameMode==="boss"
- ?"👹 BOSS LEVEL "+saveData.level
- :"LEVEL "+saveData.level+
- " • "+
- world.name.toUpperCase();
+  document.getElementById(
+    "gameLevel"
+  ).textContent=
+  gameMode==="daily"
+  ?"📅 DAILY CHALLENGE"
+  :gameMode==="boss"
+  ?"👹 BOSS LEVEL "+saveData.level
+  :"LEVEL "+saveData.level+
+  " • "+
+  world.name.toUpperCase();
 
- makeGrid();
+  makeGrid();
 
- aimX=W/2;
- aimY=H/3;
+  aimX=W/2;
+  aimY=H/3;
 
- nextShot=
- randomShot();
+  nextShot=
+  randomShot();
 
- newShooter();
+  newShooter();
 
- updateInventoryUI();
+  updateInventoryUI();
 
- updateGameUI();
+  updateGameUI();
 
- running=true;
- paused=false;
+  running=true;
+  paused=false;
 
- requestAnimationFrame(draw);
+  requestAnimationFrame(draw);
 
 }
 
-/* =============================
-STARS
-============================= */
+/* STARS */
 
 function calculateStars(){
 
- const ratio=
- levelScore/goal;
+  const ratio=
+  levelScore/goal;
 
- if(
-  ratio>=1.7 ||
-  shotsRemaining>=
-  Math.max(
-   5,
-   levelShots()*.55
-  )
- )return 3;
+  if(
+    ratio>=1.7 ||
+    shotsRemaining>=
+    Math.max(
+      5,
+      levelShots()*.55
+    )
+  )return 3;
 
- if(
-  ratio>=1.3 ||
-  shotsRemaining>=
-  Math.max(
-   2,
-   levelShots()*.25
-  )
- )return 2;
+  if(
+    ratio>=1.3 ||
+    shotsRemaining>=
+    Math.max(
+      2,
+      levelShots()*.25
+    )
+  )return 2;
 
- return 1;
+  return 1;
 
 }
 
-/* =============================
-COMPLETE
-============================= */
+/* COMPLETE */
 
 function completeLevel(){
 
- running=false;
+  running=false;
 
- if(
-  gameMode==="daily"
- ){
+  if(
+    gameMode==="daily"
+  ){
 
-  completeDaily();
+    completeDaily();
 
-  return;
+    return;
 
- }
+  }
 
- const stars=
- calculateStars();
+  const stars=
+  calculateStars();
 
- const oldStars=
- saveData.levelStars[
-  saveData.level
- ]||0;
-
- if(stars>oldStars){
-
-  saveData.totalStars+=
-  stars-oldStars;
-
+  const oldStars=
   saveData.levelStars[
-   saveData.level
-  ]=stars;
+    saveData.level
+  ]||0;
 
- }
+  if(stars>oldStars){
 
- const oldTotal=
- saveData.totalScore;
+    saveData.totalStars+=
+    stars-oldStars;
 
- saveData.totalScore+=
- levelScore;
+    saveData.levelStars[
+      saveData.level
+    ]=stars;
 
- if(
-  levelScore>
-  saveData.bestLevelScore
- ){
+  }
 
-  saveData.bestLevelScore=
+  const oldTotal=
+  saveData.totalScore;
+
+  saveData.totalScore+=
   levelScore;
 
- }
+  if(
+    levelScore>
+    saveData.bestLevelScore
+  ){
 
- let coins=
- Math.floor(
-  levelScore/10
- )+
- stars*25;
+    saveData.bestLevelScore=
+    levelScore;
 
- if(gameMode==="boss"){
+  }
 
-  coins+=150;
+  let coins=
+  Math.floor(
+    levelScore/10
+  )+
+  stars*25;
 
-  saveData.inventory.bomb++;
+  if(gameMode==="boss"){
 
- }
+    coins+=150;
 
- saveData.coins+=
- coins;
+    saveData.inventory.bomb++;
 
- saveProgress();
+  }
 
- document.getElementById(
-  "completeIcon"
- ).textContent=
- gameMode==="boss"
- ?"👑"
- :"🏆";
+  saveData.coins+=
+  coins;
 
- document.getElementById(
-  "completeTitle"
- ).textContent=
- gameMode==="boss"
- ?"BOSS DEFEATED!"
- :"LEVEL COMPLETE!";
+  saveProgress();
 
- document.getElementById(
-  "completeLevel"
- ).textContent=
- gameMode==="boss"
- ?"You defeated the Level "+
- saveData.level+
- " Boss!"
- :"Level "+
- saveData.level+
- " completed!";
+  document.getElementById(
+    "completeIcon"
+  ).textContent=
+  gameMode==="boss"
+  ?"👑"
+  :"🏆";
 
- document.getElementById(
-  "starResult"
- ).textContent=
- "⭐".repeat(stars);
+  document.getElementById(
+    "completeTitle"
+  ).textContent=
+  gameMode==="boss"
+  ?"BOSS DEFEATED!"
+  :"LEVEL COMPLETE!";
 
- document.getElementById(
-  "completeScore"
- ).textContent=
- "+"+levelScore;
+  document.getElementById(
+    "completeLevel"
+  ).textContent=
+  gameMode==="boss"
+  ?"You defeated the Level "+
+  saveData.level+
+  " Boss!"
+  :"Level "+
+  saveData.level+
+  " completed!";
 
- document.getElementById(
-  "earnedCoins"
- ).textContent=
- coins;
+  document.getElementById(
+    "starResult"
+  ).textContent=
+  "⭐".repeat(stars);
 
- document.getElementById(
-  "completeButton"
- ).textContent=
- gameMode==="boss"
- ?"ENTER NEXT WORLD →"
- :"NEXT LEVEL →";
+  document.getElementById(
+    "completeScore"
+  ).textContent=
+  "+"+levelScore;
 
- document.getElementById(
-  "completeOverlay"
- ).classList.remove(
-  "hidden"
- );
+  document.getElementById(
+    "earnedCoins"
+  ).textContent=
+  coins;
 
- checkCannonUnlock(
-  oldTotal,
-  saveData.totalScore
- );
+  document.getElementById(
+    "completeButton"
+  ).textContent=
+  gameMode==="boss"
+  ?"ENTER NEXT WORLD →"
+  :"NEXT LEVEL →";
+
+  document.getElementById(
+    "completeOverlay"
+  ).classList.remove(
+    "hidden"
+  );
+
+  checkCannonUnlock(
+    oldTotal,
+    saveData.totalScore
+  );
 
 }
 
-/* =============================
-DAILY COMPLETE
-============================= */
+/* DAILY COMPLETE */
 
 function completeDaily(){
 
- const cfg=
- dailyConfig();
+  const cfg=
+  dailyConfig();
 
- saveData.dailyCompleted=
- localDateKey();
+  saveData.dailyCompleted=
+  localDateKey();
 
- saveData.coins+=
- cfg.rewardCoins;
+  saveData.coins+=
+  cfg.rewardCoins;
 
- saveData.inventory.bomb++;
+  saveData.inventory.bomb++;
 
- saveProgress();
+  saveProgress();
 
- document.getElementById(
-  "completeIcon"
- ).textContent=
- "📅";
+  document.getElementById(
+    "completeIcon"
+  ).textContent=
+  "📅";
 
- document.getElementById(
-  "completeTitle"
- ).textContent=
- "DAILY COMPLETE!";
+  document.getElementById(
+    "completeTitle"
+  ).textContent=
+  "DAILY COMPLETE!";
 
- document.getElementById(
-  "completeLevel"
- ).textContent=
- "Today's challenge conquered!";
+  document.getElementById(
+    "completeLevel"
+  ).textContent=
+  "Today's challenge conquered!";
 
- document.getElementById(
-  "starResult"
- ).textContent=
- "🎯✨";
+  document.getElementById(
+    "starResult"
+  ).textContent=
+  "🎯✨";
 
- document.getElementById(
-  "completeScore"
- ).textContent=
- "+"+levelScore;
+  document.getElementById(
+    "completeScore"
+  ).textContent=
+  "+"+levelScore;
 
- document.getElementById(
-  "earnedCoins"
- ).textContent=
- cfg.rewardCoins;
+  document.getElementById(
+    "earnedCoins"
+  ).textContent=
+  cfg.rewardCoins;
 
- document.getElementById(
-  "completeButton"
- ).textContent=
- "BACK HOME";
+  document.getElementById(
+    "completeButton"
+  ).textContent=
+  "BACK HOME";
 
- document.getElementById(
-  "completeOverlay"
- ).classList.remove(
-  "hidden"
- );
+  document.getElementById(
+    "completeOverlay"
+  ).classList.remove(
+    "hidden"
+  );
 
 }
 
-/* =============================
-NEXT
-============================= */
+/* NEXT */
 
 function nextLevel(){
 
- document.getElementById(
-  "completeOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "completeOverlay"
+  ).classList.add("hidden");
 
- if(gameMode==="daily"){
+  if(gameMode==="daily"){
+
+    gameMode="normal";
+
+    customGoal=null;
+
+    customShots=null;
+
+    showHome();
+
+    return;
+
+  }
+
+  saveData.level++;
+
+  saveProgress();
+
+  gameMode="normal";
+
+  showHome();
+
+}
+
+/* FAIL */
+
+function failLevel(reason){
+
+  running=false;
+
+  document.getElementById(
+    "failReason"
+  ).textContent=
+  reason;
+
+  document.getElementById(
+    "failedScore"
+  ).textContent=
+  "Score: "+levelScore+
+  " / "+goal;
+
+  document.getElementById(
+    "failedOverlay"
+  ).classList.remove(
+    "hidden"
+  );
+
+}
+
+function retryLevel(){
+
+  document.getElementById(
+    "failedOverlay"
+  ).classList.add("hidden");
+
+  startLevel();
+
+}
+
+function goHome(){
+
+  document.getElementById(
+    "failedOverlay"
+  ).classList.add("hidden");
 
   gameMode="normal";
 
@@ -3598,406 +3864,320 @@ function nextLevel(){
 
   showHome();
 
-  return;
-
- }
-
- saveData.level++;
-
- saveProgress();
-
- gameMode="normal";
-
- showHome();
-
 }
 
-/* =============================
-FAIL
-============================= */
-
-function failLevel(reason){
-
- running=false;
-
- document.getElementById(
-  "failReason"
- ).textContent=
- reason;
-
- document.getElementById(
-  "failedScore"
- ).textContent=
- "Score: "+levelScore+
- " / "+goal;
-
- document.getElementById(
-  "failedOverlay"
- ).classList.remove(
-  "hidden"
- );
-
-}
-
-function retryLevel(){
-
- document.getElementById(
-  "failedOverlay"
- ).classList.add("hidden");
-
- if(gameMode==="boss"){
-
-  startLevel();
-
- }else if(gameMode==="daily"){
-
-  startLevel();
-
- }else{
-
-  startLevel();
-
- }
-
-}
-
-function goHome(){
-
- document.getElementById(
-  "failedOverlay"
- ).classList.add("hidden");
-
- gameMode="normal";
-
- customGoal=null;
-
- customShots=null;
-
- showHome();
-
-}
-
-/* =============================
-PAUSE
-============================= */
+/* PAUSE */
 
 function pauseGame(){
 
- if(!running)
- return;
+  if(!running)
+  return;
 
- paused=true;
+  paused=true;
 
- document.getElementById(
-  "pauseOverlay"
- ).classList.remove("hidden");
+  document.getElementById(
+    "pauseOverlay"
+  ).classList.remove("hidden");
 
 }
 
 function resumeGame(){
 
- document.getElementById(
-  "pauseOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "pauseOverlay"
+  ).classList.add("hidden");
 
- paused=false;
+  paused=false;
 
- requestAnimationFrame(draw);
+  requestAnimationFrame(draw);
 
 }
 
 function goHomeFromPause(){
 
- document.getElementById(
-  "pauseOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "pauseOverlay"
+  ).classList.add("hidden");
 
- running=false;
+  running=false;
 
- paused=false;
+  paused=false;
 
- gameMode="normal";
+  gameMode="normal";
 
- showHome();
+  showHome();
 
 }
 
-/* =============================
-CANNON UNLOCK
-============================= */
+/* UNLOCK */
 
 function checkCannonUnlock(
- oldScore,
- newScore
+  oldScore,
+  newScore
 ){
 
- const unlock=
- cannons.find(c=>
-  c.need>oldScore &&
-  c.need<=newScore
- );
-
- if(!unlock)
- return;
-
- setTimeout(()=>{
-
-  document.getElementById(
-   "newCannonIcon"
-  ).textContent=
-  unlock.icon;
-
-  document.getElementById(
-   "newCannonName"
-  ).textContent=
-  unlock.name+
-  " Cannon";
-
-  document.getElementById(
-   "unlockOverlay"
-  ).classList.remove(
-   "hidden"
+  const unlock=
+  cannons.find(c=>
+    c.need>oldScore &&
+    c.need<=newScore
   );
 
- },450);
+  if(!unlock)
+  return;
+
+  setTimeout(()=>{
+
+    document.getElementById(
+      "newCannonIcon"
+    ).textContent=
+    unlock.icon;
+
+    document.getElementById(
+      "newCannonName"
+    ).textContent=
+    unlock.name+
+    " Cannon";
+
+    document.getElementById(
+      "unlockOverlay"
+    ).classList.remove(
+      "hidden"
+    );
+
+  },450);
 
 }
 
 function closeUnlock(){
 
- document.getElementById(
-  "unlockOverlay"
- ).classList.add("hidden");
+  document.getElementById(
+    "unlockOverlay"
+  ).classList.add("hidden");
 
 }
 
-/* =============================
-MESSAGES
-============================= */
+/* MESSAGE */
 
 function showCombo(text){
 
- const el=
- document.getElementById(
-  "combo"
- );
+  const el=
+  document.getElementById(
+    "combo"
+  );
 
- el.textContent=text;
+  el.textContent=text;
 
- el.classList.add("show");
+  el.classList.add("show");
 
- setTimeout(
-  ()=>el.classList.remove("show"),
-  750
- );
+  setTimeout(
+    ()=>el.classList.remove("show"),
+    750
+  );
 
 }
 
 function showToast(text){
 
- const el=
- document.getElementById(
-  "toast"
- );
+  const el=
+  document.getElementById(
+    "toast"
+  );
 
- el.textContent=text;
+  el.textContent=text;
 
- el.classList.add("show");
+  el.classList.add("show");
 
- setTimeout(
-  ()=>el.classList.remove("show"),
-  1300
- );
+  setTimeout(
+    ()=>el.classList.remove("show"),
+    1300
+  );
 
 }
 
-/* =============================
-SHARE
-============================= */
+/* SHARE */
 
 function shareGame(){
 
- const text=
- "🎮 I'm playing Bubble Blast! "+
- "Level "+
- saveData.level+
- " • "+
- saveData.totalScore+
- " points • "+
- saveData.totalStars+
- " stars ⭐\n"+
- "Can you beat me? 🫧🔥\n"+
- "https://shasi31.github.io/MyVirtualPet/";
+  const text=
+  "🎮 I'm playing Bubble Blast! "+
+  "Level "+
+  saveData.level+
+  " • "+
+  saveData.totalScore+
+  " points • "+
+  saveData.totalStars+
+  " stars ⭐\n"+
+  "Can you beat me? 🫧🔥\n"+
+  "https://shasi31.github.io/MyVirtualPet/";
 
- if(navigator.share){
+  if(navigator.share){
 
-  navigator.share({
-   title:"Bubble Blast",
-   text:text
-  }).catch(()=>{});
+    navigator.share({
+      title:"Bubble Blast",
+      text:text
+    }).catch(()=>{});
 
- }else{
+  }else{
 
-  navigator.clipboard
-  ?.writeText(text);
+    navigator.clipboard
+    ?.writeText(text);
 
-  alert(
-   "Game invitation copied!"
-  );
+    alert(
+      "Game invitation copied!"
+    );
 
- }
+  }
 
 }
 
 function shareScore(){
 
- const text=
- "🏆 Bubble Blast!\n"+
- saveData.profile.name+
- " scored "+
- levelScore+
- " points on "+
- (gameMode==="daily"
- ?"Today's Daily Challenge"
- :"Level "+saveData.level)+
- "!\n"+
- "Can you beat it? 🎮🫧\n"+
- "https://shasi31.github.io/MyVirtualPet/";
+  const text=
+  "🏆 Bubble Blast!\n"+
+  saveData.profile.name+
+  " scored "+
+  levelScore+
+  " points on "+
+  (gameMode==="daily"
+   ?"Today's Daily Challenge"
+   :"Level "+saveData.level)+
+  "!\n"+
+  "Can you beat it? 🎮🫧\n"+
+  "https://shasi31.github.io/MyVirtualPet/";
 
- if(navigator.share){
+  if(navigator.share){
 
-  navigator.share({
-   title:"Bubble Blast",
-   text:text
-  }).catch(()=>{});
+    navigator.share({
+      title:"Bubble Blast",
+      text:text
+    }).catch(()=>{});
 
- }else{
+  }else{
 
-  navigator.clipboard
-  ?.writeText(text);
+    navigator.clipboard
+    ?.writeText(text);
 
- }
+  }
 
 }
 
-/* =============================
-INPUT
-============================= */
+/* INPUT */
 
 function pointerPosition(e){
 
- const rect=
- canvas.getBoundingClientRect();
+  const rect=
+  canvas.getBoundingClientRect();
 
- const p=
- e.touches
- ?e.touches[0]
- :e;
+  const p=
+  e.touches
+  ?e.touches[0]
+  :e;
 
- return{
-  x:
-  p.clientX-
-  rect.left,
+  return{
+    x:
+    p.clientX-
+    rect.left,
 
-  y:
-  p.clientY-
-  rect.top
- };
+    y:
+    p.clientY-
+    rect.top
+  };
 
 }
 
 canvas.addEventListener(
- "mousemove",
- e=>{
+  "mousemove",
+  e=>{
 
-  const p=
-  pointerPosition(e);
+    const p=
+    pointerPosition(e);
 
-  aimX=p.x;
+    aimX=p.x;
 
-  aimY=p.y;
+    aimY=p.y;
 
-  updateLoadedBubble();
+    updateLoadedBubble();
 
- }
+  }
 );
 
 canvas.addEventListener(
- "click",
- e=>{
+  "click",
+  e=>{
 
-  const p=
-  pointerPosition(e);
+    const p=
+    pointerPosition(e);
 
-  aimX=p.x;
+    aimX=p.x;
 
-  aimY=p.y;
+    aimY=p.y;
 
-  updateLoadedBubble();
+    updateLoadedBubble();
 
-  shoot();
+    shoot();
 
- }
+  }
 );
 
 canvas.addEventListener(
- "touchstart",
- e=>{
+  "touchstart",
+  e=>{
 
-  e.preventDefault();
+    e.preventDefault();
 
-  const p=
-  pointerPosition(e);
+    const p=
+    pointerPosition(e);
 
-  aimX=p.x;
+    aimX=p.x;
 
-  aimY=p.y;
+    aimY=p.y;
 
-  updateLoadedBubble();
+    updateLoadedBubble();
 
- },
- {passive:false}
+  },
+  {passive:false}
 );
 
 canvas.addEventListener(
- "touchmove",
- e=>{
+  "touchmove",
+  e=>{
 
-  e.preventDefault();
+    e.preventDefault();
 
-  const p=
-  pointerPosition(e);
+    const p=
+    pointerPosition(e);
 
-  aimX=p.x;
+    aimX=p.x;
 
-  aimY=p.y;
+    aimY=p.y;
 
-  updateLoadedBubble();
+    updateLoadedBubble();
 
- },
- {passive:false}
+  },
+  {passive:false}
 );
 
 canvas.addEventListener(
- "touchend",
- e=>{
+  "touchend",
+  e=>{
 
-  e.preventDefault();
+    e.preventDefault();
 
-  shoot();
+    shoot();
 
- },
- {passive:false}
+  },
+  {passive:false}
 );
 
 window.addEventListener(
- "resize",
- resize
+  "resize",
+  ()=>{
+    resize();
+    updateLoadedBubble();
+  }
 );
 
-/* =============================
-LOAD
-============================= */
+/* LOAD */
 
 loadSave();
 
@@ -4005,13 +4185,13 @@ resize();
 
 if(saveData.profile){
 
- selectedAvatar=
- saveData.profile.avatar;
+  selectedAvatar=
+  saveData.profile.avatar;
 
- showHome();
+  showHome();
 
 }
 </script>
 
 </body>
-</html>
+ </html>
