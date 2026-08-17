@@ -2,1001 +2,685 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Bubble Blast</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{
-  margin:0;
-  background:linear-gradient(#10192f,#17264b);
-  font-family:Arial,sans-serif;
-  color:white;
-  overflow:hidden;
+ margin:0;background:#0c1630;color:white;
+ font-family:Arial,sans-serif;overflow:hidden
 }
-
-#gameWrap{
-  max-width:500px;
-  height:100vh;
-  margin:auto;
-  position:relative;
-  background:
-    radial-gradient(circle at 50% 20%,#243c70,#111a31 65%);
-  overflow:hidden;
+#app{
+ max-width:500px;height:100vh;margin:auto;position:relative;
+ background:radial-gradient(circle at 50% 15%,#29467f,#101a35 65%);
+ overflow:hidden
 }
+.screen{position:absolute;inset:0;z-index:20}
+.hidden{display:none!important}
 
-.topbar{
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px 18px;
-  position:relative;
-  z-index:5;
+/* PROFILE */
+.profileScreen{
+ padding:28px 20px;overflow:auto;
+ background:linear-gradient(#172b57,#0d1730)
 }
-
-.title{
-  font-weight:bold;
-  font-size:20px;
+.logo{text-align:center;font-size:42px;margin:10px 0 5px}
+.profileScreen h1{text-align:center;margin:5px 0}
+.profileScreen .sub{text-align:center;color:#b7c5df;margin-bottom:25px}
+.card{
+ background:white;color:#172033;border-radius:25px;padding:20px;
+ box-shadow:0 15px 35px rgba(0,0,0,.25)
 }
-
-.scoreBox{
-  display:flex;
-  gap:10px;
+input{
+ width:100%;padding:15px;border:2px solid #dce2ec;
+ border-radius:14px;font-size:17px;margin:8px 0 18px
 }
-
-.pill{
-  background:rgba(255,255,255,.12);
-  padding:8px 12px;
-  border-radius:20px;
-  font-weight:bold;
-  font-size:14px;
+.avatarGrid{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 20px
 }
-
-canvas{
-  display:block;
-  width:100%;
-  touch-action:none;
+.avatar{
+ border:3px solid transparent;background:#f2f5fa;border-radius:18px;
+ padding:12px 5px;text-align:center;font-size:38px;cursor:pointer
 }
-
-.controls{
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  padding:10px 15px 18px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  pointer-events:none;
-}
-
-.nextBubble{
-  position:absolute;
-  left:18px;
-  bottom:25px;
-  background:rgba(255,255,255,.1);
-  padding:8px 12px;
-  border-radius:18px;
-  font-size:12px;
-  text-align:center;
-}
-
-.nextDot{
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  margin:5px auto 0;
-  border:2px solid rgba(255,255,255,.65);
-}
-
-.overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(4,8,20,.82);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:20;
-}
-
-.panel{
-  width:84%;
-  max-width:360px;
-  background:white;
-  color:#172033;
-  border-radius:25px;
-  padding:28px 22px;
-  text-align:center;
-  box-shadow:0 18px 50px rgba(0,0,0,.35);
-}
-
-.panel h1{
-  margin:0 0 10px;
-  font-size:34px;
-}
-
-.panel p{
-  color:#667085;
-  line-height:1.5;
-}
-
+.avatar span{display:block;font-size:11px;margin-top:4px;font-weight:bold}
+.avatar.selected{border-color:#557dff;background:#edf1ff}
 .mainBtn{
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:16px;
-  background:#5b7cff;
-  color:white;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
+ width:100%;padding:15px;border:0;border-radius:15px;
+ background:#557dff;color:white;font-size:17px;font-weight:bold;cursor:pointer
 }
 
-.hidden{
-  display:none;
+/* MENU */
+.menuScreen{
+ padding:22px 18px;overflow:auto;
+ background:linear-gradient(#1c3568,#0d1730)
 }
+.playerBar{
+ display:flex;align-items:center;justify-content:space-between;
+ background:rgba(255,255,255,.1);border-radius:20px;padding:13px
+}
+.playerInfo{display:flex;align-items:center;gap:10px}
+.bigAvatar{
+ width:50px;height:50px;border-radius:50%;background:white;
+ display:flex;align-items:center;justify-content:center;font-size:29px
+}
+.small{font-size:12px;color:#b9c8e4;margin-top:3px}
+.menuTitle{text-align:center;margin:28px 0 18px}
+.cannonCard{
+ background:white;color:#172033;border-radius:24px;padding:18px;margin-bottom:15px
+}
+.cannonPreview{text-align:center;font-size:75px;margin:10px}
+.cannonName{text-align:center;font-size:22px;font-weight:bold}
+.progressText{text-align:center;color:#687386;font-size:13px;margin:8px}
+.progress{
+ height:10px;background:#e5e9ef;border-radius:20px;overflow:hidden;margin:10px 0
+}
+.progressFill{height:100%;background:#557dff}
+.cannonGrid{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:15px
+}
+.cannonChoice{
+ border:2px solid #e4e7ed;border-radius:14px;padding:9px 4px;
+ text-align:center;cursor:pointer;background:#fafbfc
+}
+.cannonChoice .icon{font-size:28px}
+.cannonChoice span{display:block;font-size:10px;font-weight:bold;margin-top:4px}
+.cannonChoice.locked{opacity:.38;cursor:not-allowed}
+.cannonChoice.active{border-color:#557dff;background:#edf1ff}
 
+/* GAME */
+.topbar{
+ height:72px;display:flex;align-items:center;justify-content:space-between;
+ padding:10px 14px;position:relative;z-index:5
+}
+.gamePlayer{display:flex;align-items:center;gap:7px;font-weight:bold}
+.gameAvatar{font-size:25px}
+.scoreBox{display:flex;gap:7px}
+.pill{
+ background:rgba(255,255,255,.12);padding:7px 10px;
+ border-radius:18px;font-size:12px;font-weight:bold
+}
+canvas{display:block;width:100%;touch-action:none}
+.nextBox{
+ position:absolute;left:15px;bottom:18px;background:rgba(255,255,255,.12);
+ padding:7px 10px;border-radius:15px;font-size:10px;text-align:center
+}
+.nextDot{
+ width:27px;height:27px;border-radius:50%;margin:4px auto 0;
+ border:2px solid rgba(255,255,255,.7)
+}
+.cannonDisplay{
+ position:absolute;bottom:17px;left:50%;transform:translateX(-50%);
+ text-align:center;pointer-events:none
+}
+.cannonIcon{font-size:58px;line-height:55px}
+.cannonLabel{font-size:10px;font-weight:bold;color:#cad5ea}
 .hint{
-  position:absolute;
-  bottom:108px;
-  width:100%;
-  text-align:center;
-  color:rgba(255,255,255,.65);
-  font-size:12px;
-  pointer-events:none;
+ position:absolute;bottom:92px;width:100%;text-align:center;
+ color:rgba(255,255,255,.6);font-size:11px;pointer-events:none
 }
-
 .combo{
-  position:absolute;
-  top:80px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-size:24px;
-  font-weight:bold;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
+ position:absolute;top:80px;left:0;right:0;text-align:center;
+ font-size:25px;font-weight:bold;opacity:0;z-index:8;
+ transition:.2s;pointer-events:none
 }
-
-.combo.show{
-  opacity:1;
-  transform:scale(1.12);
+.combo.show{opacity:1;transform:scale(1.15)}
+.overlay{
+ position:absolute;inset:0;background:rgba(3,8,22,.85);
+ display:flex;align-items:center;justify-content:center;z-index:30
+}
+.panel{
+ width:84%;background:white;color:#172033;border-radius:25px;
+ padding:25px;text-align:center
+}
+.panel h1{margin-top:0}
+.unlock{
+ font-size:65px;margin:10px
+}
+.secondary{
+ margin-top:10px;border:0;background:none;color:#557dff;
+ text-decoration:underline;cursor:pointer
 }
 </style>
 </head>
 
 <body>
+<div id="app">
 
-<div id="gameWrap">
+<!-- PROFILE -->
+<div id="profileScreen" class="screen profileScreen">
+ <div class="logo">🫧</div>
+ <h1>Bubble Blast</h1>
+ <div class="sub">Create your player profile</div>
 
-  <div class="topbar">
-    <div class="title">🫧 Bubble Blast</div>
+ <div class="card">
+  <b>What's your player name?</b>
+  <input id="username" maxlength="15" placeholder="Enter username">
 
-    <div class="scoreBox">
-      <div class="pill">
-        Score <span id="score">0</span>
-      </div>
+  <b>Choose your avatar</b>
 
-      <div class="pill">
-        Best <span id="best">0</span>
-      </div>
-    </div>
+  <div class="avatarGrid">
+   <div class="avatar selected" onclick="chooseAvatar('😎',this)">😎<span>Cool</span></div>
+   <div class="avatar" onclick="chooseAvatar('👦',this)">👦<span>Boy</span></div>
+   <div class="avatar" onclick="chooseAvatar('👧',this)">👧<span>Girl</span></div>
+   <div class="avatar" onclick="chooseAvatar('🥷',this)">🥷<span>Ninja</span></div>
+   <div class="avatar" onclick="chooseAvatar('🤖',this)">🤖<span>Robot</span></div>
+   <div class="avatar" onclick="chooseAvatar('🦸',this)">🦸<span>Hero</span></div>
   </div>
 
-  <div id="combo" class="combo"></div>
+  <button class="mainBtn" onclick="saveProfile()">Let's Play 🚀</button>
+ </div>
+</div>
 
-  <canvas id="game"></canvas>
+<!-- MENU -->
+<div id="menuScreen" class="screen menuScreen hidden">
 
-  <div class="hint">
-    Aim and tap to shoot • Match 3 or more
+ <div class="playerBar">
+  <div class="playerInfo">
+   <div id="menuAvatar" class="bigAvatar">😎</div>
+   <div>
+    <b id="menuName">Player</b>
+    <div class="small">🏆 Best Score: <span id="menuBest">0</span></div>
+   </div>
+  </div>
+  <button onclick="editProfile()" style="border:0;background:none;color:white;cursor:pointer">⚙️</button>
+ </div>
+
+ <div class="menuTitle">
+  <h1>🫧 Bubble Blast</h1>
+  <div class="small">Choose your cannon and beat your best!</div>
+ </div>
+
+ <div class="cannonCard">
+  <div id="selectedCannonIcon" class="cannonPreview">🔫</div>
+  <div id="selectedCannonName" class="cannonName">Basic Cannon</div>
+  <div id="nextUnlockText" class="progressText">Next cannon at 500 points</div>
+  <div class="progress"><div id="unlockProgress" class="progressFill"></div></div>
+
+  <div id="cannonGrid" class="cannonGrid"></div>
+ </div>
+
+ <button class="mainBtn" onclick="startGame()">▶ PLAY</button>
+</div>
+
+<!-- GAME -->
+<div id="gameScreen" class="screen hidden">
+
+ <div class="topbar">
+  <div class="gamePlayer">
+   <span id="gameAvatar" class="gameAvatar">😎</span>
+   <span id="gameName">Player</span>
   </div>
 
-  <div class="nextBubble">
-    NEXT
-    <div id="nextDot" class="nextDot"></div>
+  <div class="scoreBox">
+   <div class="pill">Score <span id="score">0</span></div>
+   <div class="pill">Best <span id="best">0</span></div>
   </div>
+ </div>
 
-  <div id="startOverlay" class="overlay">
-    <div class="panel">
-      <h1>🫧 Bubble Blast</h1>
-      <p>
-        Aim, shoot and match 3 or more bubbles of the same color.
-        Clear the board and chase your high score.
-      </p>
+ <div id="combo" class="combo"></div>
 
-      <button class="mainBtn" onclick="startGame()">
-        ▶ Play
-      </button>
-    </div>
-  </div>
+ <canvas id="game"></canvas>
 
-  <div id="gameOverOverlay" class="overlay hidden">
-    <div class="panel">
-      <h1>Game Over</h1>
+ <div class="hint">Aim and tap to shoot • Match 3 or more</div>
 
-      <p>
-        Your score:
-        <b id="finalScore">0</b>
-      </p>
+ <div class="nextBox">
+  NEXT
+  <div id="nextDot" class="nextDot"></div>
+ </div>
 
-      <button class="mainBtn" onclick="startGame()">
-        🔄 Play Again
-      </button>
-    </div>
-  </div>
+ <div class="cannonDisplay">
+  <div id="gameCannon" class="cannonIcon">🔫</div>
+  <div id="gameCannonName" class="cannonLabel">BASIC</div>
+ </div>
+
+</div>
+
+<!-- GAME OVER -->
+<div id="gameOverOverlay" class="overlay hidden">
+ <div class="panel">
+  <h1>Game Over</h1>
+  <div style="font-size:50px">🏆</div>
+  <p>Score</p>
+  <h1 id="finalScore">0</h1>
+  <button class="mainBtn" onclick="startGame()">🔄 Play Again</button>
+  <button class="secondary" onclick="backToMenu()">Back to Menu</button>
+ </div>
+</div>
+
+<!-- UNLOCK -->
+<div id="unlockOverlay" class="overlay hidden">
+ <div class="panel">
+  <h2>🔓 NEW CANNON!</h2>
+  <div id="unlockIcon" class="unlock">🟤</div>
+  <h1 id="unlockName">Bronze Cannon</h1>
+  <p>You reached a new milestone!</p>
+  <button class="mainBtn" onclick="closeUnlock()">Awesome!</button>
+ </div>
+</div>
 
 </div>
 
 <script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+/* PLAYER */
 
-const scoreEl = document.getElementById("score");
-const bestEl = document.getElementById("best");
-const nextDot = document.getElementById("nextDot");
-const comboEl = document.getElementById("combo");
+let profile=JSON.parse(localStorage.getItem("bubbleProfile")||"null");
+let selectedAvatar="😎";
 
-let W, H;
-
-const ROWS = 10;
-const COLS = 9;
-
-let radius = 18;
-let diameter = radius * 2;
-
-const colors = [
-  "#ff4d67",
-  "#ffb21c",
-  "#20c77a",
-  "#3d89ff",
-  "#9557ff",
-  "#ff60c5"
+const cannons=[
+ {id:"basic",name:"Basic Cannon",icon:"🔫",need:0,speed:10,aim:180},
+ {id:"bronze",name:"Bronze Cannon",icon:"🟤",need:500,speed:10.5,aim:200},
+ {id:"silver",name:"Silver Cannon",icon:"⚪",need:1500,speed:11,aim:220},
+ {id:"gold",name:"Gold Cannon",icon:"🟡",need:3000,speed:11.5,aim:245},
+ {id:"plasma",name:"Plasma Cannon",icon:"🔵",need:5000,speed:12,aim:270},
+ {id:"legend",name:"Legendary Cannon",icon:"🔥",need:10000,speed:13,aim:300}
 ];
 
-let grid = [];
-let current = null;
-let nextColor = null;
+let selectedCannon=localStorage.getItem("selectedCannon")||"basic";
+let previousBest=Number(localStorage.getItem("bubbleBest")||0);
 
-let score = 0;
-let best = Number(localStorage.getItem("bubbleBest") || 0);
+function chooseAvatar(a,el){
+ selectedAvatar=a;
+ document.querySelectorAll(".avatar").forEach(x=>x.classList.remove("selected"));
+ el.classList.add("selected");
+}
 
-let running = false;
+function saveProfile(){
+ const name=document.getElementById("username").value.trim();
+ if(!name){alert("Please enter your player name.");return;}
+ profile={name:name,avatar:selectedAvatar};
+ localStorage.setItem("bubbleProfile",JSON.stringify(profile));
+ showMenu();
+}
 
-let aimX = 0;
-let aimY = 0;
+function editProfile(){
+ document.getElementById("menuScreen").classList.add("hidden");
+ document.getElementById("profileScreen").classList.remove("hidden");
+ document.getElementById("username").value=profile.name;
+}
 
-let shooterX = 0;
-let shooterY = 0;
+function showMenu(){
+ document.getElementById("profileScreen").classList.add("hidden");
+ document.getElementById("gameScreen").classList.add("hidden");
+ document.getElementById("menuScreen").classList.remove("hidden");
 
-let misses = 0;
-let maxMisses = 5;
+ let best=Number(localStorage.getItem("bubbleBest")||0);
 
-bestEl.textContent = best;
+ document.getElementById("menuAvatar").textContent=profile.avatar;
+ document.getElementById("menuName").textContent=profile.name;
+ document.getElementById("menuBest").textContent=best;
+
+ renderCannons(best);
+}
+
+function renderCannons(best){
+ const grid=document.getElementById("cannonGrid");
+ grid.innerHTML="";
+
+ cannons.forEach(c=>{
+  const unlocked=best>=c.need;
+  const div=document.createElement("div");
+  div.className="cannonChoice "+(!unlocked?"locked ":"")+(selectedCannon===c.id?"active":"");
+  div.innerHTML='<div class="icon">'+(unlocked?c.icon:"🔒")+'</div><span>'+c.name.replace(" Cannon","")+'</span>';
+  if(unlocked)div.onclick=()=>selectCannon(c.id);
+  grid.appendChild(div);
+ });
+
+ let active=cannons.find(c=>c.id===selectedCannon);
+ if(best<active.need){
+  selectedCannon="basic";
+  active=cannons[0];
+ }
+
+ document.getElementById("selectedCannonIcon").textContent=active.icon;
+ document.getElementById("selectedCannonName").textContent=active.name;
+
+ let next=cannons.find(c=>c.need>best);
+
+ if(next){
+  let prev=[...cannons].reverse().find(c=>c.need<=best).need;
+  let pct=Math.min(100,((best-prev)/(next.need-prev))*100);
+  document.getElementById("nextUnlockText").textContent=
+   next.name+" unlocks at "+next.need+" points";
+  document.getElementById("unlockProgress").style.width=pct+"%";
+ }else{
+  document.getElementById("nextUnlockText").textContent="All cannons unlocked! 👑";
+  document.getElementById("unlockProgress").style.width="100%";
+ }
+}
+
+function selectCannon(id){
+ selectedCannon=id;
+ localStorage.setItem("selectedCannon",id);
+ renderCannons(Number(localStorage.getItem("bubbleBest")||0));
+}
+
+/* GAME */
+
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
+const colors=["#ff4d67","#ffb21c","#20c77a","#3d89ff","#9557ff","#ff60c5"];
+
+let W,H,radius=18,diameter=36;
+const ROWS=11,COLS=9;
+
+let grid=[],current,nextColor;
+let score=0,best=Number(localStorage.getItem("bubbleBest")||0);
+let running=false,aimX=0,aimY=0,shooterX=0,shooterY=0;
+let misses=0;
+
+function cannonData(){
+ return cannons.find(c=>c.id===selectedCannon)||cannons[0];
+}
 
 function resize(){
-
-  const rect =
-    document.getElementById("gameWrap")
-    .getBoundingClientRect();
-
-  W = rect.width;
-  H = rect.height - 70;
-
-  const dpr = window.devicePixelRatio || 1;
-
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-
-  canvas.style.width = W+"px";
-  canvas.style.height = H+"px";
-
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-
-  radius = Math.min(20,(W-20)/(COLS*2));
-  diameter = radius*2;
-
-  shooterX = W/2;
-  shooterY = H-65;
+ const rect=document.getElementById("app").getBoundingClientRect();
+ W=rect.width; H=rect.height-72;
+ const dpr=window.devicePixelRatio||1;
+ canvas.width=W*dpr;canvas.height=H*dpr;
+ canvas.style.width=W+"px";canvas.style.height=H+"px";
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ radius=Math.min(20,(W-20)/(COLS*2));
+ diameter=radius*2;
+ shooterX=W/2;shooterY=H-70;
 }
 
 window.addEventListener("resize",resize);
 
-function randomColor(){
-  return colors[
-    Math.floor(Math.random()*colors.length)
-  ];
-}
+function randomColor(){return colors[Math.floor(Math.random()*colors.length)]}
 
 function makeGrid(){
-
-  grid=[];
-
-  for(let r=0;r<ROWS;r++){
-
-    let row=[];
-
-    for(let c=0;c<COLS;c++){
-
-      if(r<5){
-
-        row.push({
-          color:randomColor(),
-          active:true
-        });
-
-      }else{
-
-        row.push(null);
-
-      }
-
-    }
-
-    grid.push(row);
-  }
+ grid=[];
+ for(let r=0;r<ROWS;r++){
+  let row=[];
+  for(let c=0;c<COLS;c++)row.push(r<5?{color:randomColor()}:null);
+  grid.push(row);
+ }
 }
 
 function bubblePos(r,c){
-
-  let offset =
-    r%2===1 ? radius : 0;
-
-  return {
-    x:radius+8+c*diameter+offset,
-    y:radius+8+r*(radius*1.72)
-  };
+ let offset=r%2?radius:0;
+ return{x:radius+8+c*diameter+offset,y:radius+8+r*(radius*1.72)};
 }
 
 function drawBubble(x,y,color){
-
-  const grad =
-    ctx.createRadialGradient(
-      x-radius*.35,
-      y-radius*.35,
-      radius*.15,
-      x,
-      y,
-      radius
-    );
-
-  grad.addColorStop(0,"#ffffff");
-  grad.addColorStop(.18,color);
-  grad.addColorStop(1,color);
-
-  ctx.beginPath();
-  ctx.arc(x,y,radius,0,Math.PI*2);
-  ctx.fillStyle=grad;
-  ctx.fill();
-
-  ctx.strokeStyle="rgba(255,255,255,.4)";
-  ctx.lineWidth=1.5;
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(
-    x-radius*.35,
-    y-radius*.35,
-    radius*.22,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fillStyle="rgba(255,255,255,.5)";
-  ctx.fill();
+ const g=ctx.createRadialGradient(x-radius*.35,y-radius*.35,radius*.1,x,y,radius);
+ g.addColorStop(0,"white");g.addColorStop(.2,color);g.addColorStop(1,color);
+ ctx.beginPath();ctx.arc(x,y,radius,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+ ctx.strokeStyle="rgba(255,255,255,.4)";ctx.stroke();
 }
 
 function draw(){
+ ctx.clearRect(0,0,W,H);
+ if(!running)return;
 
-  ctx.clearRect(0,0,W,H);
+ for(let r=0;r<ROWS;r++)
+  for(let c=0;c<COLS;c++)
+   if(grid[r][c]){
+    let p=bubblePos(r,c);
+    drawBubble(p.x,p.y,grid[r][c].color);
+   }
 
-  if(!running) return;
+ drawAim();
 
-  for(let r=0;r<ROWS;r++){
-
-    for(let c=0;c<COLS;c++){
-
-      let cell=grid[r][c];
-
-      if(cell){
-
-        const p=bubblePos(r,c);
-
-        drawBubble(
-          p.x,
-          p.y,
-          cell.color
-        );
-      }
-    }
-  }
-
-  drawAim();
-
-  if(current){
-
-    drawBubble(
-      current.x,
-      current.y,
-      current.color
-    );
-  }
-
-  ctx.beginPath();
-  ctx.arc(
-    shooterX,
-    shooterY,
-    radius+8,
-    0,
-    Math.PI*2
-  );
-  ctx.strokeStyle="rgba(255,255,255,.25)";
-  ctx.lineWidth=5;
-  ctx.stroke();
-
-  requestAnimationFrame(draw);
+ if(current)drawBubble(current.x,current.y,current.color);
+ requestAnimationFrame(draw);
 }
 
 function drawAim(){
+ let dx=aimX-shooterX,dy=aimY-shooterY;
+ if(dy>0)dy=-10;
+ let len=Math.sqrt(dx*dx+dy*dy);
+ if(!len)return;
 
-  let dx=aimX-shooterX;
-  let dy=aimY-shooterY;
+ let ux=dx/len,uy=dy/len;
+ let length=cannonData().aim;
 
-  if(dy>0) dy=-10;
-
-  let len=Math.sqrt(dx*dx+dy*dy);
-
-  if(len===0)return;
-
-  let ux=dx/len;
-  let uy=dy/len;
-
-  ctx.setLineDash([5,8]);
-
-  ctx.beginPath();
-  ctx.moveTo(
-    shooterX,
-    shooterY
-  );
-
-  ctx.lineTo(
-    shooterX+ux*180,
-    shooterY+uy*180
-  );
-
-  ctx.strokeStyle="rgba(255,255,255,.45)";
-  ctx.lineWidth=2;
-  ctx.stroke();
-
-  ctx.setLineDash([]);
+ ctx.setLineDash([5,8]);
+ ctx.beginPath();
+ ctx.moveTo(shooterX,shooterY);
+ ctx.lineTo(shooterX+ux*length,shooterY+uy*length);
+ ctx.strokeStyle="rgba(255,255,255,.5)";
+ ctx.lineWidth=2;ctx.stroke();
+ ctx.setLineDash([]);
 }
 
 function newShooter(){
-
-  current={
-    x:shooterX,
-    y:shooterY,
-    color:nextColor || randomColor(),
-    moving:false,
-    vx:0,
-    vy:0
-  };
-
-  nextColor=randomColor();
-
-  nextDot.style.background=nextColor;
+ current={
+  x:shooterX,y:shooterY,
+  color:nextColor||randomColor(),
+  moving:false,vx:0,vy:0
+ };
+ nextColor=randomColor();
+ document.getElementById("nextDot").style.background=nextColor;
 }
 
 function shoot(x,y){
+ if(!running||current.moving)return;
+ let dx=x-current.x,dy=y-current.y;
+ if(dy>0)dy=-10;
+ let len=Math.sqrt(dx*dx+dy*dy);
+ if(!len)return;
 
-  if(!running ||
-     current.moving)
-     return;
-
-  let dx=x-current.x;
-  let dy=y-current.y;
-
-  if(dy>0)dy=-10;
-
-  let len=Math.sqrt(dx*dx+dy*dy);
-
-  if(len<1)return;
-
-  const speed=10;
-
-  current.vx=dx/len*speed;
-  current.vy=dy/len*speed;
-
-  current.moving=true;
-
-  animateShot();
+ let speed=cannonData().speed;
+ current.vx=dx/len*speed;
+ current.vy=dy/len*speed;
+ current.moving=true;
+ animateShot();
 }
 
 function animateShot(){
+ if(!current||!current.moving)return;
 
-  if(!current ||
-     !current.moving)
-     return;
+ current.x+=current.vx;current.y+=current.vy;
 
-  current.x+=current.vx;
-  current.y+=current.vy;
+ if(current.x-radius<0){current.x=radius;current.vx*=-1}
+ if(current.x+radius>W){current.x=W-radius;current.vx*=-1}
 
-  if(current.x-radius<0){
+ if(current.y-radius<=0){attachCurrent();return}
 
-    current.x=radius;
-    current.vx*=-1;
-  }
+ for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+  if(!grid[r][c])continue;
+  let p=bubblePos(r,c);
+  let dx=current.x-p.x,dy=current.y-p.y;
+  if(Math.sqrt(dx*dx+dy*dy)<diameter-3){attachCurrent();return}
+ }
 
-  if(current.x+radius>W){
-
-    current.x=W-radius;
-    current.vx*=-1;
-  }
-
-  if(current.y-radius<=0){
-
-    attachCurrent();
-    return;
-  }
-
-  for(let r=0;r<ROWS;r++){
-
-    for(let c=0;c<COLS;c++){
-
-      let cell=grid[r][c];
-
-      if(!cell)continue;
-
-      const p=bubblePos(r,c);
-
-      let dx=current.x-p.x;
-      let dy=current.y-p.y;
-
-      let dist=
-        Math.sqrt(dx*dx+dy*dy);
-
-      if(dist<diameter-3){
-
-        attachCurrent();
-        return;
-      }
-    }
-  }
-
-  requestAnimationFrame(
-    animateShot
-  );
+ requestAnimationFrame(animateShot);
 }
 
 function nearestSlot(){
-
-  let bestSlot=null;
-  let bestDist=Infinity;
-
-  for(let r=0;r<ROWS;r++){
-
-    for(let c=0;c<COLS;c++){
-
-      if(grid[r][c])continue;
-
-      const p=bubblePos(r,c);
-
-      let dx=current.x-p.x;
-      let dy=current.y-p.y;
-
-      let d=dx*dx+dy*dy;
-
-      if(d<bestDist){
-
-        bestDist=d;
-
-        bestSlot={
-          r:r,
-          c:c
-        };
-      }
-    }
-  }
-
-  return bestSlot;
+ let bestSlot=null,bestDist=Infinity;
+ for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+  if(grid[r][c])continue;
+  let p=bubblePos(r,c);
+  let dx=current.x-p.x,dy=current.y-p.y,d=dx*dx+dy*dy;
+  if(d<bestDist){bestDist=d;bestSlot={r,c}}
+ }
+ return bestSlot;
 }
 
 function attachCurrent(){
+ let slot=nearestSlot();
+ if(!slot){endGame();return}
 
-  let slot=nearestSlot();
+ grid[slot.r][slot.c]={color:current.color};
+ let matched=findMatch(slot.r,slot.c);
 
-  if(!slot){
-    endGame();
-    return;
-  }
+ if(matched.length>=3){
+  matched.forEach(p=>grid[p.r][p.c]=null);
+  let gain=matched.length*10;
+  score+=gain;misses=0;
+  showCombo("POP! +"+gain);
+  removeFloating();
+ }else{
+  misses++;
+  if(misses>=5){addNewRow();misses=0}
+ }
 
-  grid[slot.r][slot.c]={
-    color:current.color,
-    active:true
-  };
+ updateScore();
 
-  let matched=
-    findMatch(
-      slot.r,
-      slot.c
-    );
-
-  if(matched.length>=3){
-
-    matched.forEach(p=>{
-      grid[p.r][p.c]=null;
-    });
-
-    let gained=
-      matched.length*10;
-
-    score+=gained;
-
-    misses=0;
-
-    showCombo(
-      matched.length,
-      gained
-    );
-
-    removeFloating();
-
-  }else{
-
-    misses++;
-
-    if(misses>=maxMisses){
-
-      addNewRow();
-
-      misses=0;
-    }
-  }
-
-  updateScore();
-
-  if(checkLose()){
-    endGame();
-    return;
-  }
-
-  newShooter();
+ if(checkLose()){endGame();return}
+ newShooter();
 }
 
 function neighbors(r,c){
+ let dirs=r%2===0
+ ?[[-1,-1],[-1,0],[0,-1],[0,1],[1,-1],[1,0]]
+ :[[-1,0],[-1,1],[0,-1],[0,1],[1,0],[1,1]];
 
-  let dirs;
-
-  if(r%2===0){
-
-    dirs=[
-      [-1,-1],
-      [-1,0],
-      [0,-1],
-      [0,1],
-      [1,-1],
-      [1,0]
-    ];
-
-  }else{
-
-    dirs=[
-      [-1,0],
-      [-1,1],
-      [0,-1],
-      [0,1],
-      [1,0],
-      [1,1]
-    ];
-  }
-
-  return dirs
-  .map(d=>({
-    r:r+d[0],
-    c:c+d[1]
-  }))
-  .filter(p=>
-    p.r>=0 &&
-    p.r<ROWS &&
-    p.c>=0 &&
-    p.c<COLS
-  );
+ return dirs.map(d=>({r:r+d[0],c:c+d[1]}))
+ .filter(p=>p.r>=0&&p.r<ROWS&&p.c>=0&&p.c<COLS);
 }
 
 function findMatch(sr,sc){
+ let color=grid[sr][sc].color,stack=[{r:sr,c:sc}],seen=new Set(),out=[];
 
-  let color=
-    grid[sr][sc].color;
+ while(stack.length){
+  let p=stack.pop(),key=p.r+","+p.c;
+  if(seen.has(key))continue;
+  seen.add(key);
 
-  let stack=[
-    {r:sr,c:sc}
-  ];
+  let cell=grid[p.r][p.c];
+  if(!cell||cell.color!==color)continue;
 
-  let seen=new Set();
-
-  let result=[];
-
-  while(stack.length){
-
-    let p=stack.pop();
-
-    let key=
-      p.r+","+p.c;
-
-    if(seen.has(key))
-      continue;
-
-    seen.add(key);
-
-    let cell=
-      grid[p.r][p.c];
-
-    if(!cell ||
-       cell.color!==color)
-       continue;
-
-    result.push(p);
-
-    neighbors(
-      p.r,
-      p.c
-    ).forEach(n=>
-      stack.push(n)
-    );
-  }
-
-  return result;
+  out.push(p);
+  neighbors(p.r,p.c).forEach(n=>stack.push(n));
+ }
+ return out;
 }
 
 function removeFloating(){
+ let connected=new Set(),stack=[];
 
-  let connected=new Set();
-  let stack=[];
+ for(let c=0;c<COLS;c++)if(grid[0][c])stack.push({r:0,c});
 
-  for(let c=0;c<COLS;c++){
+ while(stack.length){
+  let p=stack.pop(),key=p.r+","+p.c;
+  if(connected.has(key))continue;
+  connected.add(key);
 
-    if(grid[0][c]){
+  neighbors(p.r,p.c).forEach(n=>{
+   if(grid[n.r][n.c])stack.push(n);
+  });
+ }
 
-      stack.push({
-        r:0,
-        c:c
-      });
-    }
+ let dropped=0;
+ for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++)
+  if(grid[r][c]&&!connected.has(r+","+c)){
+   grid[r][c]=null;dropped++;
   }
 
-  while(stack.length){
-
-    let p=stack.pop();
-    let key=p.r+","+p.c;
-
-    if(connected.has(key))
-      continue;
-
-    connected.add(key);
-
-    neighbors(
-      p.r,
-      p.c
-    ).forEach(n=>{
-
-      if(grid[n.r][n.c]){
-
-        stack.push(n);
-      }
-    });
-  }
-
-  let dropped=0;
-
-  for(let r=0;r<ROWS;r++){
-
-    for(let c=0;c<COLS;c++){
-
-      if(grid[r][c] &&
-         !connected.has(r+","+c)){
-
-        grid[r][c]=null;
-        dropped++;
-      }
-    }
-  }
-
-  if(dropped>0){
-
-    score+=dropped*15;
-
-    showCombo(
-      dropped,
-      dropped*15
-    );
-  }
+ if(dropped){
+  let gain=dropped*15;
+  score+=gain;
+  showCombo("🔥 DROP +"+gain);
+ }
 }
 
 function addNewRow(){
-
-  grid.pop();
-
-  grid.unshift(
-    Array.from(
-      {length:COLS},
-      ()=>({
-        color:randomColor(),
-        active:true
-      })
-    )
-  );
+ grid.pop();
+ grid.unshift(Array.from({length:COLS},()=>({color:randomColor()})));
 }
 
 function checkLose(){
-
-  for(let c=0;c<COLS;c++){
-
-    if(grid[ROWS-1][c])
-      return true;
-  }
-
-  return false;
+ return grid[ROWS-1].some(Boolean);
 }
 
-function showCombo(count,pts){
-
-  comboEl.textContent=
-    count>=5
-    ? "🔥 BIG POP +"+pts
-    : "POP! +"+pts;
-
-  comboEl.classList.add(
-    "show"
-  );
-
-  setTimeout(
-    ()=>comboEl.classList.remove(
-      "show"
-    ),
-    700
-  );
+function showCombo(text){
+ let el=document.getElementById("combo");
+ el.textContent=text;el.classList.add("show");
+ setTimeout(()=>el.classList.remove("show"),700);
 }
 
 function updateScore(){
+ document.getElementById("score").textContent=score;
 
-  scoreEl.textContent=score;
-
-  if(score>best){
-
-    best=score;
-
-    bestEl.textContent=best;
-
-    localStorage.setItem(
-      "bubbleBest",
-      best
-    );
-  }
+ if(score>best){
+  best=score;
+  document.getElementById("best").textContent=best;
+  localStorage.setItem("bubbleBest",best);
+ }
 }
 
 function startGame(){
+ resize();
+ score=0;misses=0;
+ best=Number(localStorage.getItem("bubbleBest")||0);
 
-  resize();
+ document.getElementById("menuScreen").classList.add("hidden");
+ document.getElementById("gameOverOverlay").classList.add("hidden");
+ document.getElementById("gameScreen").classList.remove("hidden");
 
-  score=0;
-  misses=0;
+ document.getElementById("gameAvatar").textContent=profile.avatar;
+ document.getElementById("gameName").textContent=profile.name;
+ document.getElementById("best").textContent=best;
 
-  updateScore();
+ let c=cannonData();
+ document.getElementById("gameCannon").textContent=c.icon;
+ document.getElementById("gameCannonName").textContent=c.name.toUpperCase();
 
-  makeGrid();
-
-  nextColor=randomColor();
-
-  newShooter();
-
-  aimX=W/2;
-  aimY=H/2;
-
-  running=true;
-
-  document
-  .getElementById(
-    "startOverlay"
-  )
-  .classList.add(
-    "hidden"
-  );
-
-  document
-  .getElementById(
-    "gameOverOverlay"
-  )
-  .classList.add(
-    "hidden"
-  );
-
-  requestAnimationFrame(draw);
+ makeGrid();nextColor=randomColor();newShooter();
+ aimX=W/2;aimY=H/2;
+ running=true;
+ requestAnimationFrame(draw);
 }
 
 function endGame(){
+ running=false;
+ document.getElementById("finalScore").textContent=score;
 
-  running=false;
+ let newBest=Number(localStorage.getItem("bubbleBest")||0);
+ let newly=cannons.find(c=>c.need>previousBest&&c.need<=newBest);
 
-  document.getElementById(
-    "finalScore"
-  ).textContent=score;
+ previousBest=newBest;
 
-  document.getElementById(
-    "gameOverOverlay"
-  ).classList.remove(
-    "hidden"
-  );
+ document.getElementById("gameOverOverlay").classList.remove("hidden");
+
+ if(newly){
+  setTimeout(()=>{
+   document.getElementById("unlockIcon").textContent=newly.icon;
+   document.getElementById("unlockName").textContent=newly.name;
+   document.getElementById("unlockOverlay").classList.remove("hidden");
+  },500);
+ }
+}
+
+function closeUnlock(){
+ document.getElementById("unlockOverlay").classList.add("hidden");
+}
+
+function backToMenu(){
+ running=false;
+ document.getElementById("gameOverOverlay").classList.add("hidden");
+ showMenu();
 }
 
 function pointerPosition(e){
-
-  const rect=
-    canvas.getBoundingClientRect();
-
-  const touch=
-    e.touches
-    ? e.touches[0]
-    : e;
-
-  return {
-    x:touch.clientX-rect.left,
-    y:touch.clientY-rect.top
-  };
+ const rect=canvas.getBoundingClientRect();
+ const t=e.touches?e.touches[0]:e;
+ return{x:t.clientX-rect.left,y:t.clientY-rect.top};
 }
 
-canvas.addEventListener(
-  "mousemove",
-  e=>{
+canvas.addEventListener("mousemove",e=>{
+ let p=pointerPosition(e);aimX=p.x;aimY=p.y;
+});
 
-    let p=
-      pointerPosition(e);
+canvas.addEventListener("click",e=>{
+ let p=pointerPosition(e);shoot(p.x,p.y);
+});
 
-    aimX=p.x;
-    aimY=p.y;
-  }
-);
-
-canvas.addEventListener(
-  "click",
-  e=>{
-
-    let p=
-      pointerPosition(e);
-
-    shoot(
-      p.x,
-      p.y
-    );
-  }
-);
-
-canvas.addEventListener(
-  "touchstart",
-  e=>{
-
-    e.preventDefault();
-
-    let p=
-      pointerPosition(e);
-
-    aimX=p.x;
-    aimY=p.y;
-
-    shoot(
-      p.x,
-      p.y
-    );
-  },
-  {passive:false}
-);
+canvas.addEventListener("touchstart",e=>{
+ e.preventDefault();
+ let p=pointerPosition(e);
+ aimX=p.x;aimY=p.y;shoot(p.x,p.y);
+},{passive:false});
 
 resize();
-</script>
 
+if(profile){
+ selectedAvatar=profile.avatar;
+ showMenu();
+}
+</script>
 </body>
 </html>
