@@ -3,225 +3,259 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>My Virtual Pet</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4efe7;
+  color:#3b2b20;
+}
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  background:#fffaf4;
+  box-shadow:0 0 30px rgba(0,0,0,.12);
+}
+.header{
+  padding:22px;
+  text-align:center;
+  background:linear-gradient(#fff7e8,#f3e4c7);
+}
+.header h1{margin:0;font-size:31px}
+.header p{margin:8px 0 0;color:#7b6a58}
+
+.section{padding:18px}
+
+.pet-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.pet-card{
+  background:white;
+  border:3px solid transparent;
+  border-radius:22px;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+.pet-card.selected{
+  border-color:#69a83d;
+  transform:translateY(-3px);
+}
+.pet-card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+.pet-card h3{
+  margin:12px 10px 2px;
+}
+.pet-card p{
+  margin:0 10px 13px;
+  color:#777;
+  font-size:14px;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(#b9e7ff, #f6fbff);
-    min-height: 100vh;
-    color: #253238;
+.namebox{
+  margin-top:20px;
+}
+input{
+  width:100%;
+  padding:16px;
+  border-radius:16px;
+  border:2px solid #d7c8b5;
+  font-size:17px;
+}
+.mainbtn{
+  width:100%;
+  margin-top:13px;
+  padding:16px;
+  border:0;
+  border-radius:18px;
+  background:#6ba63c;
+  color:white;
+  font-weight:bold;
+  font-size:19px;
+  cursor:pointer;
 }
 
-.container {
-    max-width: 500px;
-    margin: auto;
-    padding: 25px 18px;
+.hidden{display:none}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:17px;
+  background:#f7ead4;
+}
+.pet-title{
+  font-weight:bold;
+  font-size:21px;
+}
+.coin{
+  background:white;
+  padding:10px 14px;
+  border-radius:30px;
+  font-weight:bold;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 5px;
+.home-scene{
+  position:relative;
+  min-height:390px;
+  background:
+    linear-gradient(rgba(0,0,0,.03),rgba(0,0,0,.10)),
+    url("https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1000&q=80");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding:20px;
+}
+.pet-main{
+  width:78%;
+  max-height:310px;
+  object-fit:contain;
+  filter:drop-shadow(0 12px 12px rgba(0,0,0,.25));
+  border-radius:28px;
 }
 
-.subtitle {
-    text-align: center;
-    color: #607d8b;
-    margin-bottom: 25px;
+.message{
+  margin:0 18px;
+  margin-top:-5px;
+  position:relative;
+  background:white;
+  padding:14px;
+  border-radius:16px;
+  text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
 }
 
-.card {
-    background: white;
-    border-radius: 25px;
-    padding: 22px;
-    margin-bottom: 18px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+.stats{
+  padding:18px;
+}
+.stat{
+  margin-bottom:14px;
+}
+.statline{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:5px;
+  font-size:14px;
+  font-weight:bold;
+}
+.bar{
+  height:13px;
+  background:#e6e6e6;
+  border-radius:20px;
+  overflow:hidden;
+}
+.fill{
+  height:100%;
+  background:#78b846;
+  transition:.3s;
 }
 
-.pet-selection {
-    display: flex;
-    gap: 12px;
+.actions{
+  padding:10px 16px 22px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.action{
+  background:white;
+  border:0;
+  border-radius:19px;
+  padding:14px 5px;
+  box-shadow:0 5px 15px rgba(0,0,0,.10);
+  cursor:pointer;
+  font-size:28px;
+}
+.action span{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-top:4px;
 }
 
-.pet-option {
-    flex: 1;
-    text-align: center;
-    border: 3px solid #eee;
-    border-radius: 20px;
-    padding: 18px;
-    cursor: pointer;
+.stage{
+  color:#7a6b5a;
+  font-size:14px;
+  margin-top:4px;
 }
 
-.pet-option.selected {
-    border-color: #2196f3;
-    background: #eef8ff;
+.bottom{
+  text-align:center;
+  padding-bottom:20px;
 }
-
-.pet-icon {
-    font-size: 70px;
-}
-
-input {
-    width: 100%;
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    font-size: 17px;
-    margin-top: 15px;
-}
-
-.main-button {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 15px;
-    margin-top: 15px;
-    background: #2196f3;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.hidden {
-    display: none;
-}
-
-.pet-home {
-    text-align: center;
-}
-
-.pet-display {
-    font-size: 120px;
-    margin: 20px;
-}
-
-.pet-name {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.age {
-    color: #607d8b;
-    margin-bottom: 15px;
-}
-
-.stat {
-    margin: 14px 0;
-    text-align: left;
-}
-
-.stat-title {
-    display: flex;
-    justify-content: space-between;
-}
-
-.bar {
-    background: #eee;
-    border-radius: 20px;
-    overflow: hidden;
-    height: 13px;
-    margin-top: 5px;
-}
-
-.bar-fill {
-    height: 100%;
-    background: #4caf50;
-}
-
-.actions {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-.action-button {
-    background: white;
-    border: none;
-    border-radius: 18px;
-    padding: 15px 5px;
-    box-shadow: 0 4px 12px rgba(0,0,0,.12);
-    font-size: 28px;
-    cursor: pointer;
-}
-
-.action-button span {
-    display: block;
-    font-size: 12px;
-    margin-top: 5px;
-    font-weight: bold;
-}
-
-.message {
-    margin-top: 15px;
-    background: #fff8dc;
-    border-radius: 12px;
-    padding: 12px;
-}
-
-.coins {
-    font-weight: bold;
-    margin-bottom: 10px;
+.reset{
+  border:0;
+  background:none;
+  color:#888;
+  text-decoration:underline;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
 <div id="adoption">
 
+<div class="header">
 <h1>🐾 My Virtual Pet</h1>
-<div class="subtitle">
-Choose your new best friend
+<p>Adopt. Care. Love. Watch them grow.</p>
 </div>
 
-<div class="card">
+<div class="section">
 
-<div class="pet-selection">
+<h2>Choose Your New Best Friend</h2>
 
-<div class="pet-option selected"
-onclick="selectPet('dog',this)">
+<div class="pet-grid">
 
-<div class="pet-icon">🐶</div>
+<div class="pet-card selected"
+onclick="selectPet('golden',this)">
+<img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=600&q=80">
+<h3>Golden Retriever</h3>
+<p>Friendly • Playful • Loyal</p>
+</div>
 
-<b>Golden Retriever</b>
-<br>
-Dog
+<div class="pet-card"
+onclick="selectPet('shepherd',this)">
+<img src="https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=600&q=80">
+<h3>German Shepherd</h3>
+<p>Smart • Brave • Active</p>
+</div>
+
+<div class="pet-card"
+onclick="selectPet('tabby',this)">
+<img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=600&q=80">
+<h3>Orange Tabby</h3>
+<p>Curious • Loving • Playful</p>
+</div>
+
+<div class="pet-card"
+onclick="selectPet('british',this)">
+<img src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?auto=format&fit=crop&w=600&q=80">
+<h3>British Shorthair</h3>
+<p>Calm • Sweet • Gentle</p>
+</div>
 
 </div>
 
-<div class="pet-option"
-onclick="selectPet('cat',this)">
-
-<div class="pet-icon">🐱</div>
-
-<b>Orange Tabby</b>
-<br>
-Cat
-
-</div>
-
-</div>
-
-<input
-id="petNameInput"
-placeholder="Give your pet a name">
-
-<button
-class="main-button"
-onclick="adoptPet()">
-
-❤️ Adopt My Pet
-
+<div class="namebox">
+<input id="petNameInput" placeholder="Give your pet a name">
+<button class="mainbtn" onclick="adoptPet()">
+❤️ Adopt Now
 </button>
+</div>
 
 </div>
 </div>
@@ -229,124 +263,107 @@ onclick="adoptPet()">
 
 <div id="game" class="hidden">
 
-<div class="card pet-home">
-
-<div class="coins">
-🪙 Coins: <span id="coins">20</span>
+<div class="topbar">
+<div>
+<div id="petTitle" class="pet-title">Buddy</div>
+<div id="petStage" class="stage">Day 1 • Baby</div>
 </div>
 
-<div id="petDisplay" class="pet-display">
-🐶
+<div class="coin">
+🪙 <span id="coins">20</span>
+</div>
 </div>
 
-<div id="petName" class="pet-name">
-Buddy
-</div>
-
-<div id="age" class="age">
-Day 1 • Puppy
+<div class="home-scene">
+<img id="petMain" class="pet-main">
 </div>
 
 <div id="message" class="message">
-Welcome home!
+Welcome home! ❤️
 </div>
 
-</div>
-
-
-<div class="card">
+<div class="stats">
 
 <div class="stat">
-
-<div class="stat-title">
+<div class="statline">
 <span>🍖 Hunger</span>
-<span id="hungerNumber">80%</span>
+<span id="hungerText">80%</span>
 </div>
-
 <div class="bar">
-<div id="hungerBar"
-class="bar-fill"
-style="width:80%">
+<div id="hungerBar" class="fill"></div>
 </div>
 </div>
-
-</div>
-
 
 <div class="stat">
-
-<div class="stat-title">
+<div class="statline">
 <span>❤️ Happiness</span>
-<span id="happyNumber">80%</span>
+<span id="happyText">80%</span>
 </div>
-
 <div class="bar">
-<div id="happyBar"
-class="bar-fill"
-style="width:80%">
+<div id="happyBar" class="fill"></div>
 </div>
 </div>
-
-</div>
-
 
 <div class="stat">
-
-<div class="stat-title">
+<div class="statline">
 <span>⚡ Energy</span>
-<span id="energyNumber">80%</span>
+<span id="energyText">80%</span>
 </div>
-
 <div class="bar">
-<div id="energyBar"
-class="bar-fill"
-style="width:80%">
+<div id="energyBar" class="fill"></div>
+</div>
+</div>
+
+<div class="stat">
+<div class="statline">
+<span>🛁 Cleanliness</span>
+<span id="cleanText">80%</span>
+</div>
+<div class="bar">
+<div id="cleanBar" class="fill"></div>
 </div>
 </div>
 
 </div>
-
-</div>
-
 
 <div class="actions">
 
-<button class="action-button"
-onclick="feedPet()">
+<button class="action" onclick="feedPet()">
 🍖
 <span>Feed</span>
 </button>
 
-<button class="action-button"
-onclick="playPet()">
+<button class="action" onclick="playPet()">
 🎾
 <span>Play</span>
 </button>
 
-<button class="action-button"
-onclick="sleepPet()">
-😴
-<span>Sleep</span>
-</button>
-
-<button class="action-button"
-onclick="bathPet()">
+<button class="action" onclick="bathPet()">
 🛁
 <span>Bath</span>
 </button>
 
-<button class="action-button"
-onclick="giveTreat()">
+<button class="action" onclick="sleepPet()">
+🌙
+<span>Sleep</span>
+</button>
+
+<button class="action" onclick="treatPet()">
 🦴
 <span>Treat</span>
 </button>
 
-<button class="action-button"
-onclick="nextDay()">
+<button class="action" onclick="nextDay()">
 🌅
 <span>Next Day</span>
 </button>
 
+</div>
+
+<div class="bottom">
+<button class="reset" onclick="resetGame()">
+Start Over
+</button>
 </div>
 
 </div>
@@ -356,57 +373,89 @@ onclick="nextDay()">
 
 <script>
 
-let selectedPet = "dog";
+const images={
 
-let pet = {
+golden:
+"https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=700&q=85",
+
+shepherd:
+"https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=700&q=85",
+
+tabby:
+"https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=700&q=85",
+
+british:
+"https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?auto=format&fit=crop&w=700&q=85"
+
+};
+
+const breeds={
+golden:"Golden Retriever",
+shepherd:"German Shepherd",
+tabby:"Orange Tabby",
+british:"British Shorthair"
+};
+
+let selectedPet="golden";
+
+let pet={
 name:"",
-type:"dog",
+type:"golden",
 day:1,
 hunger:80,
 happy:80,
 energy:80,
+clean:80,
 coins:20
 };
 
 
-function selectPet(type,element){
+function selectPet(type,el){
 
-selectedPet = type;
+selectedPet=type;
 
-document
-.querySelectorAll(".pet-option")
-.forEach(x =>
-x.classList.remove("selected")
-);
+document.querySelectorAll(".pet-card")
+.forEach(card=>card.classList.remove("selected"));
 
-element.classList.add("selected");
+el.classList.add("selected");
 
 }
 
 
 function adoptPet(){
 
-let name =
-document.getElementById(
-"petNameInput"
-).value.trim();
+let name=document
+.getElementById("petNameInput")
+.value.trim();
 
-if(name === ""){
+if(!name){
 alert("Please give your pet a name.");
 return;
 }
 
-pet.name = name;
-pet.type = selectedPet;
+pet={
+name:name,
+type:selectedPet,
+day:1,
+hunger:80,
+happy:80,
+energy:80,
+clean:80,
+coins:20
+};
 
 saveGame();
+showGame();
 
-document
-.getElementById("adoption")
+}
+
+
+function showGame(){
+
+document.getElementById("adoption")
 .classList.add("hidden");
 
-document
-.getElementById("game")
+document.getElementById("game")
 .classList.remove("hidden");
 
 updateGame();
@@ -416,111 +465,94 @@ updateGame();
 
 function feedPet(){
 
-pet.hunger =
-Math.min(100,pet.hunger+20);
+pet.hunger=Math.min(100,pet.hunger+20);
 
-pet.coins =
-Math.max(0,pet.coins-1);
+pet.clean=Math.max(0,pet.clean-3);
 
 showMessage(
 pet.name+" enjoyed the food! 🍖"
 );
 
-updateGame();
-saveGame();
+saveAndUpdate();
 
 }
 
 
 function playPet(){
 
-if(pet.energy < 10){
+if(pet.energy<10){
 
 showMessage(
-pet.name+" is too tired to play 😴"
+pet.name+" is too tired to play. 😴"
 );
 
 return;
-
 }
 
-pet.happy =
-Math.min(100,pet.happy+20);
-
-pet.energy =
-Math.max(0,pet.energy-10);
-
-pet.hunger =
-Math.max(0,pet.hunger-5);
-
-pet.coins += 2;
+pet.happy=Math.min(100,pet.happy+20);
+pet.energy=Math.max(0,pet.energy-12);
+pet.hunger=Math.max(0,pet.hunger-7);
+pet.coins+=2;
 
 showMessage(
-pet.name+" loved playing! 🎾 +2 coins"
+pet.name+" had so much fun! 🎾 +2 coins"
 );
 
-updateGame();
-saveGame();
-
-}
-
-
-function sleepPet(){
-
-pet.energy =
-Math.min(100,pet.energy+30);
-
-showMessage(
-pet.name+" had a nice sleep 😴"
-);
-
-updateGame();
-saveGame();
+saveAndUpdate();
 
 }
 
 
 function bathPet(){
 
-pet.happy =
-Math.min(100,pet.happy+5);
+pet.clean=Math.min(100,pet.clean+30);
+
+pet.happy=Math.min(100,pet.happy+5);
 
 showMessage(
-pet.name+" is clean and fresh! 🛁"
+pet.name+" is fresh and clean! 🛁"
 );
 
-updateGame();
-saveGame();
+saveAndUpdate();
 
 }
 
 
-function giveTreat(){
+function sleepPet(){
 
-if(pet.coins < 2){
+pet.energy=Math.min(100,pet.energy+30);
+
+pet.hunger=Math.max(0,pet.hunger-5);
 
 showMessage(
-"Not enough coins!"
+"Good night "+pet.name+" 🌙"
 );
+
+saveAndUpdate();
+
+}
+
+
+function treatPet(){
+
+if(pet.coins<2){
+
+showMessage("You need 2 coins for a treat.");
 
 return;
-
 }
 
-pet.coins -= 2;
+pet.coins-=2;
 
-pet.happy =
-Math.min(100,pet.happy+10);
+pet.happy=Math.min(100,pet.happy+12);
 
-pet.hunger =
-Math.min(100,pet.hunger+10);
+pet.hunger=Math.min(100,pet.hunger+8);
 
 showMessage(
 pet.name+" loved the treat! 🦴"
 );
 
-updateGame();
-saveGame();
+saveAndUpdate();
 
 }
 
@@ -529,124 +561,78 @@ function nextDay(){
 
 pet.day++;
 
-pet.hunger =
-Math.max(0,pet.hunger-15);
+pet.hunger=Math.max(0,pet.hunger-15);
+pet.happy=Math.max(0,pet.happy-8);
+pet.energy=Math.max(0,pet.energy-8);
+pet.clean=Math.max(0,pet.clean-8);
 
-pet.happy =
-Math.max(0,pet.happy-8);
-
-pet.energy =
-Math.max(0,pet.energy-8);
-
-pet.coins += 5;
+pet.coins+=5;
 
 showMessage(
-"Good morning! 🌅 Day "
-+pet.day+
+"Good morning! 🌅 Day "+pet.day+
 " • Daily reward +5 coins"
 );
 
-updateGame();
-saveGame();
+saveAndUpdate();
+
+}
+
+
+function getStage(){
+
+if(pet.day<=3)return "Baby";
+if(pet.day<=7)return "Growing";
+if(pet.day<=14)return "Young";
+return "Adult";
 
 }
 
 
 function updateGame(){
 
-document.getElementById(
-"petName"
-).innerText = pet.name;
+document.getElementById("petTitle")
+.innerText=pet.name+" • "+breeds[pet.type];
 
-document.getElementById(
-"coins"
-).innerText = pet.coins;
+document.getElementById("petStage")
+.innerText="Day "+pet.day+" • "+getStage();
 
+document.getElementById("coins")
+.innerText=pet.coins;
 
-let stage;
+document.getElementById("petMain")
+.src=images[pet.type];
 
-if(pet.day <= 3)
-stage = pet.type==="dog"
-? "Small Puppy"
-: "Small Kitten";
-
-else if(pet.day <= 7)
-stage = "Growing";
-
-else if(pet.day <= 14)
-stage = "Young";
-
-else
-stage = "Adult";
-
-
-document.getElementById(
-"age"
-).innerText =
-"Day "+pet.day+" • "+stage;
-
-
-let icon;
-
-if(pet.type==="dog"){
-
-icon =
-pet.day < 8
-? "🐶"
-: "🐕";
-
-}else{
-
-icon =
-pet.day < 8
-? "🐱"
-: "🐈";
-
-}
-
-document.getElementById(
-"petDisplay"
-).innerText = icon;
-
-
-updateBar(
-"hunger",
-pet.hunger
-);
-
-updateBar(
-"happy",
-pet.happy
-);
-
-updateBar(
-"energy",
-pet.energy
-);
+updateBar("hunger",pet.hunger);
+updateBar("happy",pet.happy);
+updateBar("energy",pet.energy);
+updateBar("clean",pet.clean);
 
 }
 
 
-function updateBar(name,value){
+function updateBar(id,value){
 
-document.getElementById(
-name+"Bar"
-).style.width =
-value+"%";
+document.getElementById(id+"Bar")
+.style.width=value+"%";
 
-document.getElementById(
-name+"Number"
-).innerText =
-value+"%";
+document.getElementById(id+"Text")
+.innerText=value+"%";
 
 }
 
 
 function showMessage(text){
 
-document.getElementById(
-"message"
-).innerText = text;
+document.getElementById("message")
+.innerText=text;
+
+}
+
+
+function saveAndUpdate(){
+
+saveGame();
+updateGame();
 
 }
 
@@ -654,7 +640,7 @@ document.getElementById(
 function saveGame(){
 
 localStorage.setItem(
-"MyVirtualPet",
+"realVirtualPet",
 JSON.stringify(pet)
 );
 
@@ -663,25 +649,32 @@ JSON.stringify(pet)
 
 function loadGame(){
 
-let saved =
-localStorage.getItem(
-"MyVirtualPet"
+let data=localStorage.getItem(
+"realVirtualPet"
 );
 
-if(saved){
+if(data){
 
-pet =
-JSON.parse(saved);
+pet=JSON.parse(data);
 
-document
-.getElementById("adoption")
-.classList.add("hidden");
+showGame();
 
-document
-.getElementById("game")
-.classList.remove("hidden");
+}
 
-updateGame();
+}
+
+
+function resetGame(){
+
+if(confirm(
+"Are you sure you want to start again?"
+)){
+
+localStorage.removeItem(
+"realVirtualPet"
+);
+
+location.reload();
 
 }
 
