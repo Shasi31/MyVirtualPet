@@ -1831,39 +1831,38 @@ canvas{
 }
 
 
-/* ========== MOBILE TAP FIX ========== */
-#gameZoneScreen .gameCard{
-  isolation:isolate!important;
+/* ========== GAME ZONE CLICK HARD-FIX V8 ========== */
+#gameZoneScreen{
+  pointer-events:auto!important;
 }
-#gameZoneScreen .gameEmoji,
-#gameZoneScreen .gz8Art,
-#gameZoneScreen .gz8BlackjackArt,
-#gameZoneScreen .gz8CardAce,
-#gameZoneScreen .gz8CardKing,
-#gameZoneScreen .gz8ChipArt,
-#gameZoneScreen .gameCard::before,
-#gameZoneScreen .gameCard::after{
+#gameZoneScreen .launcherCard{
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+  user-select:none!important;
+  -webkit-user-select:none!important;
+  position:relative!important;
+  z-index:20!important;
+}
+#gameZoneScreen .launcherCard *{
   pointer-events:none!important;
 }
-#gameZoneScreen .zonePlay,
-#gameZoneScreen .gz8Content,
-#gameZoneScreen .gz8Content button,
-#gameZoneScreen .gz8Settings,
-#gameZoneScreen button{
-  position:relative!important;
-  z-index:50!important;
-  pointer-events:auto!important;
-  touch-action:manipulation!important;
-  -webkit-tap-highlight-color:rgba(255,255,255,.15);
+#gameZoneScreen .launcherCard:active{
+  transform:scale(.985)!important;
 }
-#gameZoneScreen .gameCard{
-  pointer-events:auto!important;
+#gameZoneScreen .launcherCard:focus-visible{
+  outline:3px solid rgba(255,235,128,.9)!important;
+  outline-offset:2px!important;
 }
-@media (hover:none) and (pointer:coarse){
-  #gameZoneScreen button{
-    cursor:pointer!important;
-    min-height:38px!important;
-  }
+/* The CTA is now only a visual part of the clickable card. */
+#gameZoneScreen .launcherCard .zonePlay{
+  pointer-events:none!important;
+}
+/* Hidden screens and overlays must never intercept the launcher. */
+.full.hidden,
+.overlay.hidden{
+  display:none!important;
+  pointer-events:none!important;
 }
 
 </style>
@@ -2307,9 +2306,9 @@ canvas{
   </div>
   <div class="zoneHero"><div class="controller">🎮</div><h1>FAMILY GAME ZONE</h1><p>Choose a game and have fun</p></div>
   <div class="gameCards">
-    <div class="gameCard bubbleCard"><div class="gameEmoji">🫧</div><h2>Bubble Blast</h2><p>Levels, bosses, daily challenges and cannon upgrades.</p><div class="gameFeatures"><span>🗺️ Level Map</span><span>👹 Bosses</span><span>🎯 Daily</span></div><button class="zonePlay" onclick="openBubbleBlast()">PLAY BUBBLE BLAST</button></div>
-    <div class="gameCard poolCard"><div class="gameEmoji">🎱</div><h2>8-Ball Pool</h2><p>Real physics, full rules, CPU opponents, local 2-player and purchasable cues.</p><div class="gameFeatures"><span>🎯 Real Physics</span><span>🤖 CPU</span><span>👥 2 Player</span><span>🛒 Cue Shop</span></div><button class="zonePlay" onclick="openPoolHome()">PLAY 8-BALL POOL</button></div>
-    <div class="gameCard blackjackCard"><div class="gameEmoji">🃏</div><h2>Blackjack Casino</h2><p>Casino-style Blackjack with a real 6-deck shoe, virtual chips, splits, double down and daily challenges.</p><div class="gameFeatures"><span>🃏 Real Rules</span><span>💰 Virtual Chips</span><span>✂️ Split</span><span>🎁 Daily</span></div><button class="zonePlay" onclick="openBlackjackHome()">PLAY BLACKJACK</button></div>
+    <div class="gameCard bubbleCard launcherCard" role="button" tabindex="0" data-launch="bubble" onclick="launchGameZoneGame('bubble')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();launchGameZoneGame('bubble')}"><div class="gameEmoji">🫧</div><h2>Bubble Blast</h2><p>Levels, bosses, daily challenges and cannon upgrades.</p><div class="gameFeatures"><span>🗺️ Level Map</span><span>👹 Bosses</span><span>🎯 Daily</span></div><button class="zonePlay" >PLAY BUBBLE BLAST</button></div>
+    <div class="gameCard poolCard launcherCard" role="button" tabindex="0" data-launch="pool" onclick="launchGameZoneGame('pool')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();launchGameZoneGame('pool')}"><div class="gameEmoji">🎱</div><h2>8-Ball Pool</h2><p>Real physics, full rules, CPU opponents, local 2-player and purchasable cues.</p><div class="gameFeatures"><span>🎯 Real Physics</span><span>🤖 CPU</span><span>👥 2 Player</span><span>🛒 Cue Shop</span></div><button class="zonePlay" >PLAY 8-BALL POOL</button></div>
+    <div class="gameCard blackjackCard launcherCard" role="button" tabindex="0" data-launch="blackjack" onclick="launchGameZoneGame('blackjack')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();launchGameZoneGame('blackjack')}"><div class="gameEmoji">🃏</div><h2>Blackjack Casino</h2><p>Casino-style Blackjack with a real 6-deck shoe, virtual chips, splits, double down and daily challenges.</p><div class="gameFeatures"><span>🃏 Real Rules</span><span>💰 Virtual Chips</span><span>✂️ Split</span><span>🎁 Daily</span></div><button class="zonePlay" >PLAY BLACKJACK</button></div>
   </div>
   <div class="zoneFooter">Progress is saved on this device/browser.</div>
 </div>
@@ -7543,45 +7542,68 @@ showGameZone=function(){
 };
 
 
-/* ========== MOBILE GAME LAUNCH TAP FIX ========== */
-(function(){
-  function bindMobileLauncher(){
-    const zone=document.getElementById("gameZoneScreen");
-    if(!zone)return;
+/* ========== GAME ZONE CLICK HARD-FIX V8 ========== */
+function clearGameZoneBlockers(){
+  /*
+    When the launcher is shown, explicitly hide every other full-screen game
+    and every modal overlay. This prevents an invisible layer from covering
+    the cards on desktop or mobile.
+  */
+  const keep=document.getElementById("gameZoneScreen");
 
-    const launchers=[
-      {sel:'.bubbleCard .zonePlay, .gz8Bubble button', fn:()=>openBubbleBlast()},
-      {sel:'.poolCard .zonePlay, .gz8Pool button', fn:()=>openPoolHome()},
-      {sel:'.blackjackCard .zonePlay, .gz8Blackjack button', fn:()=>openBlackjackHome()}
-    ];
+  document.querySelectorAll(".full").forEach(el=>{
+    if(el!==keep) el.classList.add("hidden");
+  });
 
-    launchers.forEach(item=>{
-      const btn=zone.querySelector(item.sel);
-      if(!btn || btn.dataset.touchFixed==="1")return;
-      btn.dataset.touchFixed="1";
+  document.querySelectorAll(".overlay").forEach(el=>{
+    el.classList.add("hidden");
+  });
 
-      let touched=false;
-      btn.addEventListener("touchend",function(e){
-        touched=true;
-        e.preventDefault();
-        e.stopPropagation();
-        item.fn();
-        setTimeout(()=>{touched=false},500);
-      },{passive:false});
-
-      btn.addEventListener("click",function(e){
-        if(touched){
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      });
-    });
+  if(keep){
+    keep.classList.remove("hidden");
+    keep.style.pointerEvents="auto";
   }
+}
 
-  document.addEventListener("DOMContentLoaded",bindMobileLauncher);
-  setTimeout(bindMobileLauncher,300);
-  setTimeout(bindMobileLauncher,1200);
-})();
+function launchGameZoneGame(which){
+  /*
+    One single launcher function for mouse, touch, keyboard and stylus.
+    No duplicate touchend/click handlers.
+  */
+  if(which==="bubble"){
+    openBubbleBlast();
+    return;
+  }
+  if(which==="pool"){
+    openPoolHome();
+    return;
+  }
+  if(which==="blackjack"){
+    openBlackjackHome();
+    return;
+  }
+}
+
+/* Wrap the existing Game Zone function once. */
+if(typeof showGameZone==="function" && !showGameZone.__hardFixed){
+  const originalGameZone=showGameZone;
+
+  const fixedGameZone=function(){
+    originalGameZone();
+    clearGameZoneBlockers();
+  };
+
+  fixedGameZone.__hardFixed=true;
+  showGameZone=fixedGameZone;
+}
+
+/* Also make sure the launcher is clean after first page load. */
+setTimeout(()=>{
+  const z=document.getElementById("gameZoneScreen");
+  if(z && !z.classList.contains("hidden")){
+    clearGameZoneBlockers();
+  }
+},100);
 
 </script>
 
