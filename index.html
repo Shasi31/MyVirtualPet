@@ -1513,7 +1513,7 @@ canvas{
 
 <div id="homeScreen" class="full hidden">
 
-  <div style="margin-bottom:8px"><button class="poolBack" style="width:auto;padding:0 12px;border-radius:16px" onclick="showGameZone()">← GAME ZONE</button></div>
+  <div style="margin-bottom:8px"><button class="poolBack" style="width:auto;padding:0 12px;border-radius:16px" onclick="backToGameZone()">← GAME ZONE</button></div>
 
   <div class="playerHeader">
 
@@ -1828,7 +1828,8 @@ canvas{
 
     <button class="primary green" onclick="resumeGame()">▶ RESUME</button>
 
-    <button class="secondary" onclick="goHomeFromPause()">Quit to Home</button>
+    <button class="secondary" onclick="goHomeFromPause()">Quit to Bubble Home</button>
+    <button class="secondary" onclick="document.getElementById('pauseOverlay').classList.add('hidden');backToGameZone()">← Family Game Zone</button>
 
   </div>
 
@@ -1920,7 +1921,7 @@ canvas{
 
 <!-- 8 BALL POOL HOME -->
 <div id="poolHomeScreen" class="full hidden">
-  <div class="poolHeader"><div class="poolHeaderLeft"><button class="poolBack" onclick="showGameZone()">←</button><div id="poolHomeAvatar" class="poolProfileAvatar">😎</div><div><div id="poolHomeName" class="poolProfileName">Player</div><div class="poolTiny">8-BALL POOL</div></div></div><div id="poolCoins" class="poolCoins">🪙 0</div></div>
+  <div class="poolHeader"><div class="poolHeaderLeft"><button class="poolBack" onclick="backToGameZone()">←</button><div id="poolHomeAvatar" class="poolProfileAvatar">😎</div><div><div id="poolHomeName" class="poolProfileName">Player</div><div class="poolTiny">8-BALL POOL</div></div></div><div id="poolCoins" class="poolCoins">🪙 0</div></div>
   <div class="poolHero"><div class="eight">🎱</div><h1>8-BALL POOL</h1><p>Aim • Control • Win</p></div>
   <div class="poolStats"><div class="poolStat"><b id="poolWins">0</b><small>WINS</small></div><div class="poolStat"><b id="poolLosses">0</b><small>LOSSES</small></div><div class="poolStat"><b id="poolStreak">0</b><small>STREAK</small></div><div class="poolStat"><b id="poolWinRate">0%</b><small>WIN RATE</small></div></div>
   <div class="poolMenuCard"><h3>Choose Match</h3><div class="modeGrid"><button id="poolCpuMode" class="modeBtn active" onclick="setPoolMode('cpu')"><span>🤖</span><b>VS CPU</b><small>Challenge computer opponents</small></button><button id="poolLocalMode" class="modeBtn" onclick="setPoolMode('local')"><span>👥</span><b>2 PLAYERS</b><small>Pass & play on one device</small></button></div><div id="poolDifficultyBox" style="margin-top:12px"><div class="label">CPU DIFFICULTY</div><div class="difficultyGrid"><button class="diffBtn active" data-diff="rookie" onclick="setPoolDifficulty('rookie',this)">ROOKIE</button><button class="diffBtn" data-diff="amateur" onclick="setPoolDifficulty('amateur',this)">AMATEUR</button><button class="diffBtn" data-diff="pro" onclick="setPoolDifficulty('pro',this)">PRO</button><button class="diffBtn" data-diff="master" onclick="setPoolDifficulty('master',this)">MASTER</button></div></div><button class="poolMainBtn" onclick="startPoolMatch()">🎱 START MATCH</button></div>
@@ -1947,7 +1948,7 @@ canvas{
 <!-- BLACKJACK HOME -->
 <div id="bjHomeScreen" class="full hidden">
   <div class="bjHeader">
-    <div class="bjHeaderLeft"><button class="poolBack" onclick="showGameZone()">←</button><div id="bjHomeAv" class="bjAv">😎</div><div><div id="bjHomeName" class="bjName">Player</div><div class="bjTiny">BLACKJACK CASINO</div></div></div>
+    <div class="bjHeaderLeft"><button class="poolBack" onclick="backToGameZone()">←</button><div id="bjHomeAv" class="bjAv">😎</div><div><div id="bjHomeName" class="bjName">Player</div><div class="bjTiny">BLACKJACK CASINO</div></div></div>
     <div id="bjHomeBalance" class="bjBalance">🪙 5,000</div>
   </div>
   <div class="bjHero"><div class="cards">🂡 🂮</div><h1>BLACKJACK</h1><p>6-Deck Shoe • Blackjack Pays 3:2 • Dealer Stands on 17</p></div>
@@ -2839,7 +2840,7 @@ const colors=[
 ];
 
 const ROWS=12;
-const COLS=9;
+let COLS=9;
 
 let W,H;
 
@@ -2948,8 +2949,8 @@ function resize(){
 
   radius=
   Math.min(
-    20,
-    (W-20)/(COLS*2)
+    34,
+    (W-24)/(COLS*2+1)
   );
 
   diameter=
@@ -2960,6 +2961,26 @@ function resize(){
 
   shooterY=
   H-46;
+
+}
+
+
+/*
+  Responsive Bubble Grid
+  Keep about 9 columns on a phone and expand gradually on wider screens.
+  This makes the starting formation use the full playable width instead of
+  staying stuck on the left side.
+*/
+function configureBubbleGrid(){
+
+  COLS=
+  Math.max(
+    9,
+    Math.min(
+      18,
+      Math.floor(W/68)
+    )
+  );
 
 }
 
@@ -3048,9 +3069,23 @@ function bubblePos(r,c){
   const offset=
   r%2?radius:0;
 
+  /*
+    Center the staggered honeycomb row across the whole canvas.
+    The final odd-row offset is included in the row width calculation.
+  */
+  const rowWidth=
+    COLS*diameter+
+    (r%2?radius:0);
+
+  const startX=
+    Math.max(
+      radius+6,
+      (W-rowWidth)/2+radius
+    );
+
   return{
     x:
-    radius+8+
+    startX+
     c*diameter+
     offset,
 
@@ -4604,6 +4639,8 @@ function updateGameUI(){
 function startLevel(){
 
   resize();
+  configureBubbleGrid();
+  resize();
 
   const world=
   worldData();
@@ -5331,7 +5368,22 @@ window.addEventListener(
 
 /* ================= FAMILY GAME ZONE ================= */
 function hideAllMainScreens(){
-  ["profileScreen","gameZoneScreen","homeScreen","gameScreen","poolHomeScreen","poolGameScreen"].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add("hidden");});
+  [
+    "profileScreen","gameZoneScreen","homeScreen","gameScreen",
+    "poolHomeScreen","poolGameScreen","bjHomeScreen","bjGameScreen"
+  ].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.add("hidden");
+  });
+
+  [
+    "mapOverlay","bossOverlay","completeOverlay","failedOverlay","pauseOverlay",
+    "shopOverlay","unlockOverlay","cueShopOverlay","poolStatsOverlay",
+    "poolResultOverlay","bjShopOverlay","bjStatsOverlay"
+  ].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.classList.add("hidden");
+  });
 }
 function showGameZone(){
   if(typeof running!=="undefined") running=false;
@@ -5343,6 +5395,15 @@ function showGameZone(){
   document.getElementById("zoneName").textContent=saveData.profile?.name||"Player";
   document.getElementById("app").style.background="radial-gradient(circle at 20% 0,#5638b8 0,transparent 34%),radial-gradient(circle at 90% 35%,#106d7a 0,transparent 35%),linear-gradient(#101a3d,#071225)";
 }
+function backToGameZone(){
+  if(typeof running!=="undefined")running=false;
+  if(typeof paused!=="undefined")paused=false;
+  if(typeof poolRunning!=="undefined")poolRunning=false;
+  if(typeof poolAnimating!=="undefined")poolAnimating=false;
+  if(typeof poolDragging!=="undefined")poolDragging=false;
+  showGameZone();
+}
+
 function openBubbleBlast(){hideAllMainScreens();showHome();}
 function editSharedProfile(){hideAllMainScreens();document.getElementById("profileScreen").classList.remove("hidden");document.getElementById("username").value=saveData.profile?.name||"";selectedAvatar=saveData.profile?.avatar||"😎";document.querySelectorAll(".avatar").forEach(el=>el.classList.toggle("selected",el.dataset.avatar===selectedAvatar));}
 
