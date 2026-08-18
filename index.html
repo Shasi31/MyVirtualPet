@@ -682,6 +682,294 @@ canvas{
  .bjTable{bottom:101px}.bjControls{height:96px}.bjCard{width:57px;height:81px}.bjDealerCards{top:45px}.bjPlayerCards{min-height:91px}.bjPlayerArea{min-height:132px}
 }
 
+
+/* ================= BLACKJACK REALISTIC TABLE V2 OVERRIDES ================= */
+#bjGameScreen{
+  z-index:48;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 50% -15%,rgba(118,92,38,.12),transparent 28%),
+    linear-gradient(180deg,#060a08,#020403 75%);
+}
+
+.bjTableTop{
+  height:52px;
+  padding:6px 8px;
+  background:linear-gradient(180deg,#0d100e,#050706);
+  border-bottom:1px solid rgba(216,180,91,.22);
+  box-shadow:0 3px 12px rgba(0,0,0,.32);
+}
+.bjTopAv{font-size:21px}
+.bjTopName{font-size:10px}
+.bjTopSub{font-size:6px}
+.bjTopBalance{
+  padding:6px 8px;
+  font-size:8px;
+  border-radius:11px;
+}
+.bjTableTop .poolBack,
+.bjTableTop .soundBtn{
+  width:32px;height:32px;
+  min-width:32px;
+}
+
+/* Full casino table, sized to leave room for the fixed control console */
+.bjTable{
+  top:58px;
+  bottom:104px;
+  left:6px;
+  right:6px;
+  border-radius:44% 44% 16px 16px/14% 14% 16px 16px;
+  border-width:7px;
+  box-shadow:
+    inset 0 0 0 3px #c59a52,
+    inset 0 0 0 7px #4e2c18,
+    inset 0 0 35px rgba(0,0,0,.25),
+    0 9px 24px rgba(0,0,0,.5);
+}
+.bjTable:before{
+  inset:12px;
+  border-color:rgba(255,226,155,.2);
+  border-radius:42% 42% 11px 11px/13% 13% 11px 11px;
+}
+
+/* Table markings */
+.bjTableText{
+  top:39%;
+  opacity:.9;
+}
+.bjTableText b{
+  font-size:15px;
+  letter-spacing:1.5px;
+  color:rgba(255,239,190,.28);
+}
+.bjTableText small{
+  font-size:6px;
+  color:rgba(255,239,190,.35);
+}
+
+/* Shoe becomes a more believable casino shoe */
+.bjShoe{
+  width:42px;height:24px;
+  right:11px;top:9px;
+  border-radius:4px 4px 7px 7px;
+  border:1px solid #777;
+  background:linear-gradient(145deg,#3b3b3b,#0b0b0b 65%);
+  transform:skewX(-4deg);
+}
+.bjShoe:after{
+  left:7px;right:7px;bottom:2px;height:10px;
+}
+
+/* Dealer area */
+.bjDealerLabel{
+  top:9px;
+  font-size:8px;
+  letter-spacing:1.4px;
+  color:#f1df9d;
+}
+.bjDealerValue{
+  top:25px;
+  font-size:7px;
+  padding:3px 6px;
+  background:rgba(0,0,0,.28);
+}
+.bjDealerCards{
+  top:39px;
+  min-height:95px;
+  align-items:flex-start;
+}
+
+/* Player area */
+.bjPlayerArea{
+  bottom:10px;
+  min-height:132px;
+}
+.bjPlayerCards{
+  min-height:88px;
+  align-items:flex-end;
+}
+.bjPlayerValue{
+  font-size:8px;
+  letter-spacing:.4px;
+  margin-top:2px;
+}
+
+/* Smaller real-sized cards with better spacing */
+.bjCard{
+  width:58px;
+  height:82px;
+  margin-left:-11px;
+  border-radius:6px;
+  box-shadow:0 4px 8px rgba(0,0,0,.34);
+}
+.bjCard:first-child{margin-left:0}
+.bjCorner{
+  left:4px;top:4px;
+  font-size:11px;
+  line-height:10px;
+}
+.bjCorner.bottom{
+  right:4px;bottom:4px;
+}
+.bjSuitBig{font-size:28px}
+
+/* Betting circle no longer fights with the table text */
+.bjBetCircle{
+  top:54%;
+  width:70px;height:70px;
+  border-width:1.5px;
+  border-color:rgba(255,233,171,.42);
+  background:rgba(0,0,0,.045);
+}
+.bjBetCircle span{font-size:7px}
+.bjBetCircle b{font-size:12px}
+
+/* Result is centered over table action */
+.bjResultBanner{
+  top:50%;
+  min-width:145px;
+  padding:10px 13px;
+}
+.bjResultBanner b{font-size:17px}
+
+/* Fixed compact bottom console */
+.bjControls{
+  height:98px;
+  padding:6px 8px max(6px,env(safe-area-inset-bottom));
+  background:
+    linear-gradient(180deg,#111713,#050706);
+  border-top:1px solid rgba(218,181,93,.18);
+  box-shadow:0 -5px 16px rgba(0,0,0,.25);
+}
+
+/* Casino chip rail */
+.bjBetPanel{
+  justify-content:flex-start;
+  gap:4px;
+}
+.bjBetRow{
+  grid-template-columns:repeat(6,1fr);
+  gap:5px;
+  align-items:center;
+}
+.bjChipBtn{
+  width:43px;
+  height:43px;
+  aspect-ratio:auto;
+  justify-self:center;
+  border-width:2px;
+  font-size:7px;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.15),
+    0 3px 5px rgba(0,0,0,.35);
+  position:relative;
+}
+.bjChipBtn:before{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:50%;
+}
+.bjDealRow{
+  grid-template-columns:.9fr 1.5fr .9fr;
+  gap:6px;
+  margin-top:2px;
+  height:34px;
+}
+.bjUtilityBtn,.bjDealBtn{
+  border-radius:10px;
+}
+.bjDealBtn{
+  font-size:11px;
+  letter-spacing:.8px;
+}
+
+/* Action controls stay fully visible */
+.bjActionPanel{
+  height:100%;
+}
+.bjActionGrid{
+  grid-template-columns:repeat(5,1fr);
+  gap:4px;
+}
+.bjMoveBtn{
+  height:54px;
+  border-radius:12px;
+  font-size:7px;
+}
+.bjMoveBtn span{
+  font-size:16px;
+  margin-bottom:1px;
+}
+
+/* Insurance */
+.bjInsurancePanel{
+  height:100%;
+}
+.bjInsurancePanel button{
+  height:48px;
+  font-size:10px;
+}
+
+/* Keep info above console instead of colliding with it */
+.bjRoundInfo{
+  left:12px;
+  bottom:108px;
+  font-size:6px;
+  color:rgba(244,224,159,.74);
+}
+
+/* Hand tabs */
+.bjHandTabs{
+  min-height:16px;
+  margin-bottom:2px;
+}
+.bjHandTab{
+  font-size:6px;
+  padding:3px 6px;
+}
+
+/* Mobile portrait tune */
+@media(max-width:600px){
+  .bjTable{
+    left:5px;right:5px;
+    top:57px;
+    bottom:103px;
+  }
+  .bjDealerCards{top:38px}
+  .bjPlayerArea{bottom:9px}
+  .bjCard{width:56px;height:79px}
+  .bjChipBtn{width:40px;height:40px}
+  .bjControls{height:96px}
+}
+
+/* Short phone tune */
+@media(max-height:720px){
+  .bjTable{
+    top:54px;
+    bottom:92px;
+  }
+  .bjControls{height:88px}
+  .bjCard{width:51px;height:72px}
+  .bjDealerCards{top:35px;min-height:82px}
+  .bjPlayerArea{min-height:112px}
+  .bjPlayerCards{min-height:76px}
+  .bjChipBtn{width:36px;height:36px;font-size:6px}
+  .bjDealRow{height:30px}
+  .bjMoveBtn{height:47px}
+  .bjRoundInfo{bottom:96px}
+}
+
+/* Desktop table stays premium but not oversized */
+@media(min-width:700px){
+  #app{max-width:760px}
+  .bjTable{left:12px;right:12px}
+  .bjCard{width:64px;height:90px}
+  .bjChipBtn{width:48px;height:48px}
+}
+
 </style>
 </head>
 
@@ -4840,7 +5128,7 @@ function bjSleep(ms){return new Promise(r=>setTimeout(r,ms));}
 async function bjDeal(){
  if(bjBusy)return;if(bjSave.chips<50){alert("You need at least 50 virtual chips.");return;}
  bjBet=Math.max(50,Math.min(2000,bjBet,bjSave.chips));bjBusy=true;bjRoundStartChips=bjSave.chips;bjSave.chips-=bjBet;bjSave.lastBet=bjBet;bjInsurance=0;bjDealer=[];bjHands=[{cards:[],bet:bjBet,status:"playing",fromSplit:false,splitAces:false,doubled:false}];bjActiveHand=0;bjDealerHoleHidden=true;bjRoundHadDouble=false;bjRoundHadSplit=false;bjPhase="dealing";bjRender();
- const order=["p","d","p","d"];for(const who of order){if(who==="p")bjHands[0].cards.push(bjDraw());else bjDealer.push(bjDraw());bjSound("card");bjRender();await bjSleep(220);}
+ const order=["p","d","p","d"];for(const who of order){if(who==="p")bjHands[0].cards.push(bjDraw());else bjDealer.push(bjDraw());bjSound("card");bjRender();await bjSleep(260);}
  bjBusy=false;
  const up=bjDealer[0],playerNat=bjIsNatural(bjHands[0]);
  if(up.r==="A"){bjPhase="insurance";bjRender();return;}
@@ -4869,7 +5157,7 @@ async function bjHit(){
 }
 async function bjStand(){if(bjBusy||bjPhase!=="player")return;bjHands[bjActiveHand].status="stood";await bjAdvanceHand();}
 async function bjDouble(){
- if(bjBusy||bjPhase!=="player")return;const h=bjHands[bjActiveHand];if(!bjCanDouble(h))return;bjSave.chips-=h.bet;h.bet*=2;h.doubled=true;bjRoundHadDouble=true;bjSound("chip");bjBusy=true;h.cards.push(bjDraw());bjSound("card");bjRender();await bjSleep(220);bjBusy=false;h.status=bjHandValue(h.cards).total>21?"bust":"stood";await bjAdvanceHand();
+ if(bjBusy||bjPhase!=="player")return;const h=bjHands[bjActiveHand];if(!bjCanDouble(h))return;bjSave.chips-=h.bet;h.bet*=2;h.doubled=true;bjRoundHadDouble=true;bjSound("chip");bjBusy=true;h.cards.push(bjDraw());bjSound("card");bjRender();await bjSleep(260);bjBusy=false;h.status=bjHandValue(h.cards).total>21?"bust":"stood";await bjAdvanceHand();
 }
 async function bjSplit(){
  if(bjBusy||bjPhase!=="player")return;const h=bjHands[bjActiveHand];if(!bjCanSplit(h))return;
@@ -4890,7 +5178,7 @@ async function bjDealerPlay(){
  bjPhase="dealer";bjDealerHoleHidden=false;bjSound("flip");bjRender();await bjSleep(420);
  const live=bjHands.some(h=>!["bust","surrender"].includes(h.status));
  if(live){
-  while(true){const v=bjHandValue(bjDealer);if(v.total<17){bjDealer.push(bjDraw());bjSound("card");bjRender();await bjSleep(430);}else break;}
+  while(true){const v=bjHandValue(bjDealer);if(v.total<17){bjDealer.push(bjDraw());bjSound("card");bjRender();await bjSleep(480);}else break;}
  }
  bjSettleHands();
 }
