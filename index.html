@@ -5080,30 +5080,118 @@ function bjOpenTableUI(){
  document.getElementById("bjTopAv").textContent=p.avatar;document.getElementById("bjTopName").textContent=p.name;document.getElementById("bjSoundBtn").textContent=bjSave.sound?"🔊":"🔇";
  applyBjTheme();bjRender();ensureBjAudio();
 }
-function openBlackjackTable(){bjPhase="bet";bjBet=Math.min(Math.max(50,bjSave.lastBet||100),Math.min(2000,bjSave.chips||50));bjDealer=[];bjHands=[];bjInsurance=0;bjDealerHoleHidden=true;bjOpenTableUI();}
+function openBlackjackTable(){bjPhase="bet";bjBet=Math.min(Math.max(50,bjSave.lastBet||100),Math.min(2000,bjSave.chips||50));bjDealer=[];bjHands=[];bjInsurance=0;bjDealerHoleHidden=true;bjRenderedPlayerHand=null;bjOpenTableUI();setTimeout(()=>bjClearTableCards(),0);}
 function bjExitTable(){if(bjBusy)return;if(bjPhase!=="bet"&&bjPhase!=="roundover"){if(!confirm("Leave this Blackjack hand? Your current bet will be lost."))return;}openBlackjackHome();}
 
 /* ================= BLACKJACK RENDER ================= */
 function bjCardHTML(c,hidden=false){
- if(hidden)return `<div class="bjCard back ${bjSave.selectedBack}"></div>`;
+ if(hidden)return `<div class="bjCard back ${bjSave.selectedBack}" data-hidden="1"></div>`;
  const red=c.s==="♥"||c.s==="♦";
- return `<div class="bjCard ${red?"red":""}"><div class="bjCorner">${c.r}<br>${c.s}</div><div class="bjSuitBig">${c.s}</div><div class="bjCorner bottom">${c.r}<br>${c.s}</div></div>`;
+ return `<div class="bjCard ${red?"red":""}" data-hidden="0"><div class="bjCorner">${c.r}<br>${c.s}</div><div class="bjSuitBig">${c.s}</div><div class="bjCorner bottom">${c.r}<br>${c.s}</div></div>`;
 }
+
+/*
+  IMPORTANT:
+  Do not rebuild the whole hand every time a card is dealt.
+  Existing card DOM nodes stay where they are; only the new card is appended.
+  This prevents the old cards from flying out and back in on every HIT.
+*/
+let bjRenderedPlayerHand=null;
+
+function bjMakeCardNode(card,hidden=false){
+ const wrap=document.createElement("div");
+ wrap.innerHTML=bjCardHTML(card,hidden).trim();
+ return wrap.firstElementChild;
+}
+
+function bjSyncDealerCards(){
+ const el=document.getElementById("bjDealerCards");
+
+ while(el.children.length>bjDealer.length){
+  el.removeChild(el.lastElementChild);
+ }
+
+ for(let i=0;i<bjDealer.length;i++){
+  const shouldHide=bjDealerHoleHidden&&i===1;
+  const existing=el.children[i];
+
+  if(!existing){
+   el.appendChild(bjMakeCardNode(bjDealer[i],shouldHide));
+   continue;
+  }
+
+  const isHidden=existing.dataset.hidden==="1";
+
+  /*
+    Only replace the dealer hole card when it actually flips.
+    Other already-dealt cards never reanimate.
+  */
+  if(isHidden!==shouldHide){
+   const replacement=bjMakeCardNode(bjDealer[i],shouldHide);
+   existing.replaceWith(replacement);
+  }
+ }
+}
+
+function bjSyncPlayerCards(hand){
+ const el=document.getElementById("bjPlayerCards");
+
+ if(!hand){
+  el.innerHTML="";
+  bjRenderedPlayerHand=null;
+  return;
+ }
+
+ /*
+   Switching between split hands is a genuine hand change,
+   so redraw that hand once. Normal HIT on the same hand only appends.
+ */
+ if(bjRenderedPlayerHand!==hand){
+  el.innerHTML="";
+  hand.cards.forEach(c=>el.appendChild(bjMakeCardNode(c,false)));
+  bjRenderedPlayerHand=hand;
+  return;
+ }
+
+ while(el.children.length>hand.cards.length){
+  el.removeChild(el.lastElementChild);
+ }
+
+ for(let i=el.children.length;i<hand.cards.length;i++){
+  el.appendChild(bjMakeCardNode(hand.cards[i],false));
+ }
+}
+
+function bjClearTableCards(){
+ document.getElementById("bjDealerCards").innerHTML="";
+ document.getElementById("bjPlayerCards").innerHTML="";
+ document.getElementById("bjHandTabs").innerHTML="";
+ document.getElementById("bjDealerValue").textContent="—";
+ document.getElementById("bjPlayerValue").textContent="PLACE YOUR BET";
+ bjRenderedPlayerHand=null;
+}
+
 function bjRender(){
  document.getElementById("bjTopBalance").textContent="🪙 "+bjSave.chips.toLocaleString();
  document.getElementById("bjTableBet").textContent=bjBet.toLocaleString();
- const dShown=bjDealer.map((c,i)=>bjCardHTML(c,bjDealerHoleHidden&&i===1)).join("");
- document.getElementById("bjDealerCards").innerHTML=dShown;
+
+ bjSyncDealerCards();
+
  const dv=bjDealer.length?(bjDealerHoleHidden?(bjCardValueRank(bjDealer[0]?.r||"2")):bjHandValue(bjDealer).total):"—";
  document.getElementById("bjDealerValue").textContent=bjDealer.length?"DEALER "+dv:"—";
+
  const h=bjHands[bjActiveHand];
- document.getElementById("bjPlayerCards").innerHTML=h?h.cards.map(c=>bjCardHTML(c,false)).join(""):"";
+ bjSyncPlayerCards(h);
+
  document.getElementById("bjHandTabs").innerHTML=bjHands.length>1?bjHands.map((x,i)=>`<button class="bjHandTab ${i===bjActiveHand?"active":""}">HAND ${i+1} • ${bjHandValue(x.cards).total}</button>`).join(""):"";
- document.getElementById("bjPlayerValue").textContent=h?`HAND ${bjActiveHand+1} • ${bjHandValue(h.cards).total} • BET ${h.bet.toLocaleString()}`:(bjPhase==="bet"?"PLACE YOUR BET":"");
+ document.getElementById("bjPlayerValue").textContent=h?`HAND ${bjActiveHand+1} • ${bjHandValue(h.cards).total} • BET ${h.bet.toLocaleString()}`:(bjPhase==="bet"||bjPhase==="roundover"?"PLACE YOUR BET":"");
+
  renderBjChips();
+
  document.getElementById("bjBetPanel").classList.toggle("hidden",bjPhase!=="bet"&&bjPhase!=="roundover");
  document.getElementById("bjActionPanel").classList.toggle("hidden",bjPhase!=="player");
  document.getElementById("bjInsurancePanel").classList.toggle("hidden",bjPhase!=="insurance");
+
  if(h&&bjPhase==="player"){
   document.getElementById("bjHitBtn").disabled=h.status!=="playing";
   document.getElementById("bjStandBtn").disabled=h.status!=="playing";
@@ -5126,9 +5214,43 @@ function bjClearBet(){if(bjBusy)return;bjBet=Math.min(50,bjSave.chips);bjRender(
 function bjRepeatBet(){if(bjBusy)return;bjBet=Math.min(Math.max(50,bjSave.lastBet||100),Math.min(2000,bjSave.chips));bjRender();}
 function bjSleep(ms){return new Promise(r=>setTimeout(r,ms));}
 async function bjDeal(){
- if(bjBusy)return;if(bjSave.chips<50){alert("You need at least 50 virtual chips.");return;}
- bjBet=Math.max(50,Math.min(2000,bjBet,bjSave.chips));bjBusy=true;bjRoundStartChips=bjSave.chips;bjSave.chips-=bjBet;bjSave.lastBet=bjBet;bjInsurance=0;bjDealer=[];bjHands=[{cards:[],bet:bjBet,status:"playing",fromSplit:false,splitAces:false,doubled:false}];bjActiveHand=0;bjDealerHoleHidden=true;bjRoundHadDouble=false;bjRoundHadSplit=false;bjPhase="dealing";bjRender();
- const order=["p","d","p","d"];for(const who of order){if(who==="p")bjHands[0].cards.push(bjDraw());else bjDealer.push(bjDraw());bjSound("card");bjRender();await bjSleep(260);}
+ if(bjBusy)return;
+ if(bjSave.chips<50){alert("You need at least 50 virtual chips.");return;}
+
+ bjBusy=true;
+
+ /*
+   Start every round with a visibly empty table.
+   Clear the previous hand first, pause briefly, then deal the new hand.
+ */
+ bjDealer=[];
+ bjHands=[];
+ bjActiveHand=0;
+ bjDealerHoleHidden=true;
+ bjInsurance=0;
+ bjRenderedPlayerHand=null;
+ bjPhase="dealing";
+ bjClearTableCards();
+ bjRender();
+ await bjSleep(220);
+
+ bjBet=Math.max(50,Math.min(2000,bjBet,bjSave.chips));
+ bjRoundStartChips=bjSave.chips;
+ bjSave.chips-=bjBet;
+ bjSave.lastBet=bjBet;
+ bjHands=[{cards:[],bet:bjBet,status:"playing",fromSplit:false,splitAces:false,doubled:false}];
+ bjRoundHadDouble=false;
+ bjRoundHadSplit=false;
+
+ const order=["p","d","p","d"];
+ for(const who of order){
+  if(who==="p")bjHands[0].cards.push(bjDraw());
+  else bjDealer.push(bjDraw());
+
+  bjSound("card");
+  bjRender();
+  await bjSleep(260);
+ }
  bjBusy=false;
  const up=bjDealer[0],playerNat=bjIsNatural(bjHands[0]);
  if(up.r==="A"){bjPhase="insurance";bjRender();return;}
