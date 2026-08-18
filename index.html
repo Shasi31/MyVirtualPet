@@ -2949,8 +2949,8 @@ function resize(){
 
   radius=
   Math.min(
-    34,
-    (W-24)/(COLS*2+1)
+    22,
+    (W-28)/(COLS*2+1)
   );
 
   diameter=
@@ -2977,8 +2977,8 @@ function configureBubbleGrid(){
   Math.max(
     9,
     Math.min(
-      18,
-      Math.floor(W/68)
+      20,
+      Math.floor(W/46)
     )
   );
 
@@ -3079,7 +3079,7 @@ function bubblePos(r,c){
 
   const startX=
     Math.max(
-      radius+6,
+      radius+10,
       (W-rowWidth)/2+radius
     );
 
