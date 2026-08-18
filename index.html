@@ -1461,6 +1461,15 @@ canvas{
   .bj3dChip{width:44px;height:44px}
 }
 
+
+.bjFlipIn{
+  animation:bjFlipCard .28s ease!important;
+}
+@keyframes bjFlipCard{
+  0%{transform:rotateY(90deg)}
+  100%{transform:rotateY(0deg)}
+}
+
 </style>
 </head>
 
@@ -6456,6 +6465,624 @@ function bjShowResult(title,detail){
   document.getElementById("bjResultDetail").textContent=detail;
   b.classList.add("show");
   setTimeout(()=>b.classList.remove("show"),1500);
+}
+
+
+/* ================= BLACKJACK V5 CARD RENDER FIX ================= */
+
+/*
+  V5 IMPORTANT FIX:
+  We no longer rebuild all cards on every render.
+  Each seat and dealer keep their existing DOM card nodes.
+  New cards are appended one at a time, so only the new card animates.
+*/
+
+let bjMDealerRenderedCount = 0;
+let bjMDealerRenderedHiddenState = [];
+let bjMSeatRendered = Array.from({length:5},()=>({
+  handIndex:-1,
+  count:0,
+  signature:""
+}));
+
+function bjMResetRenderTracking(){
+  bjMDealerRenderedCount=0;
+  bjMDealerRenderedHiddenState=[];
+  bjMSeatRendered=Array.from({length:5},()=>({
+    handIndex:-1,
+    count:0,
+    signature:""
+  }));
+}
+
+function bjMCardSignature(card){
+  return card ? card.r+"-"+card.s : "";
+}
+
+function bjMHandSignature(hand){
+  if(!hand)return "";
+  return hand.cards.map(bjMCardSignature).join("|");
+}
+
+function bjMCreateCardNode(card,hidden=false){
+  const wrap=document.createElement("div");
+  wrap.innerHTML=bjCardHTML(card,hidden).trim();
+  const node=wrap.firstElementChild;
+  node.dataset.hidden=hidden?"1":"0";
+  node.dataset.cardSig=bjMCardSignature(card);
+  return node;
+}
+
+function bjMSyncDealerIncremental(){
+  const el=document.getElementById("bjDealerCards");
+  if(!el)return;
+
+  // Full reset only if dealer card count goes backwards, which means new round/clear.
+  if(bjMDealer.length < bjMDealerRenderedCount){
+    el.innerHTML="";
+    bjMDealerRenderedCount=0;
+    bjMDealerRenderedHiddenState=[];
+  }
+
+  // Update existing hidden card only when it flips.
+  for(let i=0;i<Math.min(bjMDealerRenderedCount,bjMDealer.length);i++){
+    const shouldHide=bjMDealerHoleHidden && i===1;
+    const oldHide=bjMDealerRenderedHiddenState[i]===true;
+
+    if(oldHide!==shouldHide){
+      const current=el.children[i];
+      const replacement=bjMCreateCardNode(bjMDealer[i],shouldHide);
+
+      // Hole-card flip should not look like a newly dealt card.
+      replacement.style.animation="none";
+      replacement.classList.add("bjFlipIn");
+
+      if(current) current.replaceWith(replacement);
+      bjMDealerRenderedHiddenState[i]=shouldHide;
+    }
+  }
+
+  // Append only dealer cards that do not exist yet.
+  while(bjMDealerRenderedCount < bjMDealer.length){
+    const i=bjMDealerRenderedCount;
+    const hidden=bjMDealerHoleHidden && i===1;
+    const node=bjMCreateCardNode(bjMDealer[i],hidden);
+    el.appendChild(node);
+
+    bjMDealerRenderedHiddenState[i]=hidden;
+    bjMDealerRenderedCount++;
+  }
+}
+
+function bjMSyncSeatIncremental(seatIndex){
+  const seat=bjMSeats[seatIndex];
+  const el=document.getElementById("bjSeatCards"+seatIndex);
+  if(!el)return;
+
+  if(!seat || !seat.hands.length){
+    if(el.children.length){
+      el.innerHTML="";
+    }
+    bjMSeatRendered[seatIndex]={
+      handIndex:-1,
+      count:0,
+      signature:""
+    };
+    return;
+  }
+
+  const handIndex =
+    (bjMPhase==="player" && seatIndex===bjMActiveSeat)
+      ? bjMActiveHand
+      : 0;
+
+  const hand=seat.hands[handIndex] || seat.hands[0];
+  const tracker=bjMSeatRendered[seatIndex];
+  const signature=bjMHandSignature(hand);
+
+  /*
+    If the player switches between split hands, redraw that hand once.
+    This is a real hand switch, not a normal HIT.
+  */
+  if(tracker.handIndex!==handIndex){
+    el.innerHTML="";
+    hand.cards.forEach(c=>{
+      const n=bjMCreateCardNode(c,false);
+      n.style.animation="none";
+      el.appendChild(n);
+    });
+
+    bjMSeatRendered[seatIndex]={
+      handIndex:handIndex,
+      count:hand.cards.length,
+      signature:signature
+    };
+
+    return;
+  }
+
+  /*
+    If cards somehow shrink or the existing hand identity changed,
+    reset only that seat.
+  */
+  if(hand.cards.length < tracker.count){
+    el.innerHTML="";
+    tracker.count=0;
+    tracker.signature="";
+  }
+
+  /*
+    Normal deal / HIT:
+    append only the cards not already present.
+  */
+  while(tracker.count < hand.cards.length){
+    const card=hand.cards[tracker.count];
+    const node=bjMCreateCardNode(card,false);
+    el.appendChild(node);
+    tracker.count++;
+  }
+
+  tracker.signature=signature;
+}
+
+function bjMRender(){
+  bjMEnsureInit();
+
+  document.getElementById("bjTopBalance").textContent=
+    "🪙 "+bjSave.chips.toLocaleString();
+
+  document.getElementById("bjSelectedSpotText").textContent=
+    "SPOT "+(bjMSelectedSeat+1);
+
+  // Dealer incremental update
+  bjMSyncDealerIncremental();
+
+  let dv="—";
+  if(bjMDealer.length){
+    dv=bjMDealerHoleHidden
+      ? bjCardValueRank(bjMDealer[0].r)
+      : bjHandValue(bjMDealer).total;
+  }
+
+  document.getElementById("bjDealerValue").textContent=
+    "DEALER "+dv;
+
+  // Player seats incremental update
+  bjMSeats.forEach((s,i)=>{
+
+    const btn=document.querySelector(
+      `.bj3dSeat[data-seat="${i}"]`
+    );
+
+    btn?.classList.toggle(
+      "active",
+      i===bjMSelectedSeat ||
+      (bjMPhase==="player" && i===bjMActiveSeat)
+    );
+
+    document.getElementById("bjSeatBet"+i).textContent=
+      s.bet ? s.bet.toLocaleString() : "0";
+
+    bjMRenderChips(s);
+
+    bjMSyncSeatIncremental(i);
+
+    if(s.hands.length){
+      const hi=
+        (bjMPhase==="player" && i===bjMActiveSeat)
+          ? bjMActiveHand
+          : 0;
+
+      const h=s.hands[hi] || s.hands[0];
+
+      document.getElementById("bjSeatValue"+i).textContent=
+        s.result || bjMHandLabel(h);
+    }else{
+      document.getElementById("bjSeatValue"+i).textContent=
+        s.result || "";
+    }
+  });
+
+  document.getElementById("bjBetPanel")
+    .classList.toggle(
+      "hidden",
+      bjMPhase!=="bet" && bjMPhase!=="roundover"
+    );
+
+  document.getElementById("bjActionPanel")
+    .classList.toggle(
+      "hidden",
+      bjMPhase!=="player"
+    );
+
+  document.getElementById("bjInsurancePanel")
+    .classList.toggle(
+      "hidden",
+      bjMPhase!=="insurance"
+    );
+
+  const h=bjMCurrentHand();
+
+  if(h && bjMPhase==="player"){
+
+    document.getElementById("bjActiveHandText").textContent=
+      `PLAY SPOT ${bjMActiveSeat+1}`+
+      (bjMSeats[bjMActiveSeat].hands.length>1
+        ? " • HAND "+(bjMActiveHand+1)
+        : ""
+      )+
+      ` • BET ${h.bet.toLocaleString()}`;
+
+    document.getElementById("bjHitBtn").disabled=
+      h.status!=="playing";
+
+    document.getElementById("bjStandBtn").disabled=
+      h.status!=="playing";
+
+    document.getElementById("bjDoubleBtn").disabled=
+      !(
+        h.cards.length===2 &&
+        h.status==="playing" &&
+        bjSave.chips>=h.bet &&
+        !h.splitAces
+      );
+
+    document.getElementById("bjSplitBtn").disabled=
+      !(
+        h.cards.length===2 &&
+        bjCardValueRank(h.cards[0].r)===
+        bjCardValueRank(h.cards[1].r) &&
+        bjSave.chips>=h.bet &&
+        bjMSeats[bjMActiveSeat].hands.length<4
+      );
+
+    document.getElementById("bjSurrenderBtn").disabled=
+      !(
+        h.cards.length===2 &&
+        h.status==="playing" &&
+        !h.fromSplit
+      );
+  }
+}
+
+/* Clean table and render-tracking together */
+function bjMAutoClearNow(){
+
+  if(
+    !["roundover","bet"].includes(bjMPhase)
+  )return;
+
+  bjMDealer=[];
+  bjMDealerHoleHidden=true;
+  bjMActiveSeat=-1;
+  bjMActiveHand=0;
+
+  bjMSeats.forEach(s=>{
+    s.hands=[];
+    s.result="";
+  });
+
+  document.getElementById("bjDealerCards").innerHTML="";
+  for(let i=0;i<5;i++){
+    document.getElementById("bjSeatCards"+i).innerHTML="";
+  }
+
+  bjMResetRenderTracking();
+
+  bjMPhase="bet";
+
+  bjMRender();
+}
+
+/* Start table with a truly clean render state */
+function openBlackjackTable(){
+
+  hideForBlackjack();
+
+  document.getElementById(
+    "bjGameScreen"
+  ).classList.remove("hidden");
+
+  const p=
+    saveData.profile ||
+    {name:"Player",avatar:"😎"};
+
+  document.getElementById(
+    "bjTopAv"
+  ).textContent=p.avatar;
+
+  document.getElementById(
+    "bjTopName"
+  ).textContent=p.name;
+
+  document.getElementById(
+    "bjSoundBtn"
+  ).textContent=
+    bjSave.sound?"🔊":"🔇";
+
+  applyBjTheme();
+
+  bjMPhase="bet";
+  bjMBusy=false;
+  bjMDealer=[];
+  bjMDealerHoleHidden=true;
+  bjMActiveSeat=-1;
+  bjMActiveHand=0;
+
+  bjMEnsureInit();
+
+  bjMSeats.forEach(s=>{
+    s.hands=[];
+    s.result="";
+  });
+
+  document.getElementById(
+    "bjDealerCards"
+  ).innerHTML="";
+
+  for(let i=0;i<5;i++){
+    document.getElementById(
+      "bjSeatCards"+i
+    ).innerHTML="";
+  }
+
+  bjMResetRenderTracking();
+
+  bjMRender();
+  ensureBjAudio();
+}
+
+/*
+  Deal sequencing:
+  exactly one card appears, wait, next card appears, wait.
+*/
+async function bjDeal(){
+
+  if(bjMBusy)return;
+
+  const active=
+    bjMActiveSeats();
+
+  if(!active.length){
+    bjShowResult(
+      "PLACE A BET",
+      "Choose at least one spot"
+    );
+    return;
+  }
+
+  const total=
+    bjMTotalBet();
+
+  if(total>bjSave.chips){
+    bjShowResult(
+      "NOT ENOUGH CHIPS",
+      "Reduce one or more bets"
+    );
+    return;
+  }
+
+  bjMBusy=true;
+  bjMPhase="dealing";
+
+  // clear cards from previous hand first
+  bjMDealer=[];
+  bjMDealerHoleHidden=true;
+  bjMActiveSeat=-1;
+  bjMActiveHand=0;
+
+  bjMSeats.forEach(s=>{
+    s.hands=[];
+    s.result="";
+  });
+
+  document.getElementById(
+    "bjDealerCards"
+  ).innerHTML="";
+
+  for(let i=0;i<5;i++){
+    document.getElementById(
+      "bjSeatCards"+i
+    ).innerHTML="";
+  }
+
+  bjMResetRenderTracking();
+
+  bjMLastBets=
+    bjMSeats.map(s=>s.bet||0);
+
+  bjSave.chips-=total;
+  saveBj();
+
+  bjMRender();
+
+  await bjSleep(250);
+
+  active.forEach(s=>{
+    s.hands=[{
+      cards:[],
+      bet:s.bet,
+      status:"playing",
+      fromSplit:false,
+      splitAces:false,
+      doubled:false
+    }];
+  });
+
+  /*
+    FIRST CARD:
+    every occupied spot left-to-right, then dealer.
+  */
+  for(const s of active){
+    s.hands[0].cards.push(
+      bjDraw()
+    );
+
+    bjMAnimateDealer();
+    bjSound("card");
+    bjMRender();
+
+    await bjSleep(420);
+  }
+
+  bjMDealer.push(
+    bjDraw()
+  );
+
+  bjMAnimateDealer();
+  bjSound("card");
+  bjMRender();
+
+  await bjSleep(450);
+
+  /*
+    SECOND CARD:
+    every occupied spot left-to-right, then dealer hole card.
+  */
+  for(const s of active){
+    s.hands[0].cards.push(
+      bjDraw()
+    );
+
+    bjMAnimateDealer();
+    bjSound("card");
+    bjMRender();
+
+    await bjSleep(420);
+  }
+
+  bjMDealer.push(
+    bjDraw()
+  );
+
+  bjMAnimateDealer();
+  bjSound("card");
+  bjMRender();
+
+  await bjSleep(450);
+
+  bjMBusy=false;
+
+  if(
+    bjMDealer[0]?.r==="A"
+  ){
+    bjMInsuranceSeat=
+      active[0].index;
+
+    bjMInsuranceAmount=0;
+
+    bjMPhase="insurance";
+
+    bjMRender();
+
+    return;
+  }
+
+  await bjMDealerPeekAndStart();
+}
+
+/*
+  HIT:
+  append exactly one new card.
+  Existing cards never get replaced or reanimated.
+*/
+async function bjHit(){
+
+  if(
+    bjMBusy ||
+    bjMPhase!=="player"
+  )return;
+
+  const h=
+    bjMCurrentHand();
+
+  if(
+    !h ||
+    h.status!=="playing"
+  )return;
+
+  bjMBusy=true;
+
+  h.cards.push(
+    bjDraw()
+  );
+
+  bjMAnimateDealer();
+  bjSound("card");
+
+  bjMRender();
+
+  await bjSleep(430);
+
+  bjMBusy=false;
+
+  const v=
+    bjHandValue(h.cards).total;
+
+  if(v>21){
+
+    h.status="bust";
+
+    bjShowResult(
+      "BUST",
+      `Spot ${bjMActiveSeat+1}`
+    );
+
+    bjMFindNextHand();
+
+  }else if(v===21){
+
+    h.status="stood";
+    bjMFindNextHand();
+
+  }else{
+
+    bjMRender();
+  }
+}
+
+/* Dealer draw is also incremental, one card at a time */
+async function bjMDealerPlay(){
+
+  bjMPhase="dealer";
+  bjMDealerHoleHidden=false;
+
+  bjSound("flip");
+  bjMRender();
+
+  await bjSleep(500);
+
+  const live=
+    bjMSeats.some(
+      s=>s.hands.some(
+        h=>![
+          "bust",
+          "surrender"
+        ].includes(h.status)
+      )
+    );
+
+  if(live){
+
+    while(
+      bjHandValue(
+        bjMDealer
+      ).total<17
+    ){
+
+      bjMDealer.push(
+        bjDraw()
+      );
+
+      bjMAnimateDealer();
+      bjSound("card");
+      bjMRender();
+
+      await bjSleep(520);
+    }
+  }
+
+  bjMSettle();
 }
 
 </script>
