@@ -1153,6 +1153,314 @@ canvas{
   .bjRoundInfo{bottom:92px}
 }
 
+
+/* ================= BLACKJACK 2.5D MULTI-SPOT V4 ================= */
+
+.bj3dScreen{
+  background:
+    radial-gradient(circle at 50% -10%,rgba(145,102,38,.18),transparent 25%),
+    linear-gradient(180deg,#070b09,#020403 80%);
+  overflow:hidden!important;
+}
+
+.bj3dTopBar{
+  height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:5px 8px;
+  border-bottom:1px solid rgba(218,181,93,.2);
+  background:linear-gradient(#101410,#050706);
+  box-shadow:0 4px 14px rgba(0,0,0,.32);
+  z-index:20;
+  position:relative;
+}
+.bj3dTopLeft{display:flex;align-items:center;gap:6px}
+.bj3dRoundBtn{
+  width:34px;height:34px;border:1px solid rgba(255,255,255,.09);
+  border-radius:50%;background:#202522;color:#fff;font-size:16px
+}
+.bj3dAvatar{font-size:24px}
+.bj3dPlayerName{font-size:11px;font-weight:900}
+.bj3dThemeName{font-size:6px;color:#e3c76b;letter-spacing:.5px}
+.bj3dBalance{
+  padding:7px 10px;border-radius:14px;font-size:9px;font-weight:900;
+  color:#ffe598;background:linear-gradient(#493a16,#211b0e);
+  border:1px solid #796429
+}
+
+.bj3dCasinoStage{
+  position:absolute;
+  left:0;right:0;top:50px;bottom:104px;
+  perspective:900px;
+  overflow:hidden;
+}
+
+/* Dealer character */
+.bj3dDealer{
+  position:absolute;
+  top:0;left:50%;
+  transform:translateX(-50%);
+  width:112px;height:120px;
+  z-index:7;
+  filter:drop-shadow(0 6px 8px rgba(0,0,0,.38));
+}
+.bj3dDealerHead{
+  position:absolute;top:8px;left:36px;width:40px;height:45px;
+  border-radius:46% 46% 48% 48%;
+  background:linear-gradient(135deg,#d7a47c,#b97c57);
+  box-shadow:inset -5px -5px 8px rgba(91,48,27,.18)
+}
+.bj3dDealerHair{
+  position:absolute;top:3px;left:32px;width:49px;height:25px;
+  border-radius:50% 50% 38% 38%;background:#211813;z-index:2
+}
+.bj3dEye{position:absolute;top:18px;width:4px;height:3px;border-radius:50%;background:#201712}
+.bj3dEye.e1{left:10px}.bj3dEye.e2{right:10px}
+.bj3dSmile{
+  position:absolute;left:14px;bottom:8px;width:13px;height:6px;
+  border-bottom:2px solid #6d382a;border-radius:50%
+}
+.bj3dDealerNeck{
+  position:absolute;top:49px;left:48px;width:16px;height:13px;background:#bd825e
+}
+.bj3dDealerBody{
+  position:absolute;top:58px;left:18px;width:76px;height:55px;
+  border-radius:38px 38px 8px 8px;background:#f3f3ee;overflow:hidden
+}
+.bj3dShirt{position:absolute;inset:0;background:#efefe9}
+.bj3dVest{
+  position:absolute;left:12px;right:12px;top:0;bottom:0;
+  clip-path:polygon(0 0,37% 28%,50% 100%,63% 28%,100% 0,100% 100%,0 100%);
+  background:linear-gradient(#2a2d2b,#0e100f)
+}
+.bj3dBow{
+  position:absolute;left:31px;top:4px;color:#171817;font-size:11px;z-index:3
+}
+.bj3dDealerArm{
+  position:absolute;top:72px;left:56px;width:48px;height:13px;
+  border-radius:10px;background:#d19a74;transform-origin:left center;
+  transform:rotate(12deg);opacity:.95
+}
+.bj3dDealerArm.deal{animation:bjDealerDeal .38s ease}
+@keyframes bjDealerDeal{
+  0%{transform:rotate(12deg) translateX(0)}
+  55%{transform:rotate(28deg) translateX(22px)}
+  100%{transform:rotate(12deg) translateX(0)}
+}
+.bj3dDealerName{
+  position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);
+  font-size:7px;font-weight:900;letter-spacing:1px;color:#f0d984
+}
+
+/* Perspective casino table */
+.bj3dTable{
+  position:absolute;
+  top:78px;left:7px;right:7px;bottom:0;
+  transform:rotateX(2.2deg);
+  transform-origin:50% 0%;
+  border:8px solid #4b2713;
+  border-radius:24px 24px 49% 49%/18px 18px 20% 20%;
+  background:
+    radial-gradient(ellipse at 50% 80%,rgba(26,134,76,.35),transparent 46%),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.012) 0 2px,rgba(0,0,0,.012) 2px 4px),
+    linear-gradient(#127043,#0a4b2e);
+  box-shadow:
+    inset 0 0 0 3px #c59647,
+    inset 0 0 0 7px #7a441f,
+    inset 0 -48px 70px rgba(0,0,0,.14),
+    0 12px 30px rgba(0,0,0,.55)
+}
+.bj3dRailGlow{
+  position:absolute;inset:10px 10px 12px;
+  border:1.5px solid rgba(244,214,80,.6);
+  border-radius:16px 16px 47% 47%/12px 12px 18% 18%;
+  pointer-events:none
+}
+
+.bj3dDealerStation{
+  position:absolute;top:7px;left:0;right:0;height:31px
+}
+.bj3dShoe{
+  position:absolute;right:18px;top:1px;width:42px;height:25px;
+  border-radius:4px;background:linear-gradient(145deg,#444,#090909 70%);
+  border:1px solid #777;box-shadow:0 3px 7px rgba(0,0,0,.5)
+}
+.bj3dShoeCards{
+  position:absolute;left:7px;right:7px;bottom:2px;height:10px;
+  background:repeating-linear-gradient(90deg,#eee 0 2px,#d43d4c 2px 3px);
+  transform:skewX(-10deg)
+}
+.bj3dChipTray{
+  position:absolute;left:50%;top:0;transform:translateX(-50%);
+  height:28px;padding:3px 8px;display:flex;gap:4px;align-items:center;
+  border-radius:5px;background:linear-gradient(#242424,#0c0c0c);
+  border:1px solid #4f4f4f;box-shadow:0 3px 7px rgba(0,0,0,.45)
+}
+.bj3dChipTray i{
+  width:16px;height:20px;border-radius:6px;border:2px dashed rgba(255,255,255,.6);
+  display:block
+}
+.bj3dChipTray .c1{background:#2468b1}.bj3dChipTray .c2{background:#c93446}
+.bj3dChipTray .c3{background:#1b1b1b}.bj3dChipTray .c4{background:#2f8c58}
+.bj3dChipTray .c5{background:#e5d63f}.bj3dChipTray .c6{background:#a36924}
+
+.bj3dRules{
+  position:absolute;top:37%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;color:rgba(235,214,70,.72);white-space:nowrap;
+  text-shadow:0 1px 1px rgba(0,0,0,.25)
+}
+.bj3dRules b{display:block;font-family:Georgia,serif;font-size:13px;letter-spacing:1px}
+.bj3dRules span{display:block;margin-top:3px;font-size:5.5px;letter-spacing:.5px}
+
+.bj3dDealerHandWrap{
+  position:absolute;top:39px;left:12px;right:12px;text-align:center
+}
+.bj3dValuePill{
+  display:inline-block;padding:3px 7px;border-radius:10px;
+  background:rgba(0,0,0,.32);color:#fff;font-size:7px;font-weight:900
+}
+.bj3dDealerCards{
+  min-height:74px;display:flex;justify-content:center;align-items:flex-start;margin-top:3px
+}
+
+/* cards used inside V4 */
+.bj3dTable .bjCard{
+  width:48px;height:68px;margin-left:-9px;border-radius:5px;
+  box-shadow:0 4px 8px rgba(0,0,0,.38)
+}
+.bj3dTable .bjCard:first-child{margin-left:0}
+.bj3dTable .bjCorner{font-size:9px;line-height:8px}
+.bj3dTable .bjSuitBig{font-size:23px}
+
+/* 5 playable seats */
+.bj3dSeats{position:absolute;inset:0}
+.bj3dSeat{
+  position:absolute;width:84px;height:139px;border:0;background:transparent;color:#fff;
+  padding:0;overflow:visible;transition:.18s;z-index:4
+}
+.bj3dSeat.active{filter:drop-shadow(0 0 7px rgba(255,224,81,.7));transform:scale(1.035)}
+.bj3dSeat.active .bj3dBetBox{border-color:#ffe94a;background:rgba(255,225,52,.08)}
+.bj3dSeatLabel{
+  position:absolute;left:0;right:0;bottom:0;text-align:center;
+  font-size:6px;color:#f1db72;font-weight:900;letter-spacing:.5px
+}
+.bj3dSeatCards{
+  position:absolute;left:-28px;right:-28px;bottom:47px;min-height:72px;
+  display:flex;justify-content:center;align-items:flex-end
+}
+.bj3dSeatValue{
+  position:absolute;left:-10px;right:-10px;bottom:35px;text-align:center;
+  font-size:6px;font-weight:900;color:#fff;text-shadow:0 2px 3px #000
+}
+.bj3dBetBox{
+  position:absolute;left:19px;bottom:7px;width:47px;height:54px;
+  border:2px solid rgba(238,220,65,.75);border-radius:6px;
+  background:rgba(255,255,255,.015);display:flex;flex-direction:column;
+  align-items:center;justify-content:center
+}
+.bj3dBetBox span{font-size:5px;color:#eedf6b}
+.bj3dBetBox b{font-size:9px;color:#fff}
+.bj3dSeatChips{height:19px;display:flex;justify-content:center;align-items:center}
+
+.bj3dSeat.seat1{left:5%;bottom:15%;transform:rotate(-25deg)}
+.bj3dSeat.seat2{left:22%;bottom:4%;transform:rotate(-10deg)}
+.bj3dSeat.seat3{left:50%;bottom:0;transform:translateX(-50%)}
+.bj3dSeat.seat3.active{transform:translateX(-50%) scale(1.04)}
+.bj3dSeat.seat4{right:22%;bottom:4%;transform:rotate(10deg)}
+.bj3dSeat.seat5{right:5%;bottom:15%;transform:rotate(25deg)}
+
+.bj3dSeat .bjCard{width:42px;height:60px;margin-left:-14px}
+.bj3dSeat .bjCorner{font-size:8px;line-height:7px}
+.bj3dSeat .bjSuitBig{font-size:20px}
+
+.bj3dSeatChip{
+  width:19px;height:19px;margin-left:-6px;border-radius:50%;
+  border:2px dashed rgba(255,255,255,.7);font-size:5px;font-weight:900;
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 4px rgba(0,0,0,.38)
+}
+
+.bj3dResult{
+  position:absolute;left:50%;top:48%;transform:translate(-50%,-50%) scale(.85);
+  min-width:150px;padding:10px 14px;border-radius:16px;
+  background:rgba(5,8,7,.92);border:1px solid #d0a942;text-align:center;
+  opacity:0;pointer-events:none;transition:.22s;z-index:12;
+  box-shadow:0 10px 24px rgba(0,0,0,.45)
+}
+.bj3dResult.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.bj3dResult b{display:block;color:#ffe18c;font-size:16px;font-family:Georgia,serif}
+.bj3dResult small{font-size:8px;color:#fff}
+.bj3dTableFooter{
+  position:absolute;left:12px;bottom:5px;font-size:5.5px;color:rgba(245,225,153,.7)
+}
+
+/* bottom controls */
+.bj3dControls{
+  position:absolute;left:0;right:0;bottom:0;height:104px;
+  padding:5px 7px max(6px,env(safe-area-inset-bottom));
+  background:linear-gradient(#111713,#040605);
+  border-top:1px solid rgba(218,181,93,.18);
+  box-shadow:0 -5px 18px rgba(0,0,0,.28);z-index:15
+}
+.bj3dSelectedSpot{text-align:center;font-size:6px;color:#cbbd8c;height:11px}
+.bj3dChipRail{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.bj3dChip{
+  width:39px;height:39px;justify-self:center;border-radius:50%;
+  border:2px dashed rgba(255,255,255,.72);color:#fff;font-size:6px;font-weight:900;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.12),0 3px 5px rgba(0,0,0,.4)
+}
+.bj3dChip.chip50{background:#3a5db1}.bj3dChip.chip100{background:#bf3244}
+.bj3dChip.chip250{background:#28784e}.bj3dChip.chip500{background:#403145}
+.bj3dChip.chip1k{background:#9f681c}.bj3dChip.chip2k{background:#852a91}
+.bj3dBetActions{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:5px;margin-top:4px}
+.bj3dBetActions button{
+  height:29px;border:0;border-radius:9px;background:#29312e;color:#fff;
+  font-size:7px;font-weight:900
+}
+.bj3dBetActions button.deal{
+  background:linear-gradient(135deg,#d3a735,#8c6719);font-size:10px;letter-spacing:.7px
+}
+
+.bj3dActionPanel{height:100%;display:flex;flex-direction:column;justify-content:center}
+.bj3dActiveHandText{text-align:center;font-size:7px;color:#e8d07a;margin-bottom:6px;font-weight:900}
+.bj3dMoves{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.bj3dMoves button{
+  height:48px;border:1px solid rgba(255,255,255,.1);border-radius:12px;
+  background:linear-gradient(#26332d,#111714);color:#fff;font-size:7px;font-weight:900
+}
+.bj3dMoves button.hit{background:linear-gradient(#28744e,#16422e)}
+.bj3dMoves button.stand{background:linear-gradient(#8b3c33,#4f201b)}
+.bj3dMoves button.double{background:linear-gradient(#a37a22,#594113)}
+.bj3dMoves button:disabled{opacity:.24}
+
+.bj3dInsurance{
+  height:100%;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:5px;align-items:center
+}
+.bj3dInsurance span{font-size:8px;color:#ebd99c}
+.bj3dInsurance button{height:46px;border:0;border-radius:12px;background:#303733;color:#fff;font-size:8px;font-weight:900}
+.bj3dInsurance .yes{background:#9f7723}
+
+@media(max-height:720px){
+  .bj3dCasinoStage{bottom:95px}
+  .bj3dControls{height:95px}
+  .bj3dDealer{transform:translateX(-50%) scale(.88);transform-origin:top center}
+  .bj3dTable{top:69px}
+  .bj3dSeat{width:76px;height:126px}
+  .bj3dSeatCards{bottom:43px}
+  .bj3dChip{width:34px;height:34px}
+  .bj3dMoves button{height:43px}
+}
+
+@media(min-width:700px){
+  #app{max-width:840px}
+  .bj3dCasinoStage{left:35px;right:35px}
+  .bj3dTable .bjCard{width:56px;height:80px}
+  .bj3dSeat .bjCard{width:48px;height:69px}
+  .bj3dSeat{width:96px;height:152px}
+  .bj3dChip{width:44px;height:44px}
+}
+
 </style>
 </head>
 
@@ -1659,73 +1967,181 @@ canvas{
   </div>
 </div>
 
+
 <!-- BLACKJACK GAME -->
-<div id="bjGameScreen" class="full hidden">
-  <div class="bjTableTop">
-    <div class="bjTopPlayer"><button class="poolBack" onclick="bjExitTable()">⌂</button><div id="bjTopAv" class="bjTopAv">😎</div><div><div id="bjTopName" class="bjTopName">Player</div><div id="bjTopSub" class="bjTopSub">CLASSIC GREEN</div></div></div>
-    <div id="bjTopBalance" class="bjTopBalance">🪙 5,000</div>
-    <button id="bjSoundBtn" class="soundBtn" onclick="toggleBjSound()">🔊</button>
-  </div>
-  <div id="bjTable" class="bjTable">
-    <div class="bjCasinoRack">
-      <span class="bjRackChip"></span><span class="bjRackChip"></span><span class="bjRackChip"></span>
-      <span class="bjRackChip"></span><span class="bjRackChip"></span><span class="bjRackChip"></span>
-    </div>
-    <div class="bjLeftShoe"></div>
-    <div class="bjSeatMarkers">
-      <div class="bjSeatSpot s1"></div>
-      <div class="bjSeatSpot s2"></div>
-      <div class="bjSeatSpot s3"></div>
-      <div class="bjSeatSpot s4"></div>
-      <div class="bjSeatSpot s5"></div>
-    </div>
-    <div class="bjTableText"><b>BLACKJACK</b><small>BLACKJACK PAYS 3 TO 2 • INSURANCE PAYS 2 TO 1</small></div>
-    <div class="bjShoe"></div>
-    <div class="bjDealerLabel">DEALER</div>
-    <div id="bjDealerValue" class="bjDealerValue">—</div>
-    <div id="bjDealerCards" class="bjDealerCards"></div>
-    <div id="bjBetCircle" class="bjBetCircle"><div><span>BET</span><b id="bjTableBet">100</b><div id="bjChipStack" class="bjChipStack"></div></div></div>
-    <div class="bjPlayerArea">
-      <div id="bjHandTabs" class="bjHandTabs"></div>
-      <div id="bjPlayerCards" class="bjPlayerCards"></div>
-      <div id="bjPlayerValue" class="bjPlayerValue">PLACE YOUR BET</div>
-    </div>
-    <div id="bjResultBanner" class="bjResultBanner"><b id="bjResultTitle">YOU WIN</b><small id="bjResultDetail"></small></div>
-  </div>
-  <div id="bjRoundInfo" class="bjRoundInfo">MIN 50 • MAX 2,000 • 6 DECK SHOE</div>
+<div id="bjGameScreen" class="full hidden bj3dScreen">
 
-  <div class="bjControls">
-    <div id="bjBetPanel" class="bjBetPanel">
-      <div class="bjBetRow">
-        <button class="bjChipBtn" onclick="bjAddBet(50)">50</button>
-        <button class="bjChipBtn" onclick="bjAddBet(100)">100</button>
-        <button class="bjChipBtn" onclick="bjAddBet(250)">250</button>
-        <button class="bjChipBtn" onclick="bjAddBet(500)">500</button>
-        <button class="bjChipBtn" onclick="bjAddBet(1000)">1K</button>
-        <button class="bjChipBtn" onclick="bjAddBet(2000)">2K</button>
-      </div>
-      <div class="bjDealRow">
-        <button class="bjUtilityBtn" onclick="bjClearBet()">CLEAR</button>
-        <button class="bjDealBtn" onclick="bjDeal()">DEAL</button>
-        <button class="bjUtilityBtn" onclick="bjRepeatBet()">REPEAT</button>
+  <div class="bj3dTopBar">
+    <div class="bj3dTopLeft">
+      <button class="bj3dRoundBtn" onclick="bjExitTable()">⌂</button>
+      <div id="bjTopAv" class="bj3dAvatar">😎</div>
+      <div>
+        <div id="bjTopName" class="bj3dPlayerName">Player</div>
+        <div id="bjTopSub" class="bj3dThemeName">CLASSIC GREEN</div>
       </div>
     </div>
 
-    <div id="bjActionPanel" class="bjActionPanel hidden">
-      <div class="bjActionGrid">
-        <button id="bjHitBtn" class="bjMoveBtn hit" onclick="bjHit()"><span>＋</span>HIT</button>
-        <button id="bjStandBtn" class="bjMoveBtn stand" onclick="bjStand()"><span>✋</span>STAND</button>
-        <button id="bjDoubleBtn" class="bjMoveBtn double" onclick="bjDouble()"><span>×2</span>DOUBLE</button>
-        <button id="bjSplitBtn" class="bjMoveBtn" onclick="bjSplit()"><span>✂️</span>SPLIT</button>
-        <button id="bjSurrenderBtn" class="bjMoveBtn" onclick="bjSurrender()"><span>🏳️</span>SURRENDER</button>
+    <div id="bjTopBalance" class="bj3dBalance">🪙 5,000</div>
+
+    <button id="bjSoundBtn" class="bj3dRoundBtn" onclick="toggleBjSound()">🔊</button>
+  </div>
+
+  <div class="bj3dCasinoStage">
+
+    <!-- Dealer character -->
+    <div class="bj3dDealer">
+      <div class="bj3dDealerHair"></div>
+      <div class="bj3dDealerHead">
+        <div class="bj3dEye e1"></div>
+        <div class="bj3dEye e2"></div>
+        <div class="bj3dSmile"></div>
+      </div>
+      <div class="bj3dDealerNeck"></div>
+      <div class="bj3dDealerBody">
+        <div class="bj3dShirt"></div>
+        <div class="bj3dVest"></div>
+        <div class="bj3dBow">◆</div>
+      </div>
+      <div id="bjDealerArm" class="bj3dDealerArm"></div>
+      <div class="bj3dDealerName">DEALER</div>
+    </div>
+
+    <!-- Table -->
+    <div id="bjTable" class="bj3dTable">
+
+      <div class="bj3dRailGlow"></div>
+
+      <div class="bj3dDealerStation">
+        <div class="bj3dShoe">
+          <div class="bj3dShoeCards"></div>
+        </div>
+
+        <div class="bj3dChipTray">
+          <i class="c1"></i><i class="c2"></i><i class="c3"></i>
+          <i class="c4"></i><i class="c5"></i><i class="c6"></i>
+        </div>
+      </div>
+
+      <div class="bj3dRules">
+        <b>BLACKJACK PAYS 3 TO 2</b>
+        <span>DEALER STANDS ON 17 • INSURANCE PAYS 2 TO 1</span>
+      </div>
+
+      <div class="bj3dDealerHandWrap">
+        <div id="bjDealerValue" class="bj3dValuePill">DEALER —</div>
+        <div id="bjDealerCards" class="bj3dDealerCards"></div>
+      </div>
+
+      <!-- Five playable betting spots -->
+      <div id="bjMultiSeats" class="bj3dSeats">
+
+        <button class="bj3dSeat seat1" data-seat="0" onclick="bjSelectSeat(0)">
+          <div class="bj3dSeatLabel">SPOT 1</div>
+          <div class="bj3dSeatCards" id="bjSeatCards0"></div>
+          <div class="bj3dSeatValue" id="bjSeatValue0"></div>
+          <div class="bj3dBetBox">
+            <span>BET</span>
+            <b id="bjSeatBet0">0</b>
+            <div class="bj3dSeatChips" id="bjSeatChips0"></div>
+          </div>
+        </button>
+
+        <button class="bj3dSeat seat2" data-seat="1" onclick="bjSelectSeat(1)">
+          <div class="bj3dSeatLabel">SPOT 2</div>
+          <div class="bj3dSeatCards" id="bjSeatCards1"></div>
+          <div class="bj3dSeatValue" id="bjSeatValue1"></div>
+          <div class="bj3dBetBox">
+            <span>BET</span>
+            <b id="bjSeatBet1">0</b>
+            <div class="bj3dSeatChips" id="bjSeatChips1"></div>
+          </div>
+        </button>
+
+        <button class="bj3dSeat seat3 active" data-seat="2" onclick="bjSelectSeat(2)">
+          <div class="bj3dSeatLabel">SPOT 3</div>
+          <div class="bj3dSeatCards" id="bjSeatCards2"></div>
+          <div class="bj3dSeatValue" id="bjSeatValue2"></div>
+          <div class="bj3dBetBox">
+            <span>BET</span>
+            <b id="bjSeatBet2">100</b>
+            <div class="bj3dSeatChips" id="bjSeatChips2"></div>
+          </div>
+        </button>
+
+        <button class="bj3dSeat seat4" data-seat="3" onclick="bjSelectSeat(3)">
+          <div class="bj3dSeatLabel">SPOT 4</div>
+          <div class="bj3dSeatCards" id="bjSeatCards3"></div>
+          <div class="bj3dSeatValue" id="bjSeatValue3"></div>
+          <div class="bj3dBetBox">
+            <span>BET</span>
+            <b id="bjSeatBet3">0</b>
+            <div class="bj3dSeatChips" id="bjSeatChips3"></div>
+          </div>
+        </button>
+
+        <button class="bj3dSeat seat5" data-seat="4" onclick="bjSelectSeat(4)">
+          <div class="bj3dSeatLabel">SPOT 5</div>
+          <div class="bj3dSeatCards" id="bjSeatCards4"></div>
+          <div class="bj3dSeatValue" id="bjSeatValue4"></div>
+          <div class="bj3dBetBox">
+            <span>BET</span>
+            <b id="bjSeatBet4">0</b>
+            <div class="bj3dSeatChips" id="bjSeatChips4"></div>
+          </div>
+        </button>
+
+      </div>
+
+      <div id="bjResultBanner" class="bj3dResult">
+        <b id="bjResultTitle">YOU WIN</b>
+        <small id="bjResultDetail"></small>
+      </div>
+
+      <div class="bj3dTableFooter">MIN 50 • MAX 2,000 PER SPOT • 6-DECK SHOE</div>
+    </div>
+  </div>
+
+  <!-- Bottom controls -->
+  <div class="bj3dControls">
+
+    <div id="bjBetPanel" class="bj3dBetPanel">
+      <div class="bj3dSelectedSpot">SELECTED: <b id="bjSelectedSpotText">SPOT 3</b></div>
+
+      <div class="bj3dChipRail">
+        <button class="bj3dChip chip50" onclick="bjAddBet(50)">50</button>
+        <button class="bj3dChip chip100" onclick="bjAddBet(100)">100</button>
+        <button class="bj3dChip chip250" onclick="bjAddBet(250)">250</button>
+        <button class="bj3dChip chip500" onclick="bjAddBet(500)">500</button>
+        <button class="bj3dChip chip1k" onclick="bjAddBet(1000)">1K</button>
+        <button class="bj3dChip chip2k" onclick="bjAddBet(2000)">2K</button>
+      </div>
+
+      <div class="bj3dBetActions">
+        <button onclick="bjClearBet()">CLEAR SPOT</button>
+        <button class="deal" onclick="bjDeal()">DEAL</button>
+        <button onclick="bjRepeatBet()">REPEAT</button>
       </div>
     </div>
 
-    <div id="bjInsurancePanel" class="bjInsurancePanel hidden">
-      <button class="bjInsYes" onclick="bjTakeInsurance()">INSURANCE</button>
-      <button class="bjInsNo" onclick="bjDeclineInsurance()">NO THANKS</button>
+    <div id="bjActionPanel" class="bj3dActionPanel hidden">
+      <div class="bj3dActiveHandText" id="bjActiveHandText">PLAY SPOT 3</div>
+      <div class="bj3dMoves">
+        <button id="bjHitBtn" class="hit" onclick="bjHit()">HIT</button>
+        <button id="bjStandBtn" class="stand" onclick="bjStand()">STAND</button>
+        <button id="bjDoubleBtn" class="double" onclick="bjDouble()">DOUBLE</button>
+        <button id="bjSplitBtn" onclick="bjSplit()">SPLIT</button>
+        <button id="bjSurrenderBtn" onclick="bjSurrender()">SURRENDER</button>
+      </div>
     </div>
+
+    <div id="bjInsurancePanel" class="bj3dInsurance hidden">
+      <span>Dealer shows Ace. Take insurance?</span>
+      <button class="yes" onclick="bjTakeInsurance()">INSURANCE</button>
+      <button onclick="bjDeclineInsurance()">NO</button>
+    </div>
+
   </div>
+
 </div>
 
 <!-- BLACKJACK SHOP -->
@@ -5608,6 +6024,440 @@ if(saveData.profile){
   showGameZone();
 
 }
+
+/* ================= BLACKJACK MULTI-SPOT V4 LOGIC ================= */
+
+let bjMSeats = [];
+let bjMDealer = [];
+let bjMSelectedSeat = 2;
+let bjMPhase = "bet";
+let bjMBusy = false;
+let bjMDealerHoleHidden = true;
+let bjMActiveSeat = -1;
+let bjMActiveHand = 0;
+let bjMInsuranceSeat = -1;
+let bjMInsuranceAmount = 0;
+let bjMLastBets = [0,0,100,0,0];
+
+function bjMNewSeat(i){
+  return {index:i,bet:0,hands:[],result:""};
+}
+function bjMResetSeats(keepBets=true){
+  const oldBets = keepBets ? bjMSeats.map(s=>s.bet||0) : [0,0,0,0,0];
+  bjMSeats = Array.from({length:5},(_,i)=>{
+    const s=bjMNewSeat(i);
+    s.bet=oldBets[i]||0;
+    return s;
+  });
+}
+function bjMEnsureInit(){
+  if(!bjMSeats.length){
+    bjMSeats=Array.from({length:5},(_,i)=>bjMNewSeat(i));
+    bjMSeats[2].bet=Math.min(100,bjSave.chips);
+  }
+}
+function bjMTotalBet(){
+  return bjMSeats.reduce((a,s)=>a+(s.bet||0),0);
+}
+function bjMActiveSeats(){
+  return bjMSeats.filter(s=>s.bet>=50);
+}
+function bjMCardNode(card,hidden=false){
+  const w=document.createElement("div");
+  w.innerHTML=bjCardHTML(card,hidden).trim();
+  return w.firstElementChild;
+}
+function bjMAnimateDealer(){
+  const a=document.getElementById("bjDealerArm");
+  if(!a)return;
+  a.classList.remove("deal");
+  void a.offsetWidth;
+  a.classList.add("deal");
+}
+function bjMSeatColor(v){
+  if(v>=2000)return "#842b91";
+  if(v>=1000)return "#a36920";
+  if(v>=500)return "#443449";
+  if(v>=250)return "#2b8052";
+  if(v>=100)return "#be3446";
+  return "#3c60b3";
+}
+function bjMRenderChips(seat){
+  const el=document.getElementById("bjSeatChips"+seat.index);
+  if(!el)return;
+  el.innerHTML="";
+  if(seat.bet<50)return;
+  const vals=[2000,1000,500,250,100,50];
+  let rem=seat.bet,shown=0;
+  for(const v of vals){
+    while(rem>=v && shown<4){
+      const d=document.createElement("div");
+      d.className="bj3dSeatChip";
+      d.style.background=bjMSeatColor(v);
+      d.textContent=v>=1000?(v/1000)+"K":v;
+      el.appendChild(d);
+      rem-=v;shown++;
+    }
+  }
+}
+function bjMCurrentHand(){
+  const s=bjMSeats[bjMActiveSeat];
+  return s?.hands?.[bjMActiveHand]||null;
+}
+function bjMHandLabel(h){
+  if(!h)return "";
+  const v=bjHandValue(h.cards).total;
+  if(h.status==="bust")return "BUST • "+v;
+  if(h.status==="surrender")return "SURRENDER";
+  if(h.status==="blackjack")return "BLACKJACK";
+  if(h.status==="stood")return "STAND • "+v;
+  return "HAND • "+v;
+}
+function bjMRender(){
+  bjMEnsureInit();
+  document.getElementById("bjTopBalance").textContent="🪙 "+bjSave.chips.toLocaleString();
+  document.getElementById("bjSelectedSpotText").textContent="SPOT "+(bjMSelectedSeat+1);
+
+  // dealer
+  const de=document.getElementById("bjDealerCards");
+  de.innerHTML="";
+  bjMDealer.forEach((c,i)=>de.appendChild(bjMCardNode(c,bjMDealerHoleHidden&&i===1)));
+  let dv="—";
+  if(bjMDealer.length){
+    dv=bjMDealerHoleHidden ? bjCardValueRank(bjMDealer[0].r) : bjHandValue(bjMDealer).total;
+  }
+  document.getElementById("bjDealerValue").textContent="DEALER "+dv;
+
+  bjMSeats.forEach((s,i)=>{
+    const btn=document.querySelector(`.bj3dSeat[data-seat="${i}"]`);
+    btn?.classList.toggle("active",i===bjMSelectedSeat || (bjMPhase==="player" && i===bjMActiveSeat));
+
+    document.getElementById("bjSeatBet"+i).textContent=s.bet?s.bet.toLocaleString():"0";
+    bjMRenderChips(s);
+
+    const cardsEl=document.getElementById("bjSeatCards"+i);
+    cardsEl.innerHTML="";
+    if(s.hands.length){
+      const activeSub = (bjMPhase==="player" && i===bjMActiveSeat) ? bjMActiveHand : 0;
+      const h=s.hands[activeSub]||s.hands[0];
+      h.cards.forEach(c=>cardsEl.appendChild(bjMCardNode(c,false)));
+      if(s.hands.length>1){
+        const tag=document.createElement("div");
+        tag.style.cssText="position:absolute;right:-10px;top:-8px;background:#d4a73b;color:#111;border-radius:8px;padding:2px 4px;font-size:5px;font-weight:900";
+        tag.textContent=(activeSub+1)+"/"+s.hands.length;
+        cardsEl.appendChild(tag);
+      }
+      document.getElementById("bjSeatValue"+i).textContent=
+        s.result || bjMHandLabel(h);
+    }else{
+      document.getElementById("bjSeatValue"+i).textContent=s.result||"";
+    }
+  });
+
+  document.getElementById("bjBetPanel").classList.toggle("hidden",bjMPhase!=="bet"&&bjMPhase!=="roundover");
+  document.getElementById("bjActionPanel").classList.toggle("hidden",bjMPhase!=="player");
+  document.getElementById("bjInsurancePanel").classList.toggle("hidden",bjMPhase!=="insurance");
+
+  const h=bjMCurrentHand();
+  if(h && bjMPhase==="player"){
+    document.getElementById("bjActiveHandText").textContent=
+      `PLAY SPOT ${bjMActiveSeat+1}${bjMSeats[bjMActiveSeat].hands.length>1?" • HAND "+(bjMActiveHand+1):""} • BET ${h.bet.toLocaleString()}`;
+    document.getElementById("bjHitBtn").disabled=h.status!=="playing";
+    document.getElementById("bjStandBtn").disabled=h.status!=="playing";
+    document.getElementById("bjDoubleBtn").disabled=!(h.cards.length===2 && h.status==="playing" && bjSave.chips>=h.bet && !h.splitAces);
+    document.getElementById("bjSplitBtn").disabled=!(h.cards.length===2 && bjCardValueRank(h.cards[0].r)===bjCardValueRank(h.cards[1].r) && bjSave.chips>=h.bet && bjMSeats[bjMActiveSeat].hands.length<4);
+    document.getElementById("bjSurrenderBtn").disabled=!(h.cards.length===2 && h.status==="playing" && !h.fromSplit);
+  }
+}
+function bjSelectSeat(i){
+  if(bjMPhase!=="bet"&&bjMPhase!=="roundover")return;
+  bjMSelectedSeat=i;
+  bjMRender();
+}
+function openBlackjackTable(){
+  hideForBlackjack();
+  document.getElementById("bjGameScreen").classList.remove("hidden");
+  const p=saveData.profile||{name:"Player",avatar:"😎"};
+  document.getElementById("bjTopAv").textContent=p.avatar;
+  document.getElementById("bjTopName").textContent=p.name;
+  document.getElementById("bjSoundBtn").textContent=bjSave.sound?"🔊":"🔇";
+  applyBjTheme();
+  bjMPhase="bet";
+  bjMBusy=false;
+  bjMDealer=[];
+  bjMDealerHoleHidden=true;
+  bjMActiveSeat=-1;bjMActiveHand=0;
+  bjMEnsureInit();
+  bjMSeats.forEach(s=>{s.hands=[];s.result="";});
+  bjMRender();
+  ensureBjAudio();
+}
+function bjExitTable(){
+  if(bjMBusy)return;
+  if(!["bet","roundover"].includes(bjMPhase)){
+    if(!confirm("Leave this Blackjack round? Active bets will be lost."))return;
+  }
+  openBlackjackHome();
+}
+function bjAddBet(v){
+  if(bjMBusy||!(bjMPhase==="bet"||bjMPhase==="roundover"))return;
+  const s=bjMSeats[bjMSelectedSeat];
+  const other=bjMTotalBet()-s.bet;
+  const maxForSeat=Math.min(2000,Math.max(0,bjSave.chips-other));
+  s.bet=Math.min(maxForSeat,s.bet+v);
+  if(s.bet>0&&s.bet<50)s.bet=50;
+  bjSound("chip");bjMRender();
+}
+function bjClearBet(){
+  if(bjMBusy)return;
+  if(bjMPhase==="roundover"){
+    bjMAutoClearNow();
+  }
+  bjMSeats[bjMSelectedSeat].bet=0;
+  bjMRender();
+}
+function bjRepeatBet(){
+  if(bjMBusy)return;
+  const available=bjSave.chips;
+  let used=0;
+  bjMSeats.forEach((s,i)=>{
+    const wanted=bjMLastBets[i]||0;
+    const allowed=Math.min(wanted,2000,Math.max(0,available-used));
+    s.bet=allowed>=50?allowed:0;
+    used+=s.bet;
+  });
+  bjMRender();
+}
+async function bjDeal(){
+  if(bjMBusy)return;
+  const active=bjMActiveSeats();
+  if(!active.length){bjShowResult("PLACE A BET","Choose at least one spot");return;}
+  const total=bjMTotalBet();
+  if(total>bjSave.chips){bjShowResult("NOT ENOUGH CHIPS","Reduce one or more bets");return;}
+
+  bjMBusy=true;
+  bjMPhase="dealing";
+  bjMDealer=[];bjMDealerHoleHidden=true;bjMActiveSeat=-1;bjMActiveHand=0;
+  bjMLastBets=bjMSeats.map(s=>s.bet||0);
+  bjMSeats.forEach(s=>{s.hands=[];s.result="";});
+  bjSave.chips-=total;
+  saveBj();
+  bjMRender();
+  await bjSleep(180);
+
+  // Create first hand per active spot
+  active.forEach(s=>s.hands=[{cards:[],bet:s.bet,status:"playing",fromSplit:false,splitAces:false,doubled:false}]);
+
+  // Casino deal order: each player spot left->right, dealer; repeat
+  for(let round=0;round<2;round++){
+    for(const s of active){
+      s.hands[0].cards.push(bjDraw());
+      bjMAnimateDealer();bjSound("card");bjMRender();await bjSleep(220);
+    }
+    bjMDealer.push(bjDraw());
+    bjMAnimateDealer();bjSound("card");bjMRender();await bjSleep(240);
+  }
+
+  bjMBusy=false;
+
+  // Dealer Ace insurance
+  if(bjMDealer[0]?.r==="A"){
+    bjMInsuranceSeat=active[0].index;
+    bjMInsuranceAmount=0;
+    bjMPhase="insurance";
+    bjMRender();
+    return;
+  }
+
+  await bjMDealerPeekAndStart();
+}
+async function bjMDealerPeekAndStart(){
+  const up=bjCardValueRank(bjMDealer[0].r);
+  if((up===10||bjMDealer[0].r==="A") && bjDealerNatural.call({}) ){
+    // Use direct multi-dealer natural check
+  }
+  const dealerNat = bjMDealer.length===2 && bjHandValue(bjMDealer).total===21;
+  if((up===10||bjMDealer[0].r==="A") && dealerNat){
+    bjMDealerHoleHidden=false;bjSound("flip");bjMRender();await bjSleep(300);
+    bjMResolveDealerBlackjack();return;
+  }
+
+  // Pay naturals immediately, skip them during player actions
+  bjMSeats.forEach(s=>{
+    if(!s.hands.length)return;
+    const h=s.hands[0];
+    if(h.cards.length===2 && bjHandValue(h.cards).total===21){
+      h.status="blackjack";
+    }
+  });
+
+  bjMPhase="player";
+  bjMFindNextHand(-1,-1);
+}
+function bjTakeInsurance(){
+  // Insurance applies to the first active spot only in this family version.
+  const s=bjMSeats[bjMInsuranceSeat];
+  if(!s||!s.hands.length){bjDeclineInsurance();return;}
+  const amt=Math.floor(s.hands[0].bet/2);
+  if(bjSave.chips<amt){bjShowResult("NOT ENOUGH CHIPS","Insurance skipped");bjDeclineInsurance();return;}
+  bjSave.chips-=amt;bjMInsuranceAmount=amt;saveBj();bjSound("chip");
+  bjDeclineInsurance();
+}
+function bjDeclineInsurance(){
+  bjMPhase="dealing";bjMRender();
+  setTimeout(()=>bjMDealerPeekAndStart(),150);
+}
+function bjMResolveDealerBlackjack(){
+  if(bjMInsuranceAmount>0)bjSave.chips+=bjMInsuranceAmount*3;
+  bjMSeats.forEach(s=>{
+    if(!s.hands.length)return;
+    const h=s.hands[0];
+    const nat=h.cards.length===2&&bjHandValue(h.cards).total===21;
+    if(nat){bjSave.chips+=h.bet;s.result="PUSH";}
+    else{s.result="LOSE";}
+  });
+  bjShowResult("DEALER BLACKJACK",bjMInsuranceAmount?"Insurance paid":"Round over");
+  bjSound("lose");saveBj();bjMFinishRound();
+}
+function bjMFindNextHand(fromSeat=bjMActiveSeat,fromHand=bjMActiveHand){
+  // current seat remaining hands
+  if(fromSeat>=0){
+    const s=bjMSeats[fromSeat];
+    for(let h=fromHand+1;h<s.hands.length;h++){
+      if(s.hands[h].status==="playing"){bjMActiveSeat=fromSeat;bjMActiveHand=h;bjMRender();return true;}
+    }
+  }
+  // next seats
+  for(let i=Math.max(0,fromSeat+1);i<5;i++){
+    const s=bjMSeats[i];
+    for(let h=0;h<s.hands.length;h++){
+      if(s.hands[h].status==="playing"){bjMActiveSeat=i;bjMActiveHand=h;bjMSelectedSeat=i;bjMRender();return true;}
+    }
+  }
+  // No playable hand left
+  bjMDealerPlay();
+  return false;
+}
+async function bjHit(){
+  if(bjMBusy||bjMPhase!=="player")return;
+  const h=bjMCurrentHand();if(!h||h.status!=="playing")return;
+  bjMBusy=true;h.cards.push(bjDraw());bjMAnimateDealer();bjSound("card");bjMRender();await bjSleep(220);bjMBusy=false;
+  const v=bjHandValue(h.cards).total;
+  if(v>21){h.status="bust";bjShowResult("BUST",`Spot ${bjMActiveSeat+1}`);bjMFindNextHand();}
+  else if(v===21){h.status="stood";bjMFindNextHand();}
+  else bjMRender();
+}
+function bjStand(){
+  if(bjMBusy||bjMPhase!=="player")return;
+  const h=bjMCurrentHand();if(!h)return;
+  h.status="stood";bjMFindNextHand();
+}
+async function bjDouble(){
+  if(bjMBusy||bjMPhase!=="player")return;
+  const h=bjMCurrentHand();if(!h||h.cards.length!==2||bjSave.chips<h.bet)return;
+  bjSave.chips-=h.bet;h.bet*=2;h.doubled=true;saveBj();bjSound("chip");
+  bjMBusy=true;h.cards.push(bjDraw());bjMAnimateDealer();bjSound("card");bjMRender();await bjSleep(220);bjMBusy=false;
+  h.status=bjHandValue(h.cards).total>21?"bust":"stood";
+  bjMFindNextHand();
+}
+async function bjSplit(){
+  if(bjMBusy||bjMPhase!=="player")return;
+  const s=bjMSeats[bjMActiveSeat],h=bjMCurrentHand();
+  if(!h||h.cards.length!==2||bjCardValueRank(h.cards[0].r)!==bjCardValueRank(h.cards[1].r)||bjSave.chips<h.bet||s.hands.length>=4)return;
+  bjSave.chips-=h.bet;saveBj();
+  const second=h.cards.pop();
+  const nh={cards:[second],bet:h.bet,status:"playing",fromSplit:true,splitAces:false,doubled:false};
+  h.fromSplit=true;
+  const aces=h.cards[0].r==="A";h.splitAces=nh.splitAces=aces;
+  s.hands.splice(bjMActiveHand+1,0,nh);
+  h.cards.push(bjDraw());bjMAnimateDealer();bjSound("card");bjMRender();await bjSleep(180);
+  nh.cards.push(bjDraw());bjMAnimateDealer();bjSound("card");bjMRender();await bjSleep(180);
+  if(aces){h.status="stood";nh.status="stood";bjMFindNextHand();}
+  else bjMRender();
+}
+function bjSurrender(){
+  if(bjMBusy||bjMPhase!=="player")return;
+  const h=bjMCurrentHand();if(!h||h.cards.length!==2||h.fromSplit)return;
+  h.status="surrender";bjSave.chips+=Math.floor(h.bet/2);saveBj();bjMFindNextHand();
+}
+async function bjMDealerPlay(){
+  bjMPhase="dealer";bjMDealerHoleHidden=false;bjSound("flip");bjMRender();await bjSleep(360);
+  const live=bjMSeats.some(s=>s.hands.some(h=>!["bust","surrender"].includes(h.status)));
+  if(live){
+    while(bjHandValue(bjMDealer).total<17){
+      bjMDealer.push(bjDraw());bjMAnimateDealer();bjSound("card");bjMRender();await bjSleep(420);
+    }
+  }
+  bjMSettle();
+}
+function bjMSettle(){
+  const dv=bjHandValue(bjMDealer).total,dealerBust=dv>21;
+  let totalProfit=0,wins=0,losses=0,pushes=0,blackjacks=0;
+  bjMSeats.forEach(s=>{
+    if(!s.hands.length)return;
+    let seatNet=0,seatWin=false,seatLoss=false,seatPush=false;
+    s.hands.forEach(h=>{
+      bjSave.handsPlayed++;
+      if(h.status==="surrender"){bjSave.losses++;losses++;seatNet-=h.bet/2;seatLoss=true;return;}
+      const pv=bjHandValue(h.cards).total;
+      const natural=h.status==="blackjack" && !h.fromSplit;
+      if(natural){
+        const pay=Math.floor(h.bet*2.5);bjSave.chips+=pay;
+        const prof=pay-h.bet;seatNet+=prof;totalProfit+=prof;
+        bjSave.wins++;bjSave.blackjacks++;wins++;blackjacks++;seatWin=true;bjDailyEvent("blackjack");return;
+      }
+      if(h.status==="bust"){
+        seatNet-=h.bet;totalProfit-=h.bet;bjSave.losses++;losses++;seatLoss=true;return;
+      }
+      if(dealerBust||pv>dv){
+        bjSave.chips+=h.bet*2;seatNet+=h.bet;totalProfit+=h.bet;bjSave.wins++;wins++;seatWin=true;
+        if(h.doubled)bjDailyEvent("double");return;
+      }
+      if(pv===dv){
+        bjSave.chips+=h.bet;bjSave.pushes++;pushes++;seatPush=true;return;
+      }
+      seatNet-=h.bet;totalProfit-=h.bet;bjSave.losses++;losses++;seatLoss=true;
+    });
+    if(seatWin&&seatNet>0)s.result="WIN +"+seatNet.toLocaleString();
+    else if(seatPush&&!seatLoss)s.result="PUSH";
+    else if(seatNet<0)s.result="LOSE "+Math.abs(seatNet).toLocaleString();
+    else s.result="MIXED";
+  });
+
+  if(wins)bjDailyEvent("win3",wins);
+
+  if(totalProfit>0){
+    bjSave.currentStreak++;bjSave.bestStreak=Math.max(bjSave.bestStreak,bjSave.currentStreak);
+    bjSave.biggestWin=Math.max(bjSave.biggestWin,totalProfit);bjSound("win");
+    bjShowResult("YOU WIN","Net +"+totalProfit.toLocaleString());
+  }else if(totalProfit<0){
+    bjSave.currentStreak=0;bjSound("lose");
+    bjShowResult("DEALER WINS","Net "+totalProfit.toLocaleString());
+  }else{
+    bjShowResult("PUSH","No net change");
+  }
+  bjSave.biggestBalance=Math.max(bjSave.biggestBalance,bjSave.chips);saveBj();bjMFinishRound();
+}
+function bjMFinishRound(){
+  bjMPhase="roundover";bjMBusy=false;bjMRender();
+  setTimeout(()=>bjMAutoClearNow(),1900);
+}
+function bjMAutoClearNow(){
+  if(!["roundover","bet"].includes(bjMPhase))return;
+  bjMDealer=[];bjMDealerHoleHidden=true;bjMActiveSeat=-1;bjMActiveHand=0;
+  bjMSeats.forEach(s=>{s.hands=[];s.result="";});
+  bjMPhase="bet";
+  bjMRender();
+}
+function bjShowResult(title,detail){
+  const b=document.getElementById("bjResultBanner");
+  if(!b)return;
+  document.getElementById("bjResultTitle").textContent=title;
+  document.getElementById("bjResultDetail").textContent=detail;
+  b.classList.add("show");
+  setTimeout(()=>b.classList.remove("show"),1500);
+}
+
 </script>
 
 </body>
