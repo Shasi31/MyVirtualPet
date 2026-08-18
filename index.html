@@ -612,9 +612,10 @@ canvas{
 .poolActionRow{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}.poolAction{border:1px solid rgba(255,255,255,.13);border-radius:16px;padding:11px 4px;background:rgba(255,255,255,.08);color:#fff}.poolAction span{display:block;font-size:24px}.poolAction small{font-size:8px}
 .dailyPoolCard{margin-top:11px;border-radius:20px;padding:13px;background:linear-gradient(135deg,#f5b942,#ef7d32);color:#382000}.dailyPoolTitle{font-weight:900}.dailyPoolDesc{font-size:9px;margin:4px 0}.dailyPoolBtn{width:100%;border:0;border-radius:13px;padding:10px;background:#fff;color:#6b3b00;font-size:10px;font-weight:900;margin-top:7px}
 
-#poolGameScreen{z-index:70;background:radial-gradient(circle at 50% 0,#15343a,#061017 58%);overflow:hidden}.poolGameTop{height:72px;display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:linear-gradient(#0a252b,#06191e);border-bottom:1px solid rgba(255,255,255,.08)}.poolSide{display:flex;align-items:center;gap:6px}.poolSide .av{font-size:24px}.poolSide .nm{font-size:10px;font-weight:900}.poolSide .grp{font-size:8px;color:#a6c5c3}.poolTurn{text-align:center}.poolTurn b{display:block;font-size:10px}.poolTurn small{font-size:7px;color:#8eb8b3}
-.poolCanvasWrap{position:relative;padding:12px 10px 6px;background:radial-gradient(ellipse at center,rgba(35,94,89,.18),transparent 65%)}.poolCanvas{display:block;width:100%;touch-action:none;border-radius:18px;background:#0b5b43;box-shadow:0 18px 42px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08);user-select:none}
-.poolControlPanel{height:104px;padding:8px 10px 10px;background:linear-gradient(#071a20,#041216);border-top:1px solid rgba(255,255,255,.08)}.pullHint{text-align:center;font-size:10px;color:#b7d6d1;font-weight:800;letter-spacing:.3px}.pullHint strong{color:#f5d06f}.pullMeter{height:9px;margin:8px 5px;border-radius:999px;background:#102d31;overflow:hidden;border:1px solid rgba(255,255,255,.08)}.pullMeterFill{height:100%;width:0%;background:linear-gradient(90deg,#39d98a,#f5c542,#ef4444);transition:width .04s linear}.poolBottomRow{display:grid;grid-template-columns:46px 1fr 46px;gap:7px;align-items:center;margin-top:7px}.cueMini{height:34px;border-radius:18px;background:linear-gradient(90deg,#80522c,#d8bb83);border:2px solid #d7c08d;box-shadow:inset 0 2px 4px rgba(255,255,255,.25),0 4px 10px rgba(0,0,0,.3)}.soundBtn{height:38px;border:0;border-radius:50%;color:#fff;background:rgba(255,255,255,.12)}.ballInHandTag{font-size:8px;color:#ffdf7b;text-align:center;margin-top:4px;min-height:10px}.poolMsg{position:absolute;left:50%;top:82px;transform:translateX(-50%);z-index:5;padding:7px 11px;border-radius:14px;background:rgba(0,0,0,.72);font-size:9px;opacity:0;transition:.2s;white-space:nowrap}.poolMsg.show{opacity:1}
+#poolGameScreen{z-index:70;background:radial-gradient(circle at 50% 0,#15343a,#061017 58%);overflow:hidden;display:flex;flex-direction:column}.poolGameTop{height:70px;flex:0 0 70px;display:flex;justify-content:space-between;align-items:center;padding:7px 9px;background:linear-gradient(#0a252b,#06191e);border-bottom:1px solid rgba(255,255,255,.08)}.poolSide{display:flex;align-items:center;gap:6px}.poolSide .av{font-size:23px}.poolSide .nm{font-size:10px;font-weight:900}.poolSide .grp{font-size:8px;color:#a6c5c3}.poolTurn{text-align:center}.poolTurn b{display:block;font-size:10px}.poolTurn small{font-size:7px;color:#8eb8b3}
+.poolCanvasWrap{position:relative;flex:1 1 auto;min-height:0;padding:8px;background:radial-gradient(ellipse at center,rgba(35,94,89,.18),transparent 65%);display:flex;align-items:center;justify-content:center}.poolCanvas{display:block;max-width:100%;max-height:100%;touch-action:none;border-radius:18px;background:#0b5b43;box-shadow:0 18px 42px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08);user-select:none}
+.poolControlPanel{flex:0 0 88px;height:88px;padding:5px 10px 8px;background:linear-gradient(#071a20,#041216);border-top:1px solid rgba(255,255,255,.08)}.pullHint{text-align:center;font-size:9px;color:#b7d6d1;font-weight:800;letter-spacing:.2px}.pullHint strong{color:#f5d06f}.pullMeter{height:8px;margin:5px 5px;border-radius:999px;background:#102d31;overflow:hidden;border:1px solid rgba(255,255,255,.08)}.pullMeterFill{height:100%;width:0%;background:linear-gradient(90deg,#39d98a,#f5c542,#ef4444);transition:width .04s linear}.poolBottomRow{display:grid;grid-template-columns:42px 1fr 42px;gap:7px;align-items:center;margin-top:4px}.cueMini{height:27px;border-radius:18px;background:linear-gradient(90deg,#80522c,#d8bb83);border:2px solid #d7c08d;box-shadow:inset 0 2px 4px rgba(255,255,255,.25),0 4px 10px rgba(0,0,0,.3)}.soundBtn{height:36px;border:0;border-radius:50%;color:#fff;background:rgba(255,255,255,.12)}.ballInHandTag{font-size:8px;color:#ffdf7b;text-align:center;margin-top:2px;min-height:9px}.poolMsg{position:absolute;left:50%;top:76px;transform:translateX(-50%);z-index:5;padding:7px 11px;border-radius:14px;background:rgba(0,0,0,.72);font-size:9px;opacity:0;transition:.2s;white-space:nowrap}.poolMsg.show{opacity:1}
+@media (orientation:portrait){.poolCanvasWrap{padding:7px 14px}.poolControlPanel{flex-basis:84px;height:84px}.poolGameTop{height:66px;flex-basis:66px}.poolSide .grp{font-size:7px}.poolTurn b{font-size:9px}}
 
 .poolModalList{text-align:left}.cueShopGrid{display:grid;gap:9px}.cueShopItem{border-radius:16px;background:#f1f5f5;padding:11px;display:grid;grid-template-columns:50px 1fr 74px;gap:8px;align-items:center}.cueVisual{height:10px;border-radius:5px}.cueShopItem b{font-size:11px}.cueShopItem small{display:block;color:#718180;font-size:8px}.cueShopItem button{border:0;border-radius:10px;padding:8px 5px;font-size:8px;font-weight:900;color:#fff;background:#0f766e}.cueShopItem button.owned{background:#64748b}.poolStatsList{display:grid;grid-template-columns:1fr 1fr;gap:8px}.poolStatsTile{background:#f2f6f6;border-radius:14px;padding:12px}.poolStatsTile b{font-size:18px}.poolStatsTile small{display:block;font-size:8px;color:#718180}
 
@@ -4322,8 +4323,48 @@ const poolCanvas=document.getElementById("poolCanvas"),pctx=poolCanvas.getContex
 let poolW=460,poolH=230,poolScale=1,poolBalls=[],poolRunning=false,poolAnimating=false,poolAimAngle=Math.PI,poolShotPower=.20,poolCurrentPlayer=1,poolGroups={1:null,2:null},poolFirstContact=null,poolPottedThisTurn=[],poolScratch=false,poolBallInHand=false,poolMatchMode="cpu",poolDailyMode=false,poolDailyShots=0,poolDailyPots=0,poolCpuThinking=false,poolWinner=null,poolDragging=false,poolPointerId=null,poolPullDistance=0,poolSoundEnabled=true,poolLastCollisionSound=0;
 const POOL_R=8,POOL_MARGIN=24,POOL_POCKET=15,POOL_FRICTION=.988,POOL_STOP=.025;
 const ballColors={1:"#f4c430",2:"#1d5fd1",3:"#d93636",4:"#6b3fa0",5:"#ef7c22",6:"#16804a",7:"#7a1f23",8:"#111",9:"#f4c430",10:"#1d5fd1",11:"#d93636",12:"#6b3fa0",13:"#ef7c22",14:"#16804a",15:"#7a1f23"};
-function resizePool(){const rect=poolCanvas.getBoundingClientRect();poolW=Math.max(300,rect.width);poolH=poolW*.5;const dpr=devicePixelRatio||1;poolCanvas.width=poolW*dpr;poolCanvas.height=poolH*dpr;poolCanvas.style.height=poolH+"px";pctx.setTransform(dpr,0,0,dpr,0,0);}
-function rackPool(){poolBalls=[];poolBalls.push({n:0,x:poolW*.25,y:poolH*.5,vx:0,vy:0,potted:false});const nums=[1,10,3,12,8,5,14,2,11,6,15,4,9,13,7];let idx=0;const startX=poolW*.69,spacing=POOL_R*2.05;for(let row=0;row<5;row++){for(let j=0;j<=row;j++){const x=startX+row*spacing*.87,y=poolH*.5-row*POOL_R+j*spacing;poolBalls.push({n:nums[idx++],x,y,vx:0,vy:0,potted:false});}}}
+function resizePool(){
+ const wrap=poolCanvas.parentElement;
+ const wr=wrap.getBoundingClientRect();
+ const portrait=window.innerHeight>window.innerWidth;
+ if(portrait){
+   poolW=Math.max(300,wr.width-28);
+   poolH=Math.max(430,wr.height-14);
+   const maxRatio=1.72;
+   if(poolH>poolW*maxRatio)poolH=poolW*maxRatio;
+ }else{
+   poolW=Math.max(420,wr.width-16);
+   poolH=Math.min(Math.max(230,wr.height-12),poolW*.52);
+ }
+ const dpr=devicePixelRatio||1;
+ poolCanvas.width=poolW*dpr;
+ poolCanvas.height=poolH*dpr;
+ poolCanvas.style.width=poolW+"px";
+ poolCanvas.style.height=poolH+"px";
+ pctx.setTransform(dpr,0,0,dpr,0,0);
+}
+function rackPool(){
+ poolBalls=[];
+ const portrait=poolH>poolW*1.05;
+ const nums=[1,10,3,12,8,5,14,2,11,6,15,4,9,13,7];
+ let idx=0,spacing=POOL_R*2.05;
+ if(portrait){
+   poolBalls.push({n:0,x:poolW*.5,y:poolH*.74,vx:0,vy:0,potted:false});
+   const startY=poolH*.30;
+   for(let row=0;row<5;row++)for(let j=0;j<=row;j++){
+     const y=startY-row*spacing*.87;
+     const x=poolW*.5-row*POOL_R+j*spacing;
+     poolBalls.push({n:nums[idx++],x,y,vx:0,vy:0,potted:false});
+   }
+ }else{
+   poolBalls.push({n:0,x:poolW*.25,y:poolH*.5,vx:0,vy:0,potted:false});
+   const startX=poolW*.69;
+   for(let row=0;row<5;row++)for(let j=0;j<=row;j++){
+     const x=startX+row*spacing*.87,y=poolH*.5-row*POOL_R+j*spacing;
+     poolBalls.push({n:nums[idx++],x,y,vx:0,vy:0,potted:false});
+   }
+ }
+}
 function pockets(){return[[POOL_MARGIN,POOL_MARGIN],[poolW/2,POOL_MARGIN-2],[poolW-POOL_MARGIN,POOL_MARGIN],[POOL_MARGIN,poolH-POOL_MARGIN],[poolW/2,poolH-POOL_MARGIN+2],[poolW-POOL_MARGIN,poolH-POOL_MARGIN]];}
 function drawPoolTable(){
  pctx.clearRect(0,0,poolW,poolH);
@@ -4346,7 +4387,7 @@ function drawPoolTable(){
  // pockets with leather shadow
  pockets().forEach(([x,y])=>{const g=pctx.createRadialGradient(x-2,y-2,2,x,y,POOL_POCKET+5);g.addColorStop(0,"#020202");g.addColorStop(.65,"#000");g.addColorStop(.8,"#2b180d");g.addColorStop(1,"rgba(90,50,20,.2)");pctx.beginPath();pctx.arc(x,y,POOL_POCKET+3,0,Math.PI*2);pctx.fillStyle=g;pctx.fill();});
  // head string / spot
- pctx.globalAlpha=.18;pctx.beginPath();pctx.moveTo(poolW*.25,POOL_MARGIN+4);pctx.lineTo(poolW*.25,poolH-POOL_MARGIN-4);pctx.strokeStyle="#e8fff4";pctx.lineWidth=1;pctx.stroke();pctx.beginPath();pctx.arc(poolW*.25,poolH*.5,2.2,0,Math.PI*2);pctx.fillStyle="#fff";pctx.fill();pctx.globalAlpha=1;
+ pctx.globalAlpha=.18;const portraitTable=poolH>poolW*1.05;pctx.beginPath();if(portraitTable){pctx.moveTo(POOL_MARGIN+4,poolH*.74);pctx.lineTo(poolW-POOL_MARGIN-4,poolH*.74);}else{pctx.moveTo(poolW*.25,POOL_MARGIN+4);pctx.lineTo(poolW*.25,poolH-POOL_MARGIN-4);}pctx.strokeStyle="#e8fff4";pctx.lineWidth=1;pctx.stroke();pctx.beginPath();pctx.arc(portraitTable?poolW*.5:poolW*.25,portraitTable?poolH*.74:poolH*.5,2.2,0,Math.PI*2);pctx.fillStyle="#fff";pctx.fill();pctx.globalAlpha=1;
 }
 function drawPoolBall(b){if(b.potted)return;pctx.save();pctx.translate(b.x,b.y);pctx.shadowColor="rgba(0,0,0,.48)";pctx.shadowBlur=4;pctx.shadowOffsetX=2;pctx.shadowOffsetY=3;let grad=pctx.createRadialGradient(-POOL_R*.35,-POOL_R*.42,1,0,0,POOL_R*1.08);if(b.n===0){grad.addColorStop(0,"#fff");grad.addColorStop(.55,"#f7f7ef");grad.addColorStop(1,"#c8c8bd");pctx.beginPath();pctx.arc(0,0,POOL_R,0,Math.PI*2);pctx.fillStyle=grad;pctx.fill();pctx.shadowColor="transparent";pctx.beginPath();pctx.arc(-POOL_R*.34,-POOL_R*.38,POOL_R*.2,0,Math.PI*2);pctx.fillStyle="rgba(255,255,255,.75)";pctx.fill();pctx.restore();return;}const col=ballColors[b.n];if(b.n>8){grad.addColorStop(0,"#fff");grad.addColorStop(.55,"#f4f4ed");grad.addColorStop(1,"#c9c9c0");}else{grad.addColorStop(0,"#fff");grad.addColorStop(.18,col);grad.addColorStop(1,"#111");}pctx.beginPath();pctx.arc(0,0,POOL_R,0,Math.PI*2);pctx.fillStyle=grad;pctx.fill();pctx.shadowColor="transparent";if(b.n>8){pctx.save();pctx.beginPath();pctx.arc(0,0,POOL_R-.2,0,Math.PI*2);pctx.clip();pctx.fillStyle=col;pctx.fillRect(-POOL_R,-POOL_R*.43,POOL_R*2,POOL_R*.86);pctx.restore();}pctx.beginPath();pctx.arc(0,0,POOL_R*.43,0,Math.PI*2);pctx.fillStyle="#fff";pctx.fill();pctx.fillStyle="#111";pctx.font="bold 7px Arial";pctx.textAlign="center";pctx.textBaseline="middle";pctx.fillText(b.n,0,.5);pctx.beginPath();pctx.arc(-POOL_R*.32,-POOL_R*.4,POOL_R*.16,0,Math.PI*2);pctx.fillStyle="rgba(255,255,255,.65)";pctx.fill();pctx.restore();}
 function cueBall(){return poolBalls.find(b=>b.n===0);}
@@ -4379,7 +4420,7 @@ function resolvePoolTurn(){
  resetTurnTracking();updatePoolHUD();drawPool();if(poolMatchMode==="cpu"&&poolCurrentPlayer===2)setTimeout(cpuPoolTurn,650);
 }
 function resetTurnTracking(){poolFirstContact=null;poolPottedThisTurn=[];poolScratch=false;}
-function restoreCueBallForHand(){const c=cueBall();c.potted=false;c.vx=c.vy=0;c.x=poolW*.25;c.y=poolH*.5;}
+function restoreCueBallForHand(){const c=cueBall();c.potted=false;c.vx=c.vy=0;if(poolH>poolW*1.05){c.x=poolW*.5;c.y=poolH*.74;}else{c.x=poolW*.25;c.y=poolH*.5;}}
 function updatePoolHUD(){const p1=saveData.profile?.name||"Player";document.getElementById("poolP1Name").textContent=p1;document.getElementById("poolP1Avatar").textContent=saveData.profile?.avatar||"😎";document.getElementById("poolP2Name").textContent=poolMatchMode==="cpu"?poolDifficulty.toUpperCase()+" CPU":"PLAYER 2";document.getElementById("poolP2Avatar").textContent=poolMatchMode==="cpu"?"🤖":"👤";document.getElementById("poolP1Group").textContent=poolGroups[1]?poolGroups[1].toUpperCase():"OPEN TABLE";document.getElementById("poolP2Group").textContent=poolGroups[2]?poolGroups[2].toUpperCase():"OPEN TABLE";document.getElementById("poolTurnLabel").textContent=poolDailyMode?`DAILY ${poolDailyPots}/3 POTTED`:poolCurrentPlayer===1?"PLAYER 1 TURN":poolMatchMode==="cpu"?"CPU TURN":"PLAYER 2 TURN";document.getElementById("poolMatchLabel").textContent=poolDailyMode?`${poolDailyShots}/5 SHOTS`:poolMatchMode==="cpu"?"VS "+poolDifficulty.toUpperCase():"LOCAL MATCH";document.getElementById("poolBallInHand").textContent=poolBallInHand?"BALL IN HAND — TAP TABLE TO PLACE":"";const cue=selectedPoolCue();document.getElementById("poolCueMini").style.background=`linear-gradient(90deg,${cue.colors[0]},${cue.colors[1]})`;document.getElementById("poolPullFill").style.width=Math.round(poolShotPower*100)+"%";}
 function showPoolMsg(t){const e=document.getElementById("poolMsg");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1400);}
 function executePoolShot(angle,power){const c=cueBall();if(!c||c.potted)return;const cue=selectedPoolCue(),speed=(1.9+power*9.2)*cue.power;soundCue(power);if(navigator.vibrate&&power>.65)navigator.vibrate(18);c.vx=Math.cos(angle)*speed;c.vy=Math.sin(angle)*speed;poolFirstContact=null;poolPottedThisTurn=[];poolScratch=false;poolAnimating=true;poolDragging=false;poolPullDistance=0;poolShotPower=.2;document.getElementById("poolPullFill").style.width="0%";if(poolDailyMode)poolDailyShots++;updatePoolHUD();requestAnimationFrame(poolLoop);}
@@ -4397,7 +4438,7 @@ poolCanvas.addEventListener("pointercancel",()=>{poolDragging=false;poolPointerI
 
 /* ================= CPU ================= */
 const cpuSkill={rookie:{err:.20,power:.60},amateur:{err:.10,power:.66},pro:{err:.045,power:.72},master:{err:.018,power:.78}};
-function cpuPoolTurn(){if(!poolRunning||poolAnimating||poolCurrentPlayer!==2)return;poolCpuThinking=true;updatePoolHUD();if(poolBallInHand){const c=cueBall();c.x=poolW*.30;c.y=poolH*.5;poolBallInHand=false;}const legal=poolBalls.filter(b=>!b.potted&&b.n!==0&&legalFirstBall(2,b.n));const c=cueBall();if(!legal.length){poolCpuThinking=false;return;}let best=null,bestScore=1e9;for(const b of legal){for(const [px,py] of pockets()){const s=Math.hypot(b.x-px,b.y-py)+Math.hypot(c.x-b.x,c.y-b.y)*.25;if(s<bestScore){bestScore=s;best={b,px,py};}}}const target=best.b;const toPocket=Math.atan2(best.py-target.y,best.px-target.x),ghostX=target.x-Math.cos(toPocket)*POOL_R*2,ghostY=target.y-Math.sin(toPocket)*POOL_R*2;let angle=Math.atan2(ghostY-c.y,ghostX-c.x);const sk=cpuSkill[poolDifficulty];angle+=(Math.random()-.5)*sk.err;poolCpuThinking=false;updatePoolHUD();setTimeout(()=>executePoolShot(angle,Math.min(.9,sk.power+Math.random()*.12)),350);}
+function cpuPoolTurn(){if(!poolRunning||poolAnimating||poolCurrentPlayer!==2)return;poolCpuThinking=true;updatePoolHUD();if(poolBallInHand){const c=cueBall();if(poolH>poolW*1.05){c.x=poolW*.5;c.y=poolH*.72;}else{c.x=poolW*.30;c.y=poolH*.5;}poolBallInHand=false;}const legal=poolBalls.filter(b=>!b.potted&&b.n!==0&&legalFirstBall(2,b.n));const c=cueBall();if(!legal.length){poolCpuThinking=false;return;}let best=null,bestScore=1e9;for(const b of legal){for(const [px,py] of pockets()){const s=Math.hypot(b.x-px,b.y-py)+Math.hypot(c.x-b.x,c.y-b.y)*.25;if(s<bestScore){bestScore=s;best={b,px,py};}}}const target=best.b;const toPocket=Math.atan2(best.py-target.y,best.px-target.x),ghostX=target.x-Math.cos(toPocket)*POOL_R*2,ghostY=target.y-Math.sin(toPocket)*POOL_R*2;let angle=Math.atan2(ghostY-c.y,ghostX-c.x);const sk=cpuSkill[poolDifficulty];angle+=(Math.random()-.5)*sk.err;poolCpuThinking=false;updatePoolHUD();setTimeout(()=>executePoolShot(angle,Math.min(.9,sk.power+Math.random()*.12)),350);}
 
 /* ================= MATCH RESULT ================= */
 function cpuReward(){return{rookie:100,amateur:250,pro:500,master:1000}[poolDifficulty]||100;}
