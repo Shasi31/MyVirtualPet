@@ -1470,6 +1470,373 @@ canvas{
   100%{transform:rotateY(0deg)}
 }
 
+
+/* ================= PREMIUM FAMILY GAME ZONE ================= */
+#gameZoneScreen.zonePremium{
+  z-index:60;
+  overflow:hidden!important;
+  padding:10px!important;
+  display:grid!important;
+  grid-template-rows:64px minmax(0,1fr) 24px!important;
+  gap:8px!important;
+  background:
+    radial-gradient(circle at 8% 0,rgba(110,79,230,.40),transparent 28%),
+    radial-gradient(circle at 100% 58%,rgba(0,176,166,.16),transparent 32%),
+    linear-gradient(150deg,#111b3c,#071326 66%,#040a14)!important;
+}
+#gameZoneScreen.zonePremium.hidden{display:none!important}
+
+.zonePremiumHeader{
+  display:grid;
+  grid-template-columns:1fr auto 44px;
+  align-items:center;
+  gap:10px;
+  min-height:0;
+  padding:8px 10px;
+  border-radius:19px;
+  border:1px solid rgba(255,255,255,.12);
+  background:
+    linear-gradient(115deg,rgba(125,84,222,.26),rgba(31,119,145,.18));
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.08),
+    0 8px 24px rgba(0,0,0,.22);
+}
+
+.zonePremiumProfile{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+.zonePremiumAvatar{
+  width:44px;height:44px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  font-size:25px;
+  box-shadow:0 4px 12px rgba(0,0,0,.23);
+}
+.zonePremiumName{
+  font-size:15px;
+  font-weight:900;
+  line-height:1;
+}
+.zonePremiumSub{
+  margin-top:3px;
+  font-size:7px;
+  color:#becdf0;
+  letter-spacing:.5px;
+}
+
+.zonePremiumCenter{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  text-align:left;
+}
+.zonePremiumLogo{font-size:27px}
+.zonePremiumCenter b{
+  display:block;
+  font-size:8px;
+  letter-spacing:.7px;
+  color:#f5f7ff;
+}
+.zonePremiumCenter small{
+  display:block;
+  font-size:6px;
+  margin-top:2px;
+  color:#9eb2dc;
+}
+
+.zonePremiumSettings{
+  width:38px;height:38px;
+  border:0;
+  border-radius:50%;
+  color:#fff;
+  background:rgba(255,255,255,.12);
+  font-size:18px;
+}
+
+.zonePremiumGames{
+  min-height:0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1.02fr;
+  gap:9px;
+  overflow:hidden;
+}
+
+.zonePremiumCard{
+  position:relative;
+  min-height:0;
+  overflow:hidden;
+  padding:12px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.12);
+  color:#fff;
+  text-align:left;
+  cursor:pointer;
+  touch-action:manipulation;
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.08),
+    0 13px 28px rgba(0,0,0,.27);
+  transition:transform .14s ease,filter .14s ease;
+}
+.zonePremiumCard:hover{filter:brightness(1.06)}
+.zonePremiumCard:active{transform:scale(.985)}
+
+.zonePremiumBubble{
+  background:
+    radial-gradient(circle at 78% 19%,rgba(255,255,255,.14),transparent 19%),
+    linear-gradient(145deg,#496dff,#8148e9 72%);
+}
+.zonePremiumPool{
+  background:
+    radial-gradient(circle at 80% 15%,rgba(40,205,145,.13),transparent 23%),
+    linear-gradient(145deg,#08714f,#064138 72%);
+}
+.zonePremiumBlackjack{
+  grid-column:1/3;
+  background:
+    radial-gradient(circle at 87% 28%,rgba(222,179,69,.18),transparent 24%),
+    linear-gradient(130deg,#155f3c,#092e22 65%,#061a15);
+  border-color:rgba(221,183,75,.32);
+}
+
+.zonePremiumText{
+  position:absolute;
+  left:12px;
+  bottom:12px;
+  z-index:5;
+  max-width:72%;
+}
+.zonePremiumBlackjack .zonePremiumText{max-width:60%}
+
+.zonePremiumText small{
+  display:block;
+  font-size:5.5px;
+  font-weight:900;
+  letter-spacing:.9px;
+  color:rgba(255,255,255,.62);
+}
+.zonePremiumText h2{
+  margin:2px 0!important;
+  font-size:16px!important;
+  line-height:1.05!important;
+}
+.zonePremiumText p{
+  margin:3px 0!important;
+  font-size:6.5px!important;
+  line-height:1.2!important;
+  color:rgba(255,255,255,.78)!important;
+}
+.zonePremiumTag{
+  margin-top:5px;
+  font-size:6.5px;
+  font-weight:900;
+  color:#ffe8a1;
+}
+
+.zonePremiumPlay{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  z-index:6;
+  padding:7px 9px;
+  border-radius:10px;
+  background:rgba(255,255,255,.94);
+  color:#11182b;
+  font-size:7px;
+  font-weight:1000;
+  box-shadow:0 4px 10px rgba(0,0,0,.18);
+}
+.zoneGoldPlay{
+  background:linear-gradient(135deg,#e0b23f,#b7821d);
+  color:#171105;
+}
+
+/* Bubble artwork */
+.zoneBubbleHero{
+  position:absolute;
+  top:12px;
+  right:15px;
+  font-size:50px;
+  filter:drop-shadow(0 7px 8px rgba(0,0,0,.22));
+}
+.zoneGlowBubble{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.12);
+}
+.zoneGlowBubble.b1{width:56px;height:56px;right:54px;top:28px}
+.zoneGlowBubble.b2{width:25px;height:25px;right:24px;top:74px}
+.zoneGlowBubble.b3{width:18px;height:18px;right:92px;top:83px}
+
+/* Pool artwork */
+.zonePoolTableMini{
+  position:absolute;
+  top:12px;
+  right:14px;
+  width:116px;
+  height:76px;
+  border-radius:12px;
+  background:linear-gradient(#13785d,#0b604a);
+  border:6px solid #5b321b;
+  box-shadow:
+    inset 0 0 0 2px #bd8f4d,
+    0 7px 12px rgba(0,0,0,.26);
+  transform:rotate(-3deg);
+}
+.zonePoolRail{
+  position:absolute;
+  inset:5px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:7px;
+}
+.zoneMiniBall{
+  position:absolute;
+  width:19px;height:19px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:7px;
+  font-weight:900;
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 3px 5px rgba(0,0,0,.3);
+}
+.zoneMiniBall.ball8{background:#111;right:29px;top:23px}
+.zoneMiniBall.ball1{background:#e1b62d;right:49px;top:38px}
+.zoneMiniBall.ball9{background:#d8b12c;color:#111;right:16px;top:47px}
+.zoneMiniCue{
+  position:absolute;
+  width:78px;height:4px;
+  left:3px;top:30px;
+  transform:rotate(-10deg);
+  transform-origin:left center;
+  border-radius:3px;
+  background:linear-gradient(90deg,#e1d5b5,#9a6f39);
+}
+
+/* Blackjack artwork */
+.zoneCasinoVisual{
+  position:absolute;
+  right:10%;
+  top:50%;
+  transform:translateY(-50%);
+  width:120px;
+  height:92px;
+}
+.zoneCasinoCard{
+  position:absolute;
+  width:48px;height:68px;
+  border-radius:6px;
+  background:#fff;
+  display:grid;
+  place-items:center;
+  font-family:Georgia,serif;
+  font-size:18px;
+  font-weight:900;
+  color:#111;
+  box-shadow:0 7px 12px rgba(0,0,0,.3);
+}
+.zoneCasinoCard.cardA{left:8px;top:12px;transform:rotate(-12deg)}
+.zoneCasinoCard.cardK{left:47px;top:5px;transform:rotate(11deg);color:#c51e35}
+.zoneCasinoChip{
+  position:absolute;
+  right:2px;
+  bottom:2px;
+  width:38px;height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#9c6c1f;
+  color:#fff;
+  border:4px dashed rgba(255,255,255,.72);
+  font-size:7px;
+  font-weight:900;
+  box-shadow:0 5px 9px rgba(0,0,0,.28);
+}
+
+.zonePremiumFooter{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#8195bd;
+  font-size:6px;
+  padding:0 4px;
+}
+
+/* Mobile */
+@media(max-width:600px){
+  #gameZoneScreen.zonePremium{
+    padding:7px!important;
+    grid-template-rows:57px minmax(0,1fr) 20px!important;
+    gap:6px!important;
+  }
+  .zonePremiumHeader{
+    grid-template-columns:1fr auto;
+    padding:6px 8px;
+  }
+  .zonePremiumCenter{display:none}
+  .zonePremiumAvatar{width:38px;height:38px;font-size:22px}
+  .zonePremiumName{font-size:13px}
+  .zonePremiumGames{gap:6px}
+  .zonePremiumCard{padding:8px;border-radius:16px}
+  .zonePremiumText{left:8px;bottom:8px}
+  .zonePremiumText h2{font-size:13px!important}
+  .zonePremiumPlay{right:7px;bottom:7px;padding:5px 7px}
+  .zoneBubbleHero{font-size:37px;top:9px;right:9px}
+  .zonePoolTableMini{
+    width:88px;height:58px;right:8px;top:9px;
+    transform:scale(.9) rotate(-3deg);
+    transform-origin:top right;
+  }
+  .zoneCasinoVisual{
+    transform:translateY(-50%) scale(.76);
+    transform-origin:right center;
+    right:5%;
+  }
+}
+
+/* Short phones */
+@media(max-height:680px){
+  #gameZoneScreen.zonePremium{
+    grid-template-rows:50px minmax(0,1fr) 16px!important;
+    gap:5px!important;
+    padding:5px!important;
+  }
+  .zonePremiumHeader{border-radius:14px}
+  .zonePremiumAvatar{width:34px;height:34px;font-size:20px}
+  .zonePremiumGames{gap:5px}
+  .zonePremiumCard{border-radius:13px;padding:6px}
+  .zonePremiumText{left:7px;bottom:6px}
+  .zonePremiumText p{display:none}
+  .zonePremiumTag{margin-top:2px}
+  .zonePremiumPlay{bottom:5px;right:5px}
+}
+
+/* Wider screens */
+@media(min-width:700px){
+  #gameZoneScreen.zonePremium{
+    max-width:900px;
+    margin:auto;
+    padding:14px!important;
+    grid-template-rows:70px minmax(0,1fr) 26px!important;
+  }
+  .zonePremiumGames{
+    grid-template-columns:1fr 1fr 1fr;
+    grid-template-rows:1fr;
+  }
+  .zonePremiumBlackjack{
+    grid-column:auto;
+  }
+  .zonePremiumBlackjack .zonePremiumText{
+    max-width:70%;
+  }
+}
+
 </style>
 </head>
 
@@ -1905,18 +2272,93 @@ canvas{
 
 
 <!-- FAMILY GAME ZONE -->
-<div id="gameZoneScreen" class="full hidden">
-  <div class="zoneHeader">
-    <div class="zoneProfile"><div id="zoneAvatar" class="zoneAvatar">😎</div><div><div id="zoneName" class="zoneName">Player</div><div class="zoneSub">FAMILY GAME ZONE</div></div></div>
-    <button class="poolBack" onclick="editSharedProfile()">⚙️</button>
+<div id="gameZoneScreen" class="full hidden zonePremium">
+
+  <div class="zonePremiumHeader">
+    <div class="zonePremiumProfile">
+      <div id="zoneAvatar" class="zonePremiumAvatar">😎</div>
+      <div>
+        <div id="zoneName" class="zonePremiumName">Player</div>
+        <div class="zonePremiumSub">FAMILY GAME ZONE</div>
+      </div>
+    </div>
+
+    <div class="zonePremiumCenter">
+      <div class="zonePremiumLogo">🎮</div>
+      <div>
+        <b>PLAY • RELAX • ENJOY</b>
+        <small>Choose your game</small>
+      </div>
+    </div>
+
+    <button class="zonePremiumSettings" onclick="editSharedProfile()">⚙️</button>
   </div>
-  <div class="zoneHero"><div class="controller">🎮</div><h1>FAMILY GAME ZONE</h1><p>Choose a game and have fun</p></div>
-  <div class="gameCards">
-    <div class="gameCard bubbleCard"><div class="gameEmoji">🫧</div><h2>Bubble Blast</h2><p>Levels, bosses, daily challenges and cannon upgrades.</p><div class="gameFeatures"><span>🗺️ Level Map</span><span>👹 Bosses</span><span>🎯 Daily</span></div><button class="zonePlay" onclick="openBubbleBlast()">PLAY BUBBLE BLAST</button></div>
-    <div class="gameCard poolCard"><div class="gameEmoji">🎱</div><h2>8-Ball Pool</h2><p>Real physics, full rules, CPU opponents, local 2-player and purchasable cues.</p><div class="gameFeatures"><span>🎯 Real Physics</span><span>🤖 CPU</span><span>👥 2 Player</span><span>🛒 Cue Shop</span></div><button class="zonePlay" onclick="openPoolHome()">PLAY 8-BALL POOL</button></div>
-    <div class="gameCard blackjackCard"><div class="gameEmoji">🃏</div><h2>Blackjack Casino</h2><p>Casino-style Blackjack with a real 6-deck shoe, virtual chips, splits, double down and daily challenges.</p><div class="gameFeatures"><span>🃏 Real Rules</span><span>💰 Virtual Chips</span><span>✂️ Split</span><span>🎁 Daily</span></div><button class="zonePlay" onclick="openBlackjackHome()">PLAY BLACKJACK</button></div>
+
+  <div class="zonePremiumGames">
+
+    <button class="zonePremiumCard zonePremiumBubble" onclick="openBubbleBlast()">
+      <div class="zoneGlowBubble b1"></div>
+      <div class="zoneGlowBubble b2"></div>
+      <div class="zoneGlowBubble b3"></div>
+
+      <div class="zonePremiumVisual">
+        <div class="zoneBubbleHero">🫧</div>
+      </div>
+
+      <div class="zonePremiumText">
+        <small>ARCADE ADVENTURE</small>
+        <h2>Bubble Blast</h2>
+        <p>Levels • Bosses • Daily Challenges</p>
+        <div class="zonePremiumTag">🎯 Continue Adventure</div>
+      </div>
+
+      <div class="zonePremiumPlay">PLAY ›</div>
+    </button>
+
+    <button class="zonePremiumCard zonePremiumPool" onclick="openPoolHome()">
+      <div class="zonePoolTableMini">
+        <div class="zonePoolRail"></div>
+        <div class="zoneMiniBall ball8">8</div>
+        <div class="zoneMiniBall ball1">1</div>
+        <div class="zoneMiniBall ball9">9</div>
+        <div class="zoneMiniCue"></div>
+      </div>
+
+      <div class="zonePremiumText">
+        <small>SPORTS LOUNGE</small>
+        <h2>8-Ball Pool</h2>
+        <p>Real Physics • CPU • 2 Player</p>
+        <div class="zonePremiumTag">🎱 Rack & Play</div>
+      </div>
+
+      <div class="zonePremiumPlay">PLAY ›</div>
+    </button>
+
+    <button class="zonePremiumCard zonePremiumBlackjack" onclick="openBlackjackHome()">
+
+      <div class="zoneCasinoVisual">
+        <div class="zoneCasinoCard cardA">A♠</div>
+        <div class="zoneCasinoCard cardK">K♥</div>
+        <div class="zoneCasinoChip">500</div>
+      </div>
+
+      <div class="zonePremiumText">
+        <small>CASINO FLOOR</small>
+        <h2>Blackjack Casino</h2>
+        <p>5 Betting Spots • Dealer • Split • Double</p>
+        <div class="zonePremiumTag">🪙 Enter Casino</div>
+      </div>
+
+      <div class="zonePremiumPlay zoneGoldPlay">ENTER ›</div>
+    </button>
+
   </div>
-  <div class="zoneFooter">Progress is saved on this device/browser.</div>
+
+  <div class="zonePremiumFooter">
+    <span>💾 Progress saved automatically</span>
+    <span>🏆 Family Game Zone</span>
+  </div>
+
 </div>
 
 <!-- 8 BALL POOL HOME -->
