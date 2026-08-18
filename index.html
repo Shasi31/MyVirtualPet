@@ -1631,6 +1631,143 @@ canvas{
   #home .homeBottom{max-width:780px;margin:0 auto}
 }
 
+
+/* ================= FAMILY GAME ZONE V9 ================= */
+#gameZoneScreen.zoneV9{
+  z-index:60;
+  height:100%;
+  overflow:hidden;
+  padding:10px;
+  display:grid;
+  grid-template-rows:56px 56px minmax(0,1fr) 25px;
+  gap:8px;
+  background:
+    radial-gradient(circle at 5% 0,rgba(101,69,224,.38),transparent 27%),
+    radial-gradient(circle at 100% 65%,rgba(22,151,143,.20),transparent 30%),
+    linear-gradient(155deg,#101a3d,#071225 68%,#040a14);
+}
+#gameZoneScreen.zoneV9.hidden{display:none!important}
+
+.zoneV9Header{
+  min-height:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:7px 10px;
+  border-radius:17px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+  box-shadow:0 7px 20px rgba(0,0,0,.18);
+}
+.zoneV9Profile{display:flex;align-items:center;gap:8px}
+.zoneV9Avatar{
+  width:40px;height:40px;border-radius:50%;background:#fff;
+  display:grid;place-items:center;font-size:23px
+}
+.zoneV9Name{font-size:14px;font-weight:900}
+.zoneV9Sub{font-size:7px;color:#b8caed;margin-top:2px;letter-spacing:.5px}
+.zoneV9Settings{
+  width:35px;height:35px;border:0;border-radius:50%;
+  background:rgba(255,255,255,.12);color:#fff;font-size:17px
+}
+
+.zoneV9Title{
+  min-height:0;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  text-align:left
+}
+.zoneV9Controller{font-size:34px}
+.zoneV9Title h1{font-size:18px;margin:0;line-height:1}
+.zoneV9Title p{font-size:7px;color:#acbedf;margin:4px 0 0}
+
+.zoneV9Grid{
+  min-height:0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:8px;
+}
+.zoneV9Game{
+  min-width:0;min-height:0;
+  position:relative;overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:19px;padding:10px;
+  color:#fff;text-align:left;
+  display:flex;align-items:flex-end;
+  cursor:pointer;
+  touch-action:manipulation;
+  box-shadow:0 10px 24px rgba(0,0,0,.28);
+}
+.zoneV9Game:active{transform:scale(.985)}
+.zoneV9Bubble{
+  background:
+    radial-gradient(circle at 80% 18%,rgba(255,255,255,.27) 0 7%,transparent 8%),
+    linear-gradient(145deg,#5676ff,#8247dc)
+}
+.zoneV9Pool{
+  background:
+    radial-gradient(circle at 80% 20%,#111 0 10%,#eee 10.5% 12%,transparent 12.5%),
+    linear-gradient(145deg,#096e50,#064038)
+}
+.zoneV9Blackjack{
+  grid-column:1/3;
+  background:
+    radial-gradient(circle at 88% 24%,rgba(219,179,68,.20),transparent 22%),
+    linear-gradient(130deg,#155f3b,#0a2e21 65%,#071b15);
+  border-color:rgba(219,181,76,.30)
+}
+.zoneV9Icon{
+  position:absolute;right:10px;top:8px;font-size:38px;
+  filter:drop-shadow(0 5px 6px rgba(0,0,0,.25))
+}
+.zoneV9Info{position:relative;z-index:2;max-width:77%}
+.zoneV9Blackjack .zoneV9Info{max-width:64%}
+.zoneV9Info small{font-size:5.5px;font-weight:900;letter-spacing:.8px;color:rgba(255,255,255,.65)}
+.zoneV9Info h2{margin:2px 0;font-size:15px;line-height:1}
+.zoneV9Info p{margin:3px 0;font-size:6.5px;color:rgba(255,255,255,.78)}
+.zoneV9Status{font-size:6.5px;font-weight:800;color:#ffe59a;margin-top:4px}
+.zoneV9Go{
+  position:absolute;right:9px;bottom:9px;
+  padding:6px 8px;border-radius:9px;background:rgba(255,255,255,.92);
+  color:#11182a;font-size:7px;font-weight:1000
+}
+.zoneV9Blackjack .zoneV9Go{background:#d7a735;color:#161106}
+
+.zoneV9CasinoArt{
+  position:absolute;right:12%;top:18%;
+  width:85px;height:75px
+}
+.zoneV9CasinoArt span{
+  position:absolute;width:39px;height:56px;border-radius:5px;background:#fff;
+  display:grid;place-items:center;color:#111;font-family:Georgia,serif;font-weight:900;
+  box-shadow:0 5px 9px rgba(0,0,0,.28)
+}
+.zoneV9CasinoArt span:first-child{left:4px;top:7px;transform:rotate(-10deg)}
+.zoneV9CasinoArt span:last-child{right:4px;top:3px;color:#c51d33;transform:rotate(10deg)}
+
+.zoneV9Footer{
+  min-height:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 4px;color:#8195bd;font-size:6px
+}
+
+@media(max-height:680px){
+  #gameZoneScreen.zoneV9{
+    padding:6px;
+    grid-template-rows:48px 42px minmax(0,1fr) 18px;
+    gap:5px
+  }
+  .zoneV9Header{padding:5px 8px}
+  .zoneV9Avatar{width:34px;height:34px;font-size:20px}
+  .zoneV9Title h1{font-size:15px}
+  .zoneV9Controller{font-size:27px}
+  .zoneV9Game{padding:7px;border-radius:14px}
+  .zoneV9Icon{font-size:29px}
+  .zoneV9Info h2{font-size:13px}
+  .zoneV9Go{bottom:6px;right:6px;padding:5px 7px}
+  .zoneV9CasinoArt{transform:scale(.8);transform-origin:right top}
+}
+
 </style>
 </head>
 
@@ -1674,7 +1811,7 @@ canvas{
 
 <div id="homeScreen" class="full hidden">
 
-  <div style="margin-bottom:8px"><button class="poolBack" style="width:auto;padding:0 12px;border-radius:16px" onclick="showGameZone()">← GAME ZONE</button></div>
+  <div style="margin-bottom:8px"><button class="poolBack" style="width:auto;padding:0 12px;border-radius:16px" onclick="backToGameZone()">← GAME ZONE</button></div>
 
   <div class="playerHeader">
 
@@ -2065,23 +2202,74 @@ canvas{
 
 
 <!-- FAMILY GAME ZONE -->
-<div id="gameZoneScreen" class="full hidden">
-  <div class="zoneHeader">
-    <div class="zoneProfile"><div id="zoneAvatar" class="zoneAvatar">😎</div><div><div id="zoneName" class="zoneName">Player</div><div class="zoneSub">FAMILY GAME ZONE</div></div></div>
-    <button class="poolBack" onclick="editSharedProfile()">⚙️</button>
+<div id="gameZoneScreen" class="full hidden zoneV9">
+  <div class="zoneV9Header">
+    <div class="zoneV9Profile">
+      <div id="zoneAvatar" class="zoneV9Avatar">😎</div>
+      <div>
+        <div id="zoneName" class="zoneV9Name">Player</div>
+        <div class="zoneV9Sub">FAMILY GAME ZONE</div>
+      </div>
+    </div>
+    <button class="zoneV9Settings" onclick="editSharedProfile()">⚙️</button>
   </div>
-  <div class="zoneHero"><div class="controller">🎮</div><h1>FAMILY GAME ZONE</h1><p>Choose a game and have fun</p></div>
-  <div class="gameCards">
-    <div class="gameCard bubbleCard"><div class="gameEmoji">🫧</div><h2>Bubble Blast</h2><p>Levels, bosses, daily challenges and cannon upgrades.</p><div class="gameFeatures"><span>🗺️ Level Map</span><span>👹 Bosses</span><span>🎯 Daily</span></div><button class="zonePlay" onclick="openBubbleBlast()">PLAY BUBBLE BLAST</button></div>
-    <div class="gameCard poolCard"><div class="gameEmoji">🎱</div><h2>8-Ball Pool</h2><p>Real physics, full rules, CPU opponents, local 2-player and purchasable cues.</p><div class="gameFeatures"><span>🎯 Real Physics</span><span>🤖 CPU</span><span>👥 2 Player</span><span>🛒 Cue Shop</span></div><button class="zonePlay" onclick="openPoolHome()">PLAY 8-BALL POOL</button></div>
-    <div class="gameCard blackjackCard"><div class="gameEmoji">🃏</div><h2>Blackjack Casino</h2><p>Casino-style Blackjack with a real 6-deck shoe, virtual chips, splits, double down and daily challenges.</p><div class="gameFeatures"><span>🃏 Real Rules</span><span>💰 Virtual Chips</span><span>✂️ Split</span><span>🎁 Daily</span></div><button class="zonePlay" onclick="openBlackjackHome()">PLAY BLACKJACK</button></div>
+
+  <div class="zoneV9Title">
+    <div class="zoneV9Controller">🎮</div>
+    <div>
+      <h1>CHOOSE YOUR GAME</h1>
+      <p>Three games. One profile. Progress saved.</p>
+    </div>
   </div>
-  <div class="zoneFooter">Progress is saved on this device/browser.</div>
+
+  <div class="zoneV9Grid">
+
+    <button class="zoneV9Game zoneV9Bubble" onclick="openBubbleBlast()">
+      <div class="zoneV9Icon">🫧</div>
+      <div class="zoneV9Info">
+        <small>ADVENTURE</small>
+        <h2>Bubble Blast</h2>
+        <p>Levels • Bosses • Daily</p>
+        <div id="zoneBubbleStatus" class="zoneV9Status">Continue your journey</div>
+      </div>
+      <div class="zoneV9Go">PLAY ›</div>
+    </button>
+
+    <button class="zoneV9Game zoneV9Pool" onclick="openPoolHome()">
+      <div class="zoneV9Icon">🎱</div>
+      <div class="zoneV9Info">
+        <small>SPORTS</small>
+        <h2>8-Ball Pool</h2>
+        <p>CPU • 2 Player • Cue Shop</p>
+        <div id="zonePoolStatus" class="zoneV9Status">Ready for a match</div>
+      </div>
+      <div class="zoneV9Go">PLAY ›</div>
+    </button>
+
+    <button class="zoneV9Game zoneV9Blackjack" onclick="openBlackjackHome()">
+      <div class="zoneV9CasinoArt">
+        <span>A♠</span><span>K♥</span>
+      </div>
+      <div class="zoneV9Info">
+        <small>CASINO</small>
+        <h2>Blackjack</h2>
+        <p>5 Spots • Dealer • Split • Double</p>
+        <div id="zoneBjStatus" class="zoneV9Status">Enter the casino</div>
+      </div>
+      <div class="zoneV9Go">ENTER ›</div>
+    </button>
+
+  </div>
+
+  <div class="zoneV9Footer">
+    <span>💾 Saved on this device</span>
+    <span>🎁 Daily challenges available</span>
+  </div>
 </div>
 
 <!-- 8 BALL POOL HOME -->
 <div id="poolHomeScreen" class="full hidden">
-  <div class="poolHeader"><div class="poolHeaderLeft"><button class="poolBack" onclick="showGameZone()">←</button><div id="poolHomeAvatar" class="poolProfileAvatar">😎</div><div><div id="poolHomeName" class="poolProfileName">Player</div><div class="poolTiny">8-BALL POOL</div></div></div><div id="poolCoins" class="poolCoins">🪙 0</div></div>
+  <div class="poolHeader"><div class="poolHeaderLeft"><button class="poolBack" onclick="backToGameZone()">←</button><div id="poolHomeAvatar" class="poolProfileAvatar">😎</div><div><div id="poolHomeName" class="poolProfileName">Player</div><div class="poolTiny">8-BALL POOL</div></div></div><div id="poolCoins" class="poolCoins">🪙 0</div></div>
   <div class="poolHero"><div class="eight">🎱</div><h1>8-BALL POOL</h1><p>Aim • Control • Win</p></div>
   <div class="poolStats"><div class="poolStat"><b id="poolWins">0</b><small>WINS</small></div><div class="poolStat"><b id="poolLosses">0</b><small>LOSSES</small></div><div class="poolStat"><b id="poolStreak">0</b><small>STREAK</small></div><div class="poolStat"><b id="poolWinRate">0%</b><small>WIN RATE</small></div></div>
   <div class="poolMenuCard"><h3>Choose Match</h3><div class="modeGrid"><button id="poolCpuMode" class="modeBtn active" onclick="setPoolMode('cpu')"><span>🤖</span><b>VS CPU</b><small>Challenge computer opponents</small></button><button id="poolLocalMode" class="modeBtn" onclick="setPoolMode('local')"><span>👥</span><b>2 PLAYERS</b><small>Pass & play on one device</small></button></div><div id="poolDifficultyBox" style="margin-top:12px"><div class="label">CPU DIFFICULTY</div><div class="difficultyGrid"><button class="diffBtn active" data-diff="rookie" onclick="setPoolDifficulty('rookie',this)">ROOKIE</button><button class="diffBtn" data-diff="amateur" onclick="setPoolDifficulty('amateur',this)">AMATEUR</button><button class="diffBtn" data-diff="pro" onclick="setPoolDifficulty('pro',this)">PRO</button><button class="diffBtn" data-diff="master" onclick="setPoolDifficulty('master',this)">MASTER</button></div></div><button class="poolMainBtn" onclick="startPoolMatch()">🎱 START MATCH</button></div>
@@ -2108,7 +2296,7 @@ canvas{
 <!-- BLACKJACK HOME -->
 <div id="bjHomeScreen" class="full hidden">
   <div class="bjHeader">
-    <div class="bjHeaderLeft"><button class="poolBack" onclick="showGameZone()">←</button><div id="bjHomeAv" class="bjAv">😎</div><div><div id="bjHomeName" class="bjName">Player</div><div class="bjTiny">BLACKJACK CASINO</div></div></div>
+    <div class="bjHeaderLeft"><button class="poolBack" onclick="backToGameZone()">←</button><div id="bjHomeAv" class="bjAv">😎</div><div><div id="bjHomeName" class="bjName">Player</div><div class="bjTiny">BLACKJACK CASINO</div></div></div>
     <div id="bjHomeBalance" class="bjBalance">🪙 5,000</div>
   </div>
   <div class="bjHero"><div class="cards">🂡 🂮</div><h1>BLACKJACK</h1><p>6-Deck Shoe • Blackjack Pays 3:2 • Dealer Stands on 17</p></div>
@@ -5492,17 +5680,56 @@ window.addEventListener(
 
 /* ================= FAMILY GAME ZONE ================= */
 function hideAllMainScreens(){
-  ["profileScreen","gameZoneScreen","homeScreen","gameScreen","poolHomeScreen","poolGameScreen"].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add("hidden");});
+  [
+    "profileScreen","gameZoneScreen",
+    "homeScreen","gameScreen",
+    "poolHomeScreen","poolGameScreen",
+    "bjHomeScreen","bjGameScreen"
+  ].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.add("hidden");
+  });
+
+  [
+    "mapOverlay","bossOverlay","completeOverlay","failedOverlay","pauseOverlay",
+    "shopOverlay","unlockOverlay",
+    "cueShopOverlay","poolStatsOverlay","poolResultOverlay",
+    "bjShopOverlay","bjStatsOverlay"
+  ].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.add("hidden");
+  });
 }
 function showGameZone(){
   if(typeof running!=="undefined") running=false;
   if(typeof paused!=="undefined") paused=false;
-  poolRunning=false;
+  if(typeof poolRunning!=="undefined") poolRunning=false;
+  if(typeof poolAnimating!=="undefined") poolAnimating=false;
+  if(typeof poolDragging!=="undefined") poolDragging=false;
+  if(typeof bjMBusy!=="undefined") bjMBusy=false;
+
   hideAllMainScreens();
-  const z=document.getElementById("gameZoneScreen");z.classList.remove("hidden");
+
+  const z=document.getElementById("gameZoneScreen");
+  if(z) z.classList.remove("hidden");
+
   document.getElementById("zoneAvatar").textContent=saveData.profile?.avatar||"😎";
   document.getElementById("zoneName").textContent=saveData.profile?.name||"Player";
-  document.getElementById("app").style.background="radial-gradient(circle at 20% 0,#5638b8 0,transparent 34%),radial-gradient(circle at 90% 35%,#106d7a 0,transparent 35%),linear-gradient(#101a3d,#071225)";
+
+  const bs=document.getElementById("zoneBubbleStatus");
+  if(bs) bs.textContent="Level "+(saveData.level||1)+" • "+(saveData.totalStars||0)+" ⭐";
+
+  const ps=document.getElementById("zonePoolStatus");
+  if(ps && typeof poolSave!=="undefined") ps.textContent=(poolSave.wins||0)+" wins • 🪙 "+(poolSave.coins||0);
+
+  const js=document.getElementById("zoneBjStatus");
+  if(js && typeof bjSave!=="undefined") js.textContent="🪙 "+Number(bjSave.chips||0).toLocaleString()+" virtual chips";
+
+  document.getElementById("app").style.background=
+    "radial-gradient(circle at 5% 0,rgba(101,69,224,.38),transparent 27%),radial-gradient(circle at 100% 65%,rgba(22,151,143,.20),transparent 30%),linear-gradient(155deg,#101a3d,#071225 68%,#040a14)";
+}
+function backToGameZone(){
+  showGameZone();
 }
 function openBubbleBlast(){hideAllMainScreens();showHome();}
 function editSharedProfile(){hideAllMainScreens();document.getElementById("profileScreen").classList.remove("hidden");document.getElementById("username").value=saveData.profile?.name||"";selectedAvatar=saveData.profile?.avatar||"😎";document.querySelectorAll(".avatar").forEach(el=>el.classList.toggle("selected",el.dataset.avatar===selectedAvatar));}
@@ -6169,14 +6396,6 @@ function bjEndRound(){
 }
 
 /* ================= GAME ZONE INTEGRATION ================= */
-const _originalShowGameZone = typeof showGameZone==="function" ? showGameZone : null;
-if(_originalShowGameZone){
-  showGameZone=function(){
-    _originalShowGameZone();
-    document.getElementById("bjHomeScreen")?.classList.add("hidden");
-    document.getElementById("bjGameScreen")?.classList.add("hidden");
-  };
-}
 loadBjSave();
 
 
